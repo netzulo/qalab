@@ -4,9 +4,10 @@
 
 + 1. Clone this repo : `git clone https://github.com/netzulo/qalab.git`
 + 2. Enter on repo directory : `cd qalab`
-+ 2. Clone submodules : ``
++ 2. Clone submodules : `git submodule update`
 
 ## SubModules
 
-_Still not defined_
++ 1. qadoc  : [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)
++ 2. qacode : [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
 
