@@ -8,6 +8,5 @@
 
 ## SubModules
 
-+ 1. qadoc  : [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)
-+ 2. qacode : [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
-
++ 1. [qadoc](https://github.com/netzulo/qadoc)  : [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)
++ 2. [qacode](https://github.com/netzulo/qacode) : [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
