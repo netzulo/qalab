@@ -1,0 +1,3 @@
+[submodule "modules/qacode/qacode"]
+	path = modules/qacode/qacode
+	url = https://github.com/netzulo/qacode.git
