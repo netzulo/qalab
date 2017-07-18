@@ -4,7 +4,7 @@
 
 + 1. Clone this repo : `git clone https://github.com/netzulo/qalab.git`
 + 2. Enter on repo directory : `cd qalab`
-+ 2. Clone submodules : `git submodule update`
++ 2. Clone submodules : `git submodule update --init --recursive`
 
 ## SubModules
 
