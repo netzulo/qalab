@@ -4,3 +4,6 @@
 [submodule "modules/qadoc"]
 	path = modules/qadoc
 	url = https://github.com/netzulo/qadoc.git
+[submodule "modules/qadmin"]
+	path = modules/qadmin
+	url = https://github.com/netzulo/qadmin.git
