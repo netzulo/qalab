@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "qacode", "modules\qacode\qacode.pyproj", "{53450CA3-CDDC-4405-8FBD-A6924E1E1E09}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "qalab", "qalab\qalab.pyproj", "{D888C1A4-D0A3-42E4-B8EE-FF2F9163BF94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53450CA3-CDDC-4405-8FBD-A6924E1E1E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53450CA3-CDDC-4405-8FBD-A6924E1E1E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D888C1A4-D0A3-42E4-B8EE-FF2F9163BF94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D888C1A4-D0A3-42E4-B8EE-FF2F9163BF94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
