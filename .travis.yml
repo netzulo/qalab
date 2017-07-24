@@ -17,10 +17,10 @@ before_install:
 
 install:
   - echo "TODO:make sense cofigFile.json"
-  - python qalab/qalab.py install --hub configFile.json
+  - python qalab/qalab.py install --hub "configFile.json"
 
 before_script:
   - echo "travis before_script"
 
 script:
-  - 
+  - echo "travis script" 
