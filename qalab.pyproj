@@ -27,6 +27,9 @@
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
     <Content Include=".travis.yml" />
+    <Content Include="appveyor.yml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="LICENSE" />
     <Content Include="README.md" />
   </ItemGroup>
