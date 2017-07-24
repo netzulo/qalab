@@ -13,10 +13,9 @@
 
 ## SubModules
 
-+ 1. [qadoc](https://github.com/netzulo/qadoc)  : [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)
-+ 2. [qacode](https://github.com/netzulo/qacode) : [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
-+ 3. [qadmin](https://github.com/netzulo/qadmin) : [![Build Status](https://travis-ci.org/netzulo/qadmin.svg?branch=master)](https://travis-ci.org/netzulo/qadmin) 
-
++ 1. [qadoc](https://github.com/netzulo/qadoc)  : [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc) [![Build status](https://ci.appveyor.com/api/projects/status/ist2gcxanbbxqdss?svg=true)](https://ci.appveyor.com/api/projects/status/ist2gcxanbbxqdss?svg=true)
++ 2. [qacode](https://github.com/netzulo/qacode) : [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode) [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x?svg=true)](https://ci.appveyor.com/project/netzulo/qacode)
++ 3. [qadmin](https://github.com/netzulo/qadmin) : [![Build Status](https://travis-ci.org/netzulo/qadmin.svg?branch=master)](https://travis-ci.org/netzulo/qadmin) [![Build status](https://ci.appveyor.com/api/projects/status/qrb3o3qdeg3qv9eq?svg=true)](https://ci.appveyor.com/project/netzulo/qadmin)
 
 ## Command Usage
 
