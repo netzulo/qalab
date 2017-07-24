@@ -12,6 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>qalab</Name>
     <RootNamespace>qalab</RootNamespace>
+    <InterpreterId>MSBuild|qalab|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +34,34 @@
     <Folder Include="bin\" />
     <Folder Include="logs\" />
     <Folder Include="qalab\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bin\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="logs\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="qalab\qalab.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="qalab\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="C:\Users\cronosAdmin\Envs\qalab\">
+      <Id>qalab</Id>
+      <Version>3.6</Version>
+      <Description>qalab (Python 3.6 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
