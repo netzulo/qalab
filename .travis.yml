@@ -1,14 +1,26 @@
+branches:
+  only:
+    - master
 language: python
 python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
   - "3.6"
+
 before_install:
-  - echo "travis before_install"
-intall:
-  - echo "travis install"
-  - pip install -r requirements.txt
+  - git submodule foreach git checkout master 
+  - pip freeze
+  - python setup.py install
+
+install:
+  - echo "TODO:make sense cofigFile.json"
+  - python qalab/qalab.py install --hub configFile.json
 
 before_script:
   - echo "travis before_script"
 
 script:
-  - git submodule foreach git checkout master
+  - 
