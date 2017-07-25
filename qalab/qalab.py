@@ -38,7 +38,7 @@ def handle_command_install(args):
     config_dst = "../configs/settings.{}.json".format(args.mode)
 
     if args.mode is None:
-	logger.error("Can't start installation without select available mode")
+        logger.error("Can't start installation without select available mode")
         return # TODO: hate return like this , must improve
     else:
         logger.info("Downloading selenium from : {}".format(selenium_url))
