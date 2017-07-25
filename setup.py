@@ -13,6 +13,7 @@ setup(name='qalab',
       url = 'https://github.com/netzulo/qalab',
       download_url = 'https://github.com/netzulo/qalab/tarball/v0.0.1',
       keywords = ['testing', 'logging', 'functional','selenium', 'test', 'installer', 'hub', 'node'],
-      install_requires=[
-          'appdirs','packaging==16.8','pyparsing','six==1.10.0','nose==1.3.7','nose-testconfig==0.10', 'wget']
+      install_requires=['appdirs','packaging==16.8','pyparsing','six==1.10.0',
+                        'nose==1.3.7','nose-testconfig==0.10', 'wget'],
+      scripts=['qalab/qalab.py']
       )
