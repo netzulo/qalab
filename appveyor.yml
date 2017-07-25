@@ -17,7 +17,6 @@ environment:
 
 install:
   - "%PYTHON%\\python.exe setup.py install"
-  - "%PYTHON%\\python.exe qalab\\qalab.py install --hub configFile.json"
 
 before_test:
   - "%PYTHON%\\python.exe qalab\\qalab.py install --mode hub"
