@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-import argparse, logging, logging.handlers, os, wget
+import argparse, logging, logging.handlers, os, shutil, wget
 
 logger = logging.getLogger('qalab')
 logger.setLevel(logging.DEBUG)
@@ -21,15 +21,12 @@ parser = argparse.ArgumentParser(
 ## Main args
 parser.add_argument('-v', '--verbose', action="count", help="verbose level... repeat up to three times.")
 ## Args with subs
-commands = parser.add_subparsers(dest='install', help="Install command")
+commands = parser.add_subparsers(dest='install', help="Install selenium instance")
 command_install = commands.add_parser("install", help="Install selenium HUB or NODE")
-command_install.add_argument('--hub', default=None, help="Install selenium hub", metavar="VERSION")
-command_install.add_argument('--node', default=None, help="Install selenium node", metavar="VERSION")
+command_install.add_argument('--mode', default=None, help="Select installation mode", metavar="hub, node")
 
 
 def handle_command_install(args):
-    logger.error("handled command: install, with args={}".format(args))
-
     selenium_url_base = "https://selenium-release.storage.googleapis.com"
     selenium_url_version= "3.4"
     selenium_url_file = "3.4.0"
@@ -37,20 +34,26 @@ def handle_command_install(args):
     selenium_url = "{}/{}/{}".format(selenium_url_base,
                                   selenium_url_version,
                                   selenium_jar)
-    if args.hub is not None:
-        logger.error("HUB install detected")
-    if args.node is not None:
-        logger.error("NODE install detected")
+    config_src = "../configs/settings.{}.example.json".format(args.mode)
+    config_dst = "../configs/settings.{}.json".format(args.mode)
 
-    logger.error("Downloading selenium from : {}".format(selenium_url))
-    selenium_file = wget.download(selenium_url)
+    if args.mode is None:
+	logger.error("Can't start installation without select available mode")
+        return # TODO: hate return like this , must improve
+    else:
+        logger.info("Downloading selenium from : {}".format(selenium_url))
+        selenium_file = wget.download(selenium_url)
+        logger.info("Installation : {}, copying configuration file from example".format(args.mode))
+        shutil.copy2(config_src , config_dst) # TODO: FAILED, fix me , please
+ 
+
 
     logger.error("PROCESS NOT IMPLEMENTED")
 
 
 def set_log_level_from_verbose(args):
     if not args.verbose:
-        console_handler.setLevel('ERROR')
+        console_handler.setLevel("INFO")
     elif args.verbose == 1:
         console_handler.setLevel('WARNING')
     elif args.verbose == 2:
