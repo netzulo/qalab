@@ -42,7 +42,7 @@ def handle_command_install(args):
         return # TODO: hate return like this , must improve
     else:
         logger.info("Downloading selenium from : {}".format(selenium_url))
-        selenium_file = wget.download(selenium_url)
+        selenium_file = wget.download(selenium_url, "../bin")
         logger.info("Installation : {}, copying configuration file from example".format(args.mode))
         shutil.copy2(config_src , config_dst) # TODO: FAILED, fix me , please
  
@@ -70,4 +70,4 @@ if __name__ == '__main__':
     if args.install == 'install':
         handle_command_install(args)    
     else:
-        logger.error("Unknown command: {}".format(args.install))
+        logger.error("Unknown command: {}".format(args))

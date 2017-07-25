@@ -1,8 +1,11 @@
+import sys
 from setuptools import setup, find_packages
 from os import path
 from os import name
 
+
 CURR_PATH = path.abspath(path.dirname(__file__))
+sys.path.append(path.join(CURR_PATH, 'qalab'))
 
 setup(name='qalab',
       version='0.0.1',
