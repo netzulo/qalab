@@ -17,7 +17,7 @@ before_install:
 
 install:
   - echo "TODO:make sense cofigFile.json"
-  - python qalab/qalab.py install --hub "configFile"
+  - python qalab/qalab.py install --mode hub
 
 before_script:
   - echo "travis before_script"

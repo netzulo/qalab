@@ -20,7 +20,7 @@ install:
   - "%PYTHON%\\python.exe qalab\\qalab.py install --hub configFile.json"
 
 before_test:
-  - "echo before_test executed"
+  - "%PYTHON%\\python.exe qalab\\qalab.py install --mode hub"
 
 test_script:
   - "echo test_script executed"
