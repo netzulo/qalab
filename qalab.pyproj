@@ -31,12 +31,15 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="LICENSE" />
+    <Content Include="qalab\configs\settings.hub.example.json" />
+    <Content Include="qalab\configs\settings.node.example.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="logs\" />
     <Folder Include="qalab\" />
+    <Folder Include="qalab\configs\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bin\__init__.py">
@@ -45,6 +48,7 @@
     <Compile Include="logs\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="qalab\configs\__init__.py" />
     <Compile Include="qalab\qalab.py">
       <SubType>Code</SubType>
     </Compile>
