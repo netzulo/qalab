@@ -33,7 +33,7 @@ optional arguments:
 
 ## SubModules
 
-__All submodules status__
+__All submodules statuses__
 
 ### qacode | **[API documentation](http://qalab.tk:4567/qacode/)**
 
