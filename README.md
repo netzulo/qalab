@@ -47,10 +47,8 @@ __All submodules status__
 
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
-| master  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)  | [![Build status](https://ci.appveyor.com/api/projects/status/o70qi0ykpagrgte2/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qadoc/branch/master)
-  |
-| devel  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=devel)](https://travis-ci.org/netzulo/qadoc)  | [![Build status](https://ci.appveyor.com/api/projects/status/o70qi0ykpagrgte2/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qadoc/branch/devel)
-  |
+| master  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qadoc)  | [![Build status](https://ci.appveyor.com/api/projects/status/o70qi0ykpagrgte2/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qadoc/branch/master)  |
+| devel  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=devel)](https://travis-ci.org/netzulo/qadoc)  | [![Build status](https://ci.appveyor.com/api/projects/status/o70qi0ykpagrgte2/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qadoc/branch/devel)  |
 
 
 ### qadmin  **[API documentation](http://qalab.tk:4567/qadmin/)**
