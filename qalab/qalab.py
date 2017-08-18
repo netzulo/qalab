@@ -1,30 +1,40 @@
 #! /usr/bin/env python
-import argparse, logging, logging.handlers, os, shutil, wget
+import argparse, logging, logging.handlers, os, shutil, wget, sys
 
-logger = logging.getLogger('qalab')
-logger.setLevel(logging.DEBUG)
-if not os.path.exists('../logs'): os.mkdir('../logs')
-log_file_handler = logging.handlers.TimedRotatingFileHandler('../logs/qalab.log', when='M', interval=2)
-log_file_handler.setFormatter( logging.Formatter('%(asctime)s [%(levelname)s](%(name)s:%(funcName)s:%(lineno)d): %(message)s') )
-log_file_handler.setLevel(logging.DEBUG)
-logger.addHandler(log_file_handler)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.CRITICAL)
-console_handler.setFormatter( logging.Formatter('[%(levelname)s](%(name)s): %(message)s') )
-logger.addHandler(console_handler)
 
-parser = argparse.ArgumentParser(
-    description="Performs selenium drivers operations", 
-    epilog="----- help us on , https://github.com/netzulo/qalab -------", 
-    fromfile_prefix_chars='@',
-)
-## Main args
-parser.add_argument('-v', '--verbose', action="count", help="verbose level... repeat up to three times.")
-## Args with subs
-commands = parser.add_subparsers(dest='install', help="Install selenium instance")
-command_install = commands.add_parser("install", help="Install selenium HUB or NODE")
-command_install.add_argument('--mode', default=None, help="Select installation mode", metavar="hub, node")
+def main(args=None):
+    if args is None:
+        args = sys.argv[1:]
+    logger = logging.getLogger('qalab')
+    logger.setLevel(logging.DEBUG)
+    if not os.path.exists('../logs'): os.mkdir('../logs')
+    log_file_handler = logging.handlers.TimedRotatingFileHandler('../logs/qalab.log', when='M', interval=2)
+    log_file_handler.setFormatter( logging.Formatter('%(asctime)s [%(levelname)s](%(name)s:%(funcName)s:%(lineno)d): %(message)s') )
+    log_file_handler.setLevel(logging.DEBUG)
+    logger.addHandler(log_file_handler)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.CRITICAL)
+    console_handler.setFormatter( logging.Formatter('[%(levelname)s](%(name)s): %(message)s') )
+    logger.addHandler(console_handler)
 
+    parser = argparse.ArgumentParser(
+        description="Performs selenium drivers operations",
+        epilog="----- help us on , https://github.com/netzulo/qalab -------",
+        fromfile_prefix_chars='@',)
+    ## Main args
+    parser.add_argument('-v', '--verbose', action="count", help="verbose level... repeat up to three times.")
+    ## Args with subs
+    commands = parser.add_subparsers(dest='install', help="Install selenium instance")
+    command_install = commands.add_parser("install", help="Install selenium HUB or NODE")
+    command_install.add_argument('--mode', default=None, help="Select installation mode", metavar="hub, node")
+    # START SCRIPT
+    args = parser.parse_args()
+    set_log_level_from_verbose(console_handler,args)
+
+    if args.install == 'install':
+        handle_command_install(args)
+    else:
+        logger.error("Unknown command: {}".format(args))
 
 def handle_command_install(args):
     selenium_url_base = "https://selenium-release.storage.googleapis.com"
@@ -45,13 +55,10 @@ def handle_command_install(args):
         selenium_file = wget.download(selenium_url, "../bin")
         logger.info("Installation : {}, copying configuration file from example".format(args.mode))
         shutil.copy2(config_src , config_dst) # TODO: FAILED, fix me , please
- 
-
-
     logger.error("PROCESS NOT IMPLEMENTED")
 
 
-def set_log_level_from_verbose(args):
+def set_log_level_from_verbose(console_handler, args):
     if not args.verbose:
         console_handler.setLevel("INFO")
     elif args.verbose == 1:
@@ -65,9 +72,4 @@ def set_log_level_from_verbose(args):
 
 
 if __name__ == '__main__':
-    args = parser.parse_args()
-    set_log_level_from_verbose(args)
-    if args.install == 'install':
-        handle_command_install(args)    
-    else:
-        logger.error("Unknown command: {}".format(args))
+    main()
