@@ -12,7 +12,7 @@ python:
   - "3.6"
 
 before_install:
-  - sudo apt-get install timeout
+  - sudo apt-get install coreutils
   - git submodule foreach git checkout master 
   - pip freeze
   - python setup.py install
