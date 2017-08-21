@@ -1,36 +1,46 @@
 #! /usr/bin/env python
-import argparse, logging, logging.handlers, os, shutil, wget, subprocess
-
-logger = logging.getLogger('qalab')
-logger.setLevel(logging.DEBUG)
-if not os.path.exists('logs'): os.mkdir('logs')
-log_file_handler = logging.handlers.TimedRotatingFileHandler('logs/qalab.log', when='M', interval=2)
-log_file_handler.setFormatter( logging.Formatter('%(asctime)s [%(levelname)s](%(name)s:%(funcName)s:%(lineno)d): %(message)s') )
-log_file_handler.setLevel(logging.DEBUG)
-logger.addHandler(log_file_handler)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.CRITICAL)
-console_handler.setFormatter( logging.Formatter('[%(levelname)s](%(name)s): %(message)s') )
-logger.addHandler(console_handler)
-
-parser = argparse.ArgumentParser(
-    description="Performs selenium drivers operations", 
-    epilog="----- help us on , https://github.com/netzulo/qalab -------", 
-    fromfile_prefix_chars='@',
-)
-## Main args
-parser.add_argument('-v', '--verbose', action="count", help="verbose level... repeat up to three times.")
-## Args with subs
-commands = parser.add_subparsers(dest="selenium", help="Actions for selenium instance")
-command_install = commands.add_parser("selenium", help="Actions for selenium HUB or NODE")
-command_install.add_argument('-m','--mode', default=None, help="Select mode, values are: [hub, node]")
-command_install.add_argument('-i','--install', action="store_true", help="Download selenium jar")
-command_install.add_argument('-s','--start', action="store_true", help="Start Selenium jar")
-command_install.add_argument('-p','--platform', default=None, help="Select mode, values are: [lin32,lin64,win32,win64]")
+import argparse, logging, logging.handlers, os, shutil, sys, subprocess
+import wget
 
 
+def main(args=None):
+    if args is None:
+        args = sys.argv[1:]
+    logger = logging.getLogger('qalab')
+    logger.setLevel(logging.DEBUG)
+    if not os.path.exists('../logs'): os.mkdir('../logs')
+    log_file_handler = logging.handlers.TimedRotatingFileHandler('../logs/qalab.log', when='M', interval=2)
+    log_file_handler.setFormatter( logging.Formatter('%(asctime)s [%(levelname)s](%(name)s:%(funcName)s:%(lineno)d): %(message)s') )
+    log_file_handler.setLevel(logging.DEBUG)
+    logger.addHandler(log_file_handler)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.CRITICAL)
+    console_handler.setFormatter( logging.Formatter('[%(levelname)s](%(name)s): %(message)s') )
+    logger.addHandler(console_handler)
 
-def handle_command_install(args):
+    parser = argparse.ArgumentParser(
+        description="Performs selenium drivers operations",
+        epilog="----- help us on , https://github.com/netzulo/qalab -------",
+        fromfile_prefix_chars='@',)
+    ## Main args
+    parser.add_argument('-v', '--verbose', action="count", help="verbose level... repeat up to three times.")
+    ## Args with subs
+    commands = parser.add_subparsers(dest="selenium", help="Actions for selenium instance")
+    command_install = commands.add_parser("selenium", help="Actions for selenium HUB or NODE")
+    command_install.add_argument('-m','--mode', default=None, help="Select mode, values are: [hub, node]")
+    command_install.add_argument('-i','--install', action="store_true", help="Download selenium jar")
+    command_install.add_argument('-s','--start', action="store_true", help="Start Selenium jar")
+    command_install.add_argument('-p','--platform', default=None, help="Select mode, values are: [lin32,lin64,win32,win64]")
+    # START SCRIPT
+    args = parser.parse_args()
+    set_log_level_from_verbose(console_handler,args)
+
+    if args.selenium == 'selenium':
+        handle_command_selenium(args)
+    else:
+        logger.error("Unknown command: {}".format(args))
+
+def handle_command_selenium(args):
     selenium_url_base = "https://selenium-release.storage.googleapis.com"
     selenium_url_version= "3.4"
     selenium_url_file = "3.4.0"
@@ -91,7 +101,7 @@ def handle_command_install(args):
             logger.error("ACTION not selected: --install , --start")
 
 
-def set_log_level_from_verbose(args):
+def set_log_level_from_verbose(console_handler, args):
     if not args.verbose:
         console_handler.setLevel("INFO")
     elif args.verbose == 1:
@@ -105,9 +115,4 @@ def set_log_level_from_verbose(args):
 
 
 if __name__ == '__main__':
-    args = parser.parse_args()
-    set_log_level_from_verbose(args)
-    if args.selenium == 'selenium':
-        handle_command_install(args)    
-    else:
-        logger.error("Unknown command: {}".format(args))
+    main()
