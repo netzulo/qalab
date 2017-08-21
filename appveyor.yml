@@ -22,8 +22,8 @@ install:
   - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -i"
 
 before_test:
-  - "cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -s\""
-  - "cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -s\""
+  - cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -s\"
+  - cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -s\"
 
 test_script:
   - "telnet localhost 11000"
