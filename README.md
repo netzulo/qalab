@@ -16,13 +16,19 @@
 ## Command Usage
 
 ```
-usage: qalab.py [-h] [-v] {install} ...
+usage: qalab.py [-h] [-v] {selenium} ...
 
 Performs selenium drivers operations
 
 positional arguments:
-  {install}      Install command
-    install      Install selenium HUB or NODE
+  {selenium}     Actions for selenium instance
+    selenium     Actions for selenium HUB or NODE
+	
+  selenium arguments:
+  -h, --help            show this help message and exit
+  -m MODE, --mode MODE  Select mode, values are: [hub, node]
+  -i, --install         Download selenium jar
+  -s, --start           Start Selenium jar
 
 optional arguments:
   -h, --help     show this help message and exit

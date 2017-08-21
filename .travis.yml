@@ -5,7 +5,6 @@ branches:
 language: python
 python:
   - "2.7"
-  - "3.2"
   - "3.3"
   - "3.4"
   - "3.5"
@@ -14,14 +13,18 @@ python:
 before_install:
   - git submodule foreach git checkout master 
   - pip freeze
+  - python setup.py build
   - python setup.py install
 
 install:
-  - echo "TODO:make sense cofigFile.json"
-  - python qalab/qalab.py install --mode hub
+  - python qalab/qalab.py selenium -m hub -i
+  - python qalab/qalab.py selenium -m node -i
 
 before_script:
-  - echo "travis before_script"
+  - python qalab/qalab.py selenium -m hub -s &
+  - python qalab/qalab.py selenium -m node -s &
 
 script:
-  - echo "travis script" 
+  - sleep 10
+  - nc -z -v -w5 localhost 11000
+  - nc -z -v -w5 localhost 11001

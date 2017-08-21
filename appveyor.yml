@@ -18,9 +18,9 @@ environment:
 
 install:
   - "%PYTHON%\\python.exe setup.py install"
-
-before_test:
-  - "%PYTHON%\\python.exe qalab\\qalab.py install --mode hub"
+  - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -i"
+  - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -i"
 
 test_script:
-  - "echo test_script executed"
+  - echo "BUILD SUCCESS"
+

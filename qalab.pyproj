@@ -33,22 +33,23 @@
     <Content Include="LICENSE" />
     <Content Include="qalab\configs\settings.hub.example.json" />
     <Content Include="qalab\configs\settings.node.example.json" />
+    <Content Include="qalab\drivers\chromedriver_32" />
+    <Content Include="qalab\drivers\chromedriver_32.exe" />
+    <Content Include="qalab\drivers\chromedriver_64" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="logs\" />
     <Folder Include="qalab\" />
     <Folder Include="qalab\configs\" />
+    <Folder Include="qalab\drivers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bin\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="logs\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="qalab\configs\__init__.py" />
+    <Compile Include="qalab\drivers\__init__.py" />
     <Compile Include="qalab\qalab.py">
       <SubType>Code</SubType>
     </Compile>
