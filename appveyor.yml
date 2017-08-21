@@ -18,9 +18,13 @@ environment:
 
 install:
   - "%PYTHON%\\python.exe setup.py install"
+  - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -i"
+  - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -i"
 
 before_test:
-  - "%PYTHON%\\python.exe qalab\\qalab.py install --mode hub"
+  - "cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -s\""
+  - "cmd \k \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -s\""
 
 test_script:
-  - "echo test_script executed"
+  - "telnet localhost 11000"
+  - "telnet localhost 11001"

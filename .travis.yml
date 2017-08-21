@@ -17,11 +17,16 @@ before_install:
   - python setup.py install
 
 install:
-  - echo "TODO:make sense cofigFile.json"
-  - python qalab/qalab.py install --mode hub
+  - python qalab/qalab.py selenium -m hub -i
+  - python qalab/qalab.py selenium -m node -i
 
 before_script:
-  - echo "travis before_script"
+  - python qalab/qalab.py selenium -m hub -s &
+  - python qalab/qalab.py selenium -m node -s &
 
 script:
-  - echo "travis script" 
+  - TIMEOUT=10 timeout $TIMEOUT telnet localhost 11000
+  - echo "Selenium HUB it's ready to use"
+  - TIMEOUT=10 timeout $TIMEOUT telnet localhost 11001
+  - echo "Selenium NODE it's ready to use"
+
