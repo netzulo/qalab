@@ -58,7 +58,7 @@ def handle_command_selenium(args, logger):
     else:
         if args.install:
             logger.info("Downloading selenium from : {}".format(selenium_url))
-            selenium_file = wget.download(selenium_url, "qalab/drivers")
+            selenium_file = wget.download(selenium_url, out="qalab/drivers")
             logger.info("Installation : {}, copying configuration file from example".format(args.mode))
             shutil.copy2(config_src , config_dst)
             logger.info("Installacion : COMPLETED")
