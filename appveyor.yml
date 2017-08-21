@@ -22,8 +22,9 @@ install:
   - "%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -i"
 
 before_test:
-  - "start %PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -s"
-  - "start %PYTHON%\\python.exe qalab\\qalab.py selenium -m node -s"
+  - java -jar something.jar
+  - "start \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m hub -s\" "
+  - "start \"%PYTHON%\\python.exe qalab\\qalab.py selenium -m node -s\" "
 
 test_script:
   - "telnet localhost 11000"
