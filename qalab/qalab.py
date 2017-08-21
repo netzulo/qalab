@@ -36,11 +36,11 @@ def main(args=None):
     set_log_level_from_verbose(console_handler,args)
 
     if args.selenium == 'selenium':
-        handle_command_selenium(args)
+        handle_command_selenium(args, logger)
     else:
         logger.error("Unknown command: {}".format(args))
 
-def handle_command_selenium(args):
+def handle_command_selenium(args, logger):
     selenium_url_base = "https://selenium-release.storage.googleapis.com"
     selenium_url_version= "3.4"
     selenium_url_file = "3.4.0"
