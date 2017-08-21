@@ -25,6 +25,6 @@ before_script:
   - python qalab/qalab.py selenium -m node -s &
 
 script:
-  - timeout 10 "telnet localhost 11000"
-  - timeout 10 "telnet localhost 11001"
+  - timeout 3 telnet localhost 11000
+  - timeout 3 telnet localhost 11001
 
