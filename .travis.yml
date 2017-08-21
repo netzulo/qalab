@@ -12,7 +12,6 @@ python:
   - "3.6"
 
 before_install:
-  - sudo apt-get install coreutils
   - git submodule foreach git checkout master 
   - pip freeze
   - python setup.py install
@@ -27,6 +26,6 @@ before_script:
 
 script:
   - sleep 10
-  - timeout 3 telnet localhost 11000
-  - timeout 3 telnet localhost 11001
+  - nc -z -v -w5 localhost 11000
+  - nc -z -v -w5 localhost 11001
 
