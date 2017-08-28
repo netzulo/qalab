@@ -106,3 +106,7 @@ ENV/
 
 # Logs rotate
 logs/*.log.*
+
+# QAlab 
+qalab/configs/settings.hub.json
+qalab/configs/settings.node.json
