@@ -41,7 +41,7 @@ optional arguments:
 
 __All submodules statuses__
 
-### qacode | **[API documentation](http://qalab.tk:4567/qacode/)**
+### qacode | **[API documentation](http://qalab.tk/qacode/)**
 
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
@@ -49,7 +49,7 @@ __All submodules statuses__
 | devel  | [![Build Status](https://travis-ci.org/netzulo/qadmin.svg?branch=devel)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/devel)  |
 
 
-### qadoc | **[API documentation](http://qalab.tk:4567/qadoc/)**
+### qadoc | **[API documentation](http://qalab.tk/qadoc/)**
 
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
@@ -57,7 +57,7 @@ __All submodules statuses__
 | devel  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=devel)](https://travis-ci.org/netzulo/qadoc)  | [![Build status](https://ci.appveyor.com/api/projects/status/o70qi0ykpagrgte2/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qadoc/branch/devel)  |
 
 
-### qadmin  **[API documentation](http://qalab.tk:4567/qadmin/)**
+### qadmin  **[API documentation](http://qalab.tk/qadmin/)**
 
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
@@ -65,3 +65,9 @@ __All submodules statuses__
 | devel  | [![Build Status](https://travis-ci.org/netzulo/qadmin.svg?branch=devel)](https://travis-ci.org/netzulo/qadmin)  | [![Build status](https://ci.appveyor.com/api/projects/status/qrb3o3qdeg3qv9eq/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qadmin/branch/devel)  |
 
 
+### qadrivers  **[API documentation](http://qalab.tk/qadrivers/)**
+
+| Branch  | Linux 32 | Linux 64 | Windows 32 | Windows 64 |
+| ------------- | ------------- |  ------------- |
+| master  | ?  | ?  | ?  | ?  |
+| devel  | ?  | ?  | ?  | ?  |
