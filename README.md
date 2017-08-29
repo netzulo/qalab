@@ -84,8 +84,8 @@ __All submodules statuses__
 
 | Drivers  | Linux 32 | Linux 64 |  Windows 32 | Windows 64 |
 | ------------- | ------------- |  ------------- |  ------------- |  ------------- |
-| Chrome | OK |  OK |  OK |  _doesn't exist_ |
-| Firefox | - |  - |  - |  - |
-| PhantomJs | - |  - |  - |  - |
-| Internet Explorer | - |  - |  - |  - |
-| Edge | - |  - |  - |  - |
+| Chrome |  OK |  OK |  OK |  _doesn't exist_ |
+| Firefox |  - |  - |  OK |  OK |
+| PhantomJs |  - |  - |  - |  - |
+| Internet Explorer |  - |  - |  OK |  OK |
+| Edge |  _doesn't exist_ |  _doesn't exist_ |  _doesn't exist_ |  OK |
