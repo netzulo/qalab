@@ -21,8 +21,8 @@ install:
   - python qalab/qalab.py selenium -m node -i
 
 before_script:
-  - python qalab/qalab.py selenium -m hub -s &
-  - python qalab/qalab.py selenium -m node -s &
+  - python qalab/qalab.py selenium -m hub -s -p lin64 &
+  - python qalab/qalab.py selenium -m node -s -p lin64 &
 
 script:
   - sleep 10
