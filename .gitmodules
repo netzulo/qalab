@@ -7,3 +7,6 @@
 [submodule "modules/qadmin"]
 	path = modules/qadmin
 	url = https://github.com/netzulo/qadmin.git
+[submodule "modules/qadrivers"]
+        path = modules/qadrivers
+        url = https://github.com/netzulo/qadrivers.git
