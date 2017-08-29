@@ -42,8 +42,8 @@ def main(args=None):
 
 def handle_command_selenium(args, logger):
     selenium_url_base = "https://selenium-release.storage.googleapis.com"
-    selenium_url_version= "3.4"
-    selenium_url_file = "3.4.0"
+    selenium_url_version= "3.5"
+    selenium_url_file = "3.5.3"
     selenium_jar = "selenium-server-standalone-{}.jar".format(selenium_url_file)
     selenium_url = "{}/{}/{}".format(selenium_url_base,
                                   selenium_url_version,
@@ -53,7 +53,8 @@ def handle_command_selenium(args, logger):
     platforms = ["win32", "win64","lin32","lin64"]
     drivers_path = "modules/qadrivers/"
     drivers_vars = ["-Dwebdriver.chrome.driver=","-Dwebdriver.gecko.driver=","-Dphantomjs.binary.path=", "-Dwebdriver.ie.driver=", "-Dwebdriver.edge.driver="]
-    drivers_names = ["chromedriver_32.exe","chromedriver_32","chromedriver_64"]
+    drivers_names = ["chromedriver_32.exe","chromedriver_32","chromedriver_64",
+                     "firefoxdriver_32.exe", "firefoxdriver_64.exe","firefoxdriver_32","firefoxdriver_64"]
     drivers_abspaths = []
                 
     for driver_name in drivers_names:
@@ -88,13 +89,17 @@ def handle_command_selenium(args, logger):
                 logger.error("Can't start without select available platform: [win32,win64,lin32,lin64]")
                 return
             elif args.platform == "win32":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe")])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
+                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_32.exe")])
             elif args.platform == "win64":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe")])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
+                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_64.exe")])
             elif args.platform == "lin32":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32")])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32"),
+                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_32")])
             elif args.platform == "lin64":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64")])            
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64"),
+                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_64")])
 
             if args.mode == "node":
                 cmd_args.extend(cmd_drivers)
