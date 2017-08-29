@@ -51,6 +51,22 @@ def handle_command_selenium(args, logger):
     config_src = "qalab/configs/settings.{}.example.json".format(args.mode)
     config_dst = "qalab/configs/settings.{}.json".format(args.mode)
     platforms = ["win32", "win64","lin32","lin64"]
+    drivers_path = "modules/qadrivers/"
+    drivers_vars = ["-Dwebdriver.chrome.driver=","-Dwebdriver.gecko.driver=","-Dphantomjs.binary.path=", "-Dwebdriver.ie.driver=", "-Dwebdriver.edge.driver="]
+    drivers_names = ["chromedriver_32.exe","chromedriver_32","chromedriver_64"]
+    drivers_abspaths = []
+                
+    for driver_name in drivers_names:
+        if driver_name.startswith("chrome"):
+            drivers_abspaths.append(get_driver_abspath(drivers_vars[0],drivers_path, driver_name))
+        if driver_name.startswith("firefox"):
+            drivers_abspaths.append(get_driver_abspath(drivers_vars[1],drivers_path, driver_name))
+        if driver_name.startswith("phantomjs"):
+            drivers_abspaths.append(get_driver_abspath(drivers_vars[2],drivers_path, driver_name))
+        if driver_name.startswith("internetexplorer"):
+            drivers_abspaths.append(get_driver_abspath(drivers_vars[3],drivers_path, driver_name))
+        if driver_name.startswith("edge"):
+            drivers_abspaths.append(get_driver_abspath(drivers_vars[4],drivers_path, driver_name))
 
     if args.mode is None:
         logger.error("Can't start without select available mode: [hub, node]")
@@ -61,53 +77,41 @@ def handle_command_selenium(args, logger):
             selenium_file = wget.download(selenium_url, out="qalab/drivers")
             logger.info("Installation : {}, copying configuration file from example".format(args.mode))
             shutil.copy2(config_src , config_dst)
-
-            # TODO: difference hub and node install
-            if args.mode == "hub":
-                pass
-            if args.mode == "node":
-                logger.info("Node, downloading drivers")
-                # TODO: git clone drivers
-
+            logger.info("Installation : drivers ready at path, modules/qadrivers")
             logger.info("Installacion : COMPLETED")
         elif args.start:
             cmd_drivers = []
-            if args.platform  is not None and args.platform not in platforms:
+            if args.platform is None or args.platform not in platforms:
                 logger.error("Can't start without select available platform: [win32,win64,lin32,lin64]")
                 return
             elif args.platform == "win32":
-                cmd_drivers.extend(["-Dwebdriver.chrome.driver=qalab/drivers/chromedriver_32.exe",
-                             "-Dwebdriver.gecko.driver=qalab/drivers/geckodriver_64.exe",
-                             "-Dwebdriver.ie.driver=qalab/drivers/IEDriverServer_32.exe",
-                             "-Dwebdriver.edge.driver==qalab/drivers/EdgeDriver_64.exe",
-                             "-Dphantomjs.binary.path=qalab/drivers/phantomjs.exe"])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe")])
             elif args.platform == "win64":
-                cmd_drivers.extend(["-Dwebdriver.chrome.driver=qalab/drivers/chromedriver_32.exe",
-                             "-Dwebdriver.gecko.driver=qalab/drivers/geckodriver_64.exe",
-                             "-Dwebdriver.ie.driver=qalab/drivers/IEDriverServer_64.exe",
-                             "-Dwebdriver.edge.driver==qalab/drivers/EdgeDriver_64.exe",
-                             "-Dphantomjs.binary.path=qalab/drivers/phantomjs.exe"])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe")])
             elif args.platform == "lin32":
-                cmd_drivers.extend(["-Dwebdriver.chrome.driver=qalab/drivers/chromedriver_64",
-                             "-Dwebdriver.gecko.driver=qalab/drivers/geckodriver_64",                             
-                             "-Dphantomjs.binary.path=qalab/drivers/phantomjs"])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32")])
             elif args.platform == "lin64":
-                cmd_drivers.extend(["-Dwebdriver.chrome.driver=qalab/drivers/chromedriver_64",
-                             "-Dwebdriver.gecko.driver=qalab/drivers/geckodriver_64",
-                             "-Dphantomjs.binary.path=qalab/drivers/phantomjs"])
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64")])
             # TODO: adapt this array to use on win/lin 32/64            
             cmd_args = ["java"]
             if args.mode == "node":
                 cmd_args.extend(cmd_drivers)
             cmd_args.extend(["-jar", "qalab/drivers/{}".format(selenium_jar),
                         "-role", args.mode, "-{}Config".format(args.mode), config_dst,
-                        "-log","logs/selenium.{}.log".format(args.mode)]
-)
+                        "-log","logs/selenium.{}.log".format(args.mode)])
+            logger.info("Executing command : {}".format(cmd_args))
             subprocess.call(cmd_args)
             pass
         else:
             logger.error("ACTION not selected: --install , --start")
 
+def drivers_abspaths_filter(drivers_abspaths=[], contains=""):
+    for driver_abspath in drivers_abspaths:
+        if contains in driver_abspath:
+            return driver_abspath
+
+def get_driver_abspath(driver_var, driver_path, driver_name):
+    return "{}{}{}".format(driver_var, driver_path, driver_name)
 
 def set_log_level_from_verbose(console_handler, args):
     if not args.verbose:
