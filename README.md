@@ -67,7 +67,10 @@ __All submodules statuses__
 
 ### qadrivers  **[API documentation](http://qalab.tk/qadrivers/)**
 
-| Branch  | Linux 32 | Linux 64 | Windows 32 | Windows 64 |
-| ------------- | ------------- |  ------------- |
-| master  | ?  | ?  | ?  | ?  |
-| devel  | ?  | ?  | ?  | ?  |
+| Drivers  | Linux 32 | Linux 64 |  Windows 32 | Windows 64 |
+| ------------- | ------------- |  ------------- |  ------------- |  ------------- |
+| Chrome | OK |  OK |  OK |  _doesn't exist_ |
+| Firefox | - |  - |  - |  - |
+| PhantomJs | - |  - |  - |  - |
+| Internet Explorer | - |  - |  - |  - |
+| Edge | - |  - |  - |  - |

@@ -61,6 +61,14 @@ def handle_command_selenium(args, logger):
             selenium_file = wget.download(selenium_url, out="qalab/drivers")
             logger.info("Installation : {}, copying configuration file from example".format(args.mode))
             shutil.copy2(config_src , config_dst)
+
+            # TODO: difference hub and node install
+            if args.mode == "hub":
+                pass
+            if args.mode == "node":
+                logger.info("Node, downloading drivers")
+                # TODO: git clone drivers
+
             logger.info("Installacion : COMPLETED")
         elif args.start:
             cmd_drivers = []
