@@ -80,7 +80,10 @@ def handle_command_selenium(args, logger):
             logger.info("Installation : drivers ready at path, modules/qadrivers")
             logger.info("Installacion : COMPLETED")
         elif args.start:
+            cmd_args = ["java"]
             cmd_drivers = []
+            cmd_default_args = ["-jar", "qalab/drivers/{}".format(selenium_jar),"-role", args.mode, "-{}Config".format(args.mode), config_dst,"-log","logs/selenium.{}.log".format(args.mode)]            
+
             if args.platform is None or args.platform not in platforms:
                 logger.error("Can't start without select available platform: [win32,win64,lin32,lin64]")
                 return
@@ -91,14 +94,11 @@ def handle_command_selenium(args, logger):
             elif args.platform == "lin32":
                 cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32")])
             elif args.platform == "lin64":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64")])
-            # TODO: adapt this array to use on win/lin 32/64            
-            cmd_args = ["java"]
+                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64")])            
+
             if args.mode == "node":
                 cmd_args.extend(cmd_drivers)
-            cmd_args.extend(["-jar", "qalab/drivers/{}".format(selenium_jar),
-                        "-role", args.mode, "-{}Config".format(args.mode), config_dst,
-                        "-log","logs/selenium.{}.log".format(args.mode)])
+            cmd_args.extend(cmd_default_args)
             logger.info("Executing command : {}".format(cmd_args))
             subprocess.call(cmd_args)
             pass

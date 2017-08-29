@@ -29,6 +29,8 @@ positional arguments:
   -m MODE, --mode MODE  Select mode, values are: [hub, node]
   -i, --install         Download selenium jar
   -s, --start           Start Selenium jar
+  -p PLATFORM, --platform PLATFORM
+                          Select mode, values are: [lin32,lin64,win32,win64]
 
 optional arguments:
   -h, --help     show this help message and exit
@@ -36,6 +38,19 @@ optional arguments:
 
 ----- help us on , https://github.com/netzulo/qalab -------
 ```
+
+## How to creat HUB + Node ?
+
+### Hub
+
++ 1. Create configuration : `python qalab/qalab.py selenium --mode hub --install`
++ 2. Start Hub : `python qalab/qalab.py selenium --mode hub --start`
+
+### Node
+
++ 1. Create configuration : `python qalab/qalab.py selenium --mode node --install`
++ 2. Start Node : `python qalab/qalab.py selenium --mode node --start --platform win64`
+
 
 ## SubModules
 
