@@ -53,9 +53,10 @@ def handle_command_selenium(args, logger):
     platforms = ["win32", "win64","lin32","lin64"]
     drivers_path = "modules/qadrivers/"
     drivers_vars = ["-Dwebdriver.chrome.driver=","-Dwebdriver.gecko.driver=","-Dphantomjs.binary.path=", "-Dwebdriver.ie.driver=", "-Dwebdriver.edge.driver="]
-    drivers_names = ["chromedriver_32.exe","chromedriver_32","chromedriver_64",
+    drivers_names = ["chromedriver_32.exe", "chromedriver_64.exe","chromedriver_32","chromedriver_64",
                      "firefoxdriver_32.exe", "firefoxdriver_64.exe","firefoxdriver_32","firefoxdriver_64",
-                     "iedriver_32.exe","iedriver_64.exe","edgedriver_64.exe"]
+                     "iexplorerdriver_32.exe","iexplorerdriver_64.exe",
+                     "edgedriver_32.exe","edgedriver_64.exe"]
     drivers_abspaths = []
                 
     for driver_name in drivers_names:
@@ -92,11 +93,11 @@ def handle_command_selenium(args, logger):
             elif args.platform == "win32":
                 cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
                                     drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_32.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="iedriver_32.exe")])
+                                    drivers_abspaths_filter(drivers_abspaths,contains="iexplorerdriver_32.exe")])
             elif args.platform == "win64":
                 cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
                                     drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_64.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="iedriver_64.exe"),
+                                    drivers_abspaths_filter(drivers_abspaths,contains="iexplorerdriver_64.exe"),
                                     drivers_abspaths_filter(drivers_abspaths,contains="edgedriver_64.exe")])
             elif args.platform == "lin32":
                 cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32"),
