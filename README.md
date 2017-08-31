@@ -86,6 +86,6 @@ __All submodules statuses__
 | ------------- | ------------- |  ------------- |  ------------- |  ------------- |
 | Chrome |  OK |  OK |  OK |  OK |
 | Firefox |  OK |  OK |  OK |  OK |
-| PhantomJs |  - |  - |  - |  - |
+| PhantomJs |  OK |  OK |  OK |  OK |
 | Internet Explorer |  _doesn't exist_ |  _doesn't exist_ |  OK |  OK |
 | Edge |  _doesn't exist_ |  _doesn't exist_ |  OK |  OK |
