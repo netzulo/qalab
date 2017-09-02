@@ -78,8 +78,12 @@ def handle_command_selenium(args, logger):
         return
     else:
         if args.install:
-            logger.info("Downloading selenium from : {}".format(selenium_url))
-            selenium_file = wget.download(selenium_url, out="qalab/drivers")
+            jar_path = "{}/{}".format("qalab/drivers",selenium_jar)
+            if os.path.exists(jar_path):
+                logger.info("Selenium JAR ready at: {}".format(jar_path))
+            else:
+                logger.info("Downloading selenium from : {}".format(selenium_url))
+                selenium_file = wget.download(selenium_url, out="qalab/drivers")
             logger.info("Installation : {}, copying configuration file from example".format(args.mode))
             shutil.copy2(config_src , config_dst)
             logger.info("Installation : drivers ready at path, modules/qadrivers")
@@ -93,24 +97,24 @@ def handle_command_selenium(args, logger):
                 logger.error("Can't start without select available platform: [win32,win64,lin32,lin64]")
                 return
             elif args.platform == "win32":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_32.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="phantomjsdriver_32.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="iexplorerdriver_32.exe")])
+                cmd_drivers.extend([name_filter(drivers_abspaths,"chromedriver_32.exe"),
+                                    name_filter(drivers_abspaths,"firefoxdriver_32.exe"),
+                                    name_filter(drivers_abspaths,"phantomjsdriver_32.exe"),
+                                    name_filter(drivers_abspaths,"iexplorerdriver_32.exe")])
             elif args.platform == "win64":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_64.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="phantomjsdriver_64.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="iexplorerdriver_64.exe"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="edgedriver_64.exe")])
+                cmd_drivers.extend([name_filter(drivers_abspaths,"chromedriver_32.exe"),
+                                    name_filter(drivers_abspaths,"firefoxdriver_64.exe"),
+                                    name_filter(drivers_abspaths,"phantomjsdriver_64.exe"),
+                                    name_filter(drivers_abspaths,"iexplorerdriver_64.exe"),
+                                    name_filter(drivers_abspaths,"edgedriver_64.exe")])
             elif args.platform == "lin32":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_32"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_32"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="phantomjsdriver_32")])
+                cmd_drivers.extend([name_filter(drivers_abspaths,"chromedriver_32"),
+                                    name_filter(drivers_abspaths,"firefoxdriver_32"),
+                                    name_filter(drivers_abspaths,"phantomjsdriver_32")])
             elif args.platform == "lin64":
-                cmd_drivers.extend([drivers_abspaths_filter(drivers_abspaths,contains="chromedriver_64"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="firefoxdriver_64"),
-                                    drivers_abspaths_filter(drivers_abspaths,contains="phantomjsdriver_64")])
+                cmd_drivers.extend([name_filter(drivers_abspaths,"chromedriver_64"),
+                                    name_filter(drivers_abspaths,"firefoxdriver_64"),
+                                    name_filter(drivers_abspaths,"phantomjsdriver_64")])
 
             if args.mode == "node":
                 cmd_args.extend(cmd_drivers)
@@ -121,10 +125,10 @@ def handle_command_selenium(args, logger):
         else:
             logger.error("ACTION not selected: --install , --start")
 
-def drivers_abspaths_filter(drivers_abspaths=[], contains=""):
-    for driver_abspath in drivers_abspaths:
-        if contains in driver_abspath:
-            return driver_abspath
+def name_filter(names=[], endswith=""):
+    for name in names:
+        if name.endswith(endswith):
+            return name
 
 def get_driver_abspath(driver_var, driver_path, driver_name):
     return "{}{}{}".format(driver_var, driver_path, driver_name)
