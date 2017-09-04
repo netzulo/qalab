@@ -1,30 +1,33 @@
 branches:
   only:
-    - master
-    - devel
+  - master
+  - devel
 language: python
 python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+- "2.7"
+- "3.3"
+- "3.4"
+- "3.5"
+- "3.6"
 
 before_install:
-  - git submodule foreach git checkout master 
-  - pip freeze
-  - python setup.py build
-  - python setup.py install
+- git submodule foreach git checkout master 
+- pip freeze
+- python setup.py build
+- python setup.py install
 
 install:
-  - python qalab/qalab.py selenium -m hub -i
-  - python qalab/qalab.py selenium -m node -i
+- python qalab/qalab.py selenium -m hub -i
+- python qalab/qalab.py selenium -m node -i
 
 before_script:
-  - python qalab/qalab.py selenium -m hub -s -p lin64 &
-  - python qalab/qalab.py selenium -m node -s -p lin64 &
+- python qalab/qalab.py selenium -m hub -s -p lin64 &
+- python qalab/qalab.py selenium -m node -s -p lin64 &
 
 script:
-  - sleep 10
-  - nc -z -v -w5 localhost 11000
-  - nc -z -v -w5 localhost 11001
+- sleep 10
+- nc -z -v -w5 localhost 11000
+- nc -z -v -w5 localhost 11001
+
+after_script:
+- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82
