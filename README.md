@@ -13,6 +13,12 @@
 + 3. Clone submodules : `git submodule update --init --recursive`
 + 4. Attach branches HEAD: `git submodule foreach git checkout master`
 
+## PIP install
+
+```
+pip install qalaboratory
+```
+
 ## Command Usage
 
 ```
