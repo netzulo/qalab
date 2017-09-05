@@ -7,7 +7,7 @@
 
 [![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)
 [![Downloads on Pypi](https://img.shields.io/pypi/dd/qacode.svg)](https://img.shields.io/pypi/dd/qacode.svg)
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)]()
+[![GitHub release](https://img.shields.io/github/release/netzulo/qacode.svg)]()
 
 ## Code Metrics
 
