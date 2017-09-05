@@ -5,9 +5,13 @@
 | master  | [![Build Status](https://travis-ci.org/netzulo/qalab.svg?branch=master)](https://travis-ci.org/netzulo/qalab)  | [![Build status](https://ci.appveyor.com/api/projects/status/f4orjhi6vjgsxxq9/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qalab-v060g/branch/master)  |
 | devel  | [![Build Status](https://travis-ci.org/netzulo/qalab.svg?branch=devel)](https://travis-ci.org/netzulo/qalab)  | [![Build status](https://ci.appveyor.com/api/projects/status/f4orjhi6vjgsxxq9/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qalab-v060g/branch/devel)  |
 
+[![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)
+[![Downloads on Pypi](https://img.shields.io/pypi/dd/qacode.svg)](https://img.shields.io/pypi/dd/qacode.svg)
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)]()
+
 ## Code Metrics
 
-![Quality Gate][https://qalab.tk/api/badges/gate?key=qacode](https://qalab.tk/api/badges/gate?key=qacode)
+![Quality Gate][https://qalab.tk/api/badges/gate?key=qacode]()
 
 ## _How to install ?_
 
