@@ -7,7 +7,7 @@
 
 ## Code Metrics
 
-[![Quality Gate](https://qalab.tk/api/badges/gate?key=qacode)](https://qalab.tk/api/badges/gate?key=qacode)
+![Quality Gate][https://qalab.tk/api/badges/gate?key=qacode](https://qalab.tk/api/badges/gate?key=qacode)
 
 ## _How to install ?_
 
