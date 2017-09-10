@@ -36,7 +36,7 @@
     <Content Include="qalab\drivers\chromedriver_32" />
     <Content Include="qalab\drivers\chromedriver_32.exe" />
     <Content Include="qalab\drivers\chromedriver_64" />
-    <Content Include="README.md" />
+    <Content Include="README.rst" />
     <Content Include="sonar-project.properties" />
   </ItemGroup>
   <ItemGroup>

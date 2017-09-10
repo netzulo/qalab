@@ -2,43 +2,40 @@ branches:
   only:
   - master
   - devel
-
-env:
-  global:
-  - secure: e4j7f4oVrkMJxgxqNqHFDKyatA3f6jbMcCE1ZiUpNiase9NsnlUWunzMF5XVZWQKaN+c+XE1TRKne/nM3Xageovx4KcmVMD6AmUFWkXfQLMg4VkpQ8UdmLRpoZniOPpjqC8w7sL6PRwIwuwbu412D5eQOWDyorn+xo1i5vpb28+S9FiDLICx6oRjtAY2YK5Ab1+rHC9EjD2+agluSntqhKlynxTEmNWn3VIuQgt08TbGyTsWSA/yb9g4xLTQ0lcp5zF1l7MWgCCvugmxl+kneUvExnxsrbpUgLNzCmxI7uad+M7s5SiBcmW43LC7Fo3gSxu1eHTTR4F+2RML/hE8AodAqVav/pfumA/q97Be5uvZxluV9ofRq1Gx1yongKb78tDmKnMtR56PUPx527dH59+1/gKFFtiAgfjDJ/qIzrDkGVPm0WnsLGrnOEnXvE0pxe2rO9I+BCdheGQ4xEWCImkyIK5c+ET+plCZXavdNGIvyFpAwPRg5nhZurf2kXcXiMqa5eLZpo+QFhaDOya85Z9lKI0d6Eie01ETM0WOAD5QhTKW4JrKxI8/PB2Lhcsv/5+wX1zu5wt1X8lgz5DZYbseHykxk72/oDdgizjKUkIRIeiE4z+wm6ujMQoi3Hqd+85d9gcealO/mOgLd45HrIEXCGaULsh9pxvuWtFMQDes
-
 addons:
-  sonarqube:
+  sonarcloud:
+    organization: netzulo-github
     branches:
     - master
     - devel
-
+    token:
+      secure: 
+  sonar:
+    token:
+      secure: vIva4kmFlPnC1SiNpNbJ+OapNSNM5Fc+qLfouZzeBzgQnUHlVCc8HWSQLwZfSqdRPfmcoyo8n04T+lhtpBO+gPuIqfxuFtrioqAkzOPXgl/rwkFkt5Dbl78MA/vsDJNMEG3nQrzDDXrv1FL9RKME5bdfhiJJTRkpZEelfkOEnkYhweq6oQFg7XaSLuH6G/AcTiSj5CHZxVj0uDuuS/OeHDCmKTBr738Ax9sXiutB4q9n1uRPAZFRK8jQm368yKazYlVrX5yFUyTIC5Jl0Ezrp6n7Xrq2by0QXeFtbUQspC+4XPHN+smL0jda19rxkuLjNCr8f42Z2XO1Cq7Uq/CWlIMwd2zMgf17u+lu3hByTPfSxNmdMBb0xF1f5G09nm8cIO7XgZUAC9wJL3i0jnAqaiJKlNPQOzKz4IXWf4kf0nN3f/HFRr+ZkC8Ypx/N4Ea59MapY7E9rOpZ4Sy20fa4Npn9pFUVxmLYVmhUXXAdr6Ch4tyCBjbNy6qEa2dQuWMceDmlAQtU6Kcl56Y7IVeV4Hjy4iQPIt9QyTE74wVl/Syn3hJQ+ek12h6GCagY6MTBz8sOVAmk1g9+pXY+DeKIbg8yLZXysUP/Ouo7i1jB8zCHrMdn8+kf0m6m9Pv9Kf6Nbmbe+BT02wVUpg0FdZu0SIZgZxWolSDy4Hm+iw8YmrY=
+    github_token:
+      secure: mN7wX2UevUAVZwsQHMFN4UQgcEGiZXsGebbKo3f6cPpxdlGa4R2IiJx8bOhzauw8Dy2wNcIRFc6czVNf7Jpm0fn7n5eRJPeMCfTqXSNWcV5Q5aWdI3hrpogQESf65tZO5qC7sQPuFrH7yYg2fD6W5lCk3xKoZTPqOYF+jW+TYgWh2WpQZSh0VAUf5oXpdxQoFs0vRxgqN5ErTJ+Eye2ZUf1WlmcaoyGILzueZq8NjZ7dUYMlNaVYXWrLVk0dzqd3SUG5IaXOAwehywumVuc7+nH7VELRu4cTQdhLGZ8TU7vd7L8e7+UsRGxUjcy/QiXlTExTd6pzSJwvtZB7GRsWN+8qP1RH48g6rv9uid2WgiYRU88qRKFciSNkOW0ItMrB1JUyWrwOR/rCkU42alFkDe7hdaPCmVz85Y78ZYD3jsy4J4jxGjdaZHIAJUtEhC3wHctujz8lurK4CQWOcpOzcgN9ebxpBkl6I4dap1XCFrOLdnWT3i+Dl+gHU4Z89RcdEvhTpQJzgf2yGoPdHR5djRnQ2HMcJjY155qiXblEkDY5NxG4Ov5VEwEu2Hw5ctwJXYhx0vbDKQgWkCqtRyoQdtGCYR2H4lyzLygfYUo+zYitHoGAgPzI0sBJJtIsIVFwcLaAnUVxKlbDsJDixxNrBBS79DUtBOTH4rXxKYkVrFk=
 language: python
 python:
-- "2.7"
-- "3.3"
-- "3.4"
-- "3.5"
-- "3.6"
-
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
 before_install:
-- git submodule foreach git checkout master 
+- git submodule foreach git checkout master
 - pip freeze
 - python setup.py build
 - python setup.py install
-
 install:
 - python qalab/qalab.py selenium -m hub -i
 - python qalab/qalab.py selenium -m node -i
-
 before_script:
 - python qalab/qalab.py selenium -m hub -s -p lin64 &
 - python qalab/qalab.py selenium -m node -s -p lin64 &
-
 script:
 - sleep 10
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
-
 after_script:
-- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82
+- sonar-scanner -X
