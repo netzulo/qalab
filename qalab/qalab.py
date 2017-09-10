@@ -83,7 +83,7 @@ def handle_command_selenium(args, logger):
                 logger.info("Selenium JAR ready at: {}".format(jar_path))
             else:
                 logger.info("Downloading selenium from : {}".format(selenium_url))
-                selenium_file = wget.download(selenium_url, out="qalab/drivers")
+                wget.download(selenium_url, out="qalab/drivers")
             logger.info("Installation : {}, copying configuration file from example".format(args.mode))
             shutil.copy2(config_src , config_dst)
             logger.info("Installation : drivers ready at path, modules/qadrivers")
@@ -120,8 +120,7 @@ def handle_command_selenium(args, logger):
                 cmd_args.extend(cmd_drivers)
             cmd_args.extend(cmd_default_args)
             logger.info("Executing command : {}".format(cmd_args))
-            subprocess.call(cmd_args)
-            pass
+            return subprocess.call(cmd_args)            
         else:
             logger.error("ACTION not selected: --install , --start")
 
