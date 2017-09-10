@@ -4,7 +4,7 @@ branches:
   - devel
 addons:
   sonarcloud:
-    organization: github-netzulo
+    organization: netzulo-github
     branches:
     - master
     - devel
