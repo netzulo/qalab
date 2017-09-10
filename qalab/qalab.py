@@ -121,7 +121,6 @@ def handle_command_selenium(args, logger):
             cmd_args.extend(cmd_default_args)
             logger.info("Executing command : {}".format(cmd_args))
             subprocess.call(cmd_args)
-            pass
         else:
             logger.error("ACTION not selected: --install , --start")
 
