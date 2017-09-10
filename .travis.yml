@@ -5,13 +5,13 @@ branches:
 
 env:
   global:
-  - secure: e4j7f4oVrkMJxgxqNqHFDKyatA3f6jbMcCE1ZiUpNiase9NsnlUWunzMF5XVZWQKaN+c+XE1TRKne/nM3Xageovx4KcmVMD6AmUFWkXfQLMg4VkpQ8UdmLRpoZniOPpjqC8w7sL6PRwIwuwbu412D5eQOWDyorn+xo1i5vpb28+S9FiDLICx6oRjtAY2YK5Ab1+rHC9EjD2+agluSntqhKlynxTEmNWn3VIuQgt08TbGyTsWSA/yb9g4xLTQ0lcp5zF1l7MWgCCvugmxl+kneUvExnxsrbpUgLNzCmxI7uad+M7s5SiBcmW43LC7Fo3gSxu1eHTTR4F+2RML/hE8AodAqVav/pfumA/q97Be5uvZxluV9ofRq1Gx1yongKb78tDmKnMtR56PUPx527dH59+1/gKFFtiAgfjDJ/qIzrDkGVPm0WnsLGrnOEnXvE0pxe2rO9I+BCdheGQ4xEWCImkyIK5c+ET+plCZXavdNGIvyFpAwPRg5nhZurf2kXcXiMqa5eLZpo+QFhaDOya85Z9lKI0d6Eie01ETM0WOAD5QhTKW4JrKxI8/PB2Lhcsv/5+wX1zu5wt1X8lgz5DZYbseHykxk72/oDdgizjKUkIRIeiE4z+wm6ujMQoi3Hqd+85d9gcealO/mOgLd45HrIEXCGaULsh9pxvuWtFMQDes
+  - secure:
 
 addons:
-  sonarqube:
-    branches:
-    - master
-    - devel
+  sonarcloud:
+    organization: "github-netzulo"
+    token:
+      secure: 
 
 language: python
 python:
