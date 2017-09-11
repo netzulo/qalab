@@ -2,6 +2,9 @@ branches:
   only:
   - master
   - devel
+env:
+  global:
+    secure: eNfPUCH9tIgec55pTZrhoLWFqJHWGPVykPw19dnlxVYVzNTM91DOa1xrBkaUBrSZPW6+j+/AN4hb5wUDY+PBMhjnt2bvGBVKbJ+ghkq7e6oYuHzRLPSMT7+iUcjjQuK0HI+EpFZDfs5rUYTSubyoKu/sENYGarbiLHGDswpbDezMWqwC8pu4Qn/NJG6vYBhr/sFC/KkEt81mIzeF3BF4K0p0+n6YW8o+BfdYJpv+3fqpUbR4xhVMI91oVbUVNOOYVrepxXmvbk07WjHANHmLRtw43HRIisrFtwLLWZvT86tEeHCG3Eyucv8f1+2d9DO6h57Ulsd29L0AekaNO1Vatb0GeJ1qicAPkLEQwcniUPq7Dz2F5XhPCri8Caw8lb4zga4Vl3Ij/aY8yG5DFAih4e2B3ddfr5DGs5XSGaiocuyH9OwRv1AImvy/oE+oossJHeg25XIW61dt1H4GG0IQA3Kw12FmydjdZhQbcG7cqHack8F3nmboKqut5qvePnp+B7PfTC4I/i6Gb9GxOtvgJiq2zVoFxIvfP5xrppe6Lb7b0fWze9Se+jc5hiZI8ynAuN8nmfBlh/a63nhpIBfUBCOlqpw12dk2vvbJEXHOEuPUf3hdLz+1Otx9/GW/DQ7pjzgxwJ466jsfOOODgLAggIAEFfeBZ9X0ta2rL9nCc2g=
 addons:
   sonarqube:
     branches:
@@ -9,7 +12,6 @@ addons:
     - devel
     token:
       secure: VtPxaodHoyiwC1P1RTlfb86qaEEg96/1CTvpDAR7dnT/EfzCR6OqSKbi+xRIYLyl+KLxTkmhvbwt83YseWXh5OCrq89USRA7tJBwubBj6TWf7B24xgsijusUtc/Xz/BbZFqM8wz8PnenpifHu4MNHwT6zXm5uYc3r2FK9BPJgjicNIHgj83m2r6TBJfK1n8mADOWBlxl/Y8m3kopPUzmb6GeM4cgykYp46KhgK/zviCUrVR1mTn2ilkqX3/KgG1FGUUSRzXgTaToqvzVSKE+qMq7Ai9N3arv8JcnMSpR9rl0ZCAC3shc2hCiB5WygpJmxya5v9YjDEb7RQQavUCEs/4LnDZbckufa4ImPHDyRACUBmg8Bsgu0XQKxEsl8RgDibSPz1Sd6HFAgr80OPUwBa562DJLv3qoYSB3/FmKaww/asxJC8sUhYZi2Xx3WrguZgn8jgQJfX51EnFNQrTEQdvfI5RE1s1vIfZXEx7yqCrcQj5nhM0CSLXG8MA7R1TpZCC/oGzl0dVhIr+O2kjfFtmjO9j3HxiTlMXSopMtMCRLQZoiu3ipCnIsyGROgeBbBg0Xq67qECD9k8hqrwlgnbjxlAgbGi3yMTb1nkh6AhCs59NwcUeGQoW/7k6UgA4p9rSHwEupbzmXKvn7brjca5Ih5wmlRne10qnFS+dLvMg=
-
 language: python
 python:
 - '2.7'
@@ -33,4 +35,5 @@ script:
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
 after_script:
-- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 
+- git checkout ${TRAVIS_BRANCH}
+- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 -Dsonar.github.repository=netzulo/qalab -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST} -Dsonar.github.oauth=${GITHUB_TOKEN}
