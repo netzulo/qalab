@@ -4,11 +4,10 @@ branches:
   - devel
 addons:
   sonarcloud:
-    organization: "netzulo-github"
+    organization: netzulo-github
     branches:
     - master
     - devel
-
 language: python
 python:
 - '2.7'
@@ -33,3 +32,6 @@ script:
 - nc -z -v -w5 localhost 11001
 after_script:
 - sonar-scanner -X Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url==http://qalab.tk:82
+env:
+  global:
+    secure: vuXeHRSH+2v7grokuRTelMdjuPiIpPjhOP0ebteawxeHwVFon+W2W/av+kDapO+qS5gJsiKogRvxTPUpncQUQDLW/usC7F02eJr5ERfQBkNpZ11ZRObtWZ83yMQoviqkIvHUlIwr5gGEGt96U5szDrVKexdVaBXzCHFbnbbOtxxDIZKaYCANLr2ihQ0vzfggHas6PHr8WzuV/ha7JY+Gto3w2BsZ9tPQIqkI47aTF2HzUvDrAjzbd2fTVTMDsPnPdIOI80P0RGNXYZgYO5YXVFjKOnuhBMOGjZuGYYqneJsVJfAtI5ud08lsTlN6zbAfKCjLEI4WDN+dBGF4SgKZ+7//N7nBbAipoyQiNzgE86rxmz6LpEfhka0yJ4PahLn9bw5Vu+vA0H2i35sDPPe2CDFrtLdD24TwbSYsUzX9wtMXBMBx+bVRHdXbZdYMYnejdlxOsdQE+JXXb/7oJtqMPtHirHILlAJgnivwHraUkHT8DdHjH8XGwIuMv0gopKtgm0XkfFqCDnaBehKOvWh6bczs7Hkg/4sRixIIX1aoD1ZoUeVZ6WfFLHrLPlYpjy2MfPg7J6x3fMTk3bp5RrPVyXrn7zbv8ekY2kgOTChJjPDfrJ65ACA/16IO3bT2yaFTuJ+/0BRBQhfdyc0Xx/olhpzPSVuxpyGYfpeqTqTRFl8=
