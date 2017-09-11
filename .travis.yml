@@ -35,5 +35,4 @@ script:
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
 after_script:
-- git checkout ${TRAVIS_BRANCH}
 - sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 -Dsonar.github.repository=netzulo/qalab -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST} -Dsonar.github.oauth=${GITHUB_TOKEN} -Dsonar.analysis.mode=preview
