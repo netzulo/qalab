@@ -3,7 +3,7 @@ branches:
   - master
   - devel
 addons:
-  sonarcloud:
+  sonarqube:
     organization: netzulo-github
     branches:
     - master
