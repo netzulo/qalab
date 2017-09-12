@@ -1,6 +1,9 @@
 env:
   global:
-    secure: eNfPUCH9tIgec55pTZrhoLWFqJHWGPVykPw19dnlxVYVzNTM91DOa1xrBkaUBrSZPW6+j+/AN4hb5wUDY+PBMhjnt2bvGBVKbJ+ghkq7e6oYuHzRLPSMT7+iUcjjQuK0HI+EpFZDfs5rUYTSubyoKu/sENYGarbiLHGDswpbDezMWqwC8pu4Qn/NJG6vYBhr/sFC/KkEt81mIzeF3BF4K0p0+n6YW8o+BfdYJpv+3fqpUbR4xhVMI91oVbUVNOOYVrepxXmvbk07WjHANHmLRtw43HRIisrFtwLLWZvT86tEeHCG3Eyucv8f1+2d9DO6h57Ulsd29L0AekaNO1Vatb0GeJ1qicAPkLEQwcniUPq7Dz2F5XhPCri8Caw8lb4zga4Vl3Ij/aY8yG5DFAih4e2B3ddfr5DGs5XSGaiocuyH9OwRv1AImvy/oE+oossJHeg25XIW61dt1H4GG0IQA3Kw12FmydjdZhQbcG7cqHack8F3nmboKqut5qvePnp+B7PfTC4I/i6Gb9GxOtvgJiq2zVoFxIvfP5xrppe6Lb7b0fWze9Se+jc5hiZI8ynAuN8nmfBlh/a63nhpIBfUBCOlqpw12dk2vvbJEXHOEuPUf3hdLz+1Otx9/GW/DQ7pjzgxwJ466jsfOOODgLAggIAEFfeBZ9X0ta2rL9nCc2g=
+# GITHUB TOKEN
+  - secure: eNfPUCH9tIgec55pTZrhoLWFqJHWGPVykPw19dnlxVYVzNTM91DOa1xrBkaUBrSZPW6+j+/AN4hb5wUDY+PBMhjnt2bvGBVKbJ+ghkq7e6oYuHzRLPSMT7+iUcjjQuK0HI+EpFZDfs5rUYTSubyoKu/sENYGarbiLHGDswpbDezMWqwC8pu4Qn/NJG6vYBhr/sFC/KkEt81mIzeF3BF4K0p0+n6YW8o+BfdYJpv+3fqpUbR4xhVMI91oVbUVNOOYVrepxXmvbk07WjHANHmLRtw43HRIisrFtwLLWZvT86tEeHCG3Eyucv8f1+2d9DO6h57Ulsd29L0AekaNO1Vatb0GeJ1qicAPkLEQwcniUPq7Dz2F5XhPCri8Caw8lb4zga4Vl3Ij/aY8yG5DFAih4e2B3ddfr5DGs5XSGaiocuyH9OwRv1AImvy/oE+oossJHeg25XIW61dt1H4GG0IQA3Kw12FmydjdZhQbcG7cqHack8F3nmboKqut5qvePnp+B7PfTC4I/i6Gb9GxOtvgJiq2zVoFxIvfP5xrppe6Lb7b0fWze9Se+jc5hiZI8ynAuN8nmfBlh/a63nhpIBfUBCOlqpw12dk2vvbJEXHOEuPUf3hdLz+1Otx9/GW/DQ7pjzgxwJ466jsfOOODgLAggIAEFfeBZ9X0ta2rL9nCc2g=
+# SONAR_GITHUB_TOKEN
+  - secure: Q3yIlvsQ2Ten33rNGcL5+5UglAWmri0ga6Z2FQKq4SXUMyKJhfQsP96TyTgDjWupgrtVag1q/cNecwyJHNQKW6p2HUg9FKeSk+v8qxXpgm58NGm4R1WJY6OaFaxX8vE6RXShzrT55jeEGCj+wPbpSotOsAArtodUqGKnqCQHS5AKaCsFkmthMped3lM1Rw+qR/ToQLrrrfoPN4V/c8g5j0x4II+6XSSLoNLlovN8MF8pJzQ2ZpHfaus7U147ErG5Xyjxt7RQXwyXCjOJbjZ5u8UOwLd5dGp37z081ZG/HpilDi/G1JEAz5vGo2cwVSxhCnJ9qCuqyzd2VNBlBpKEZwIlGp+CxBON2En9c3Vc3HzWTS6fofTOyJe04hZOND/k0r8eDWTSultIIkgmrdTr4iVkeoCw/GRvxbP33qFkUBexmhykhhcXGwDC0JUxU/XkFUdpaR5hIDfcbiduhBGNM/Z53rcktt0O/Ug8wXp+PmQ7MBrKYh4ZesytLa3CIfJkJr+hr9+L9YP7VooJDNbz4q78IucfYmqhuLS3f+JdfHbpYAcnt42ueYYZjibL3QoSprb61IWVFikt4Pt01uD1V//F5cysm8qVGzfg8L5KlZJcF/DUYqJnaazkasKztKR8pdMMcMSa3tAeOkH1jxGf9fUhXuHXD1D9KqokA4zqhYo=
 addons:
   sonarqube:
     branches:
@@ -31,4 +34,6 @@ script:
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
 after_script:
-- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 -Dsonar.github.repository=netzulo/qalab -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST} -Dsonar.github.oauth=${GITHUB_TOKEN} -Dsonar.analysis.mode=preview -Dsonar.branch=${TRAVIS_BRANCH}
+- alias sonar-scan-pr="sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 -Dsonar.github.repository=netzulo/qalab -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST} -Dsonar.github.oauth=${GITHUB_TOKEN} -Dsonar.analysis.mode=preview -Dsonar.branch=${TRAVIS_BRANCH}"
+- alias sonar-scan-branch="sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82"
+- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scan-branch; else sonar-scan-pr
