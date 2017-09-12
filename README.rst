@@ -21,11 +21,30 @@ Documentation
 - QAdrivers qadrivers_api_
 
 
-Code Metrics
-------------
+Code Metrics by sonarqube
+----------------------------
 
-_TODO: create table code metrics from sonarqube server for each github QA module_
-
+.. image:: http://qalab.tk:82/api/badges/gate?key=qalab
+  :alt: Quality Gate
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=lines
+  :alt: Lines
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=bugs
+  :alt: Bugs
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=vulnerabilities
+  :alt: Vulnerabilities
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=code_smells
+  :alt: Code Smells
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=sqale_debt_ratio
+  :alt: Debt ratio
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
+.. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=comment_lines_density
+  :alt: Comments
+  :target: http://qalab.tk:82/api/badges/gate?key=qalab
 How to install ?
 ----------------
 
