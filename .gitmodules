@@ -10,3 +10,6 @@
 [submodule "modules/qadrivers"]
         path = modules/qadrivers
         url = https://github.com/netzulo/qadrivers.git
+[submodule "modules/qatestlink"]
+	path = modules/qatestlink
+	url = https://github.com/netzulo/qatestlink
