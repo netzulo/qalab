@@ -53,7 +53,7 @@ How to install ?
 + 3. *Clone submodules* : ``git submodule update --init --recursive``
 + 4. *Attach branches HEAD* : ``git submodule foreach git checkout master``
 
-PIP install
+PIP install *Not working, just development mode cloning from github*
 ***********
 
 ``pip install qalaboratory``
