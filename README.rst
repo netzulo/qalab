@@ -93,7 +93,7 @@ Hub
 ****
 
 + 1. Create configuration : ``python qalab/qalab.py selenium --mode hub --install``
-+ 2. Start Hub : ``python qalab/qalab.py selenium --mode hub --start --platform lin64``
++ 2. Start Hub : ``python qalab/qalab.py selenium --mode hub --start``
 
 Node
 ****
