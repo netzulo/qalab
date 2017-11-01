@@ -1,21 +1,22 @@
 QA laboratory 
 =============
 
-+--------------+--------------------------+---------------------------+---------------------------+--------------------------+
-| Branch name  | QAlab                    | QAcode                    | QAdmin                    | QAdoc                    |
-+==============+==========================+===========================+===========================+==========================+
-| master       | |qalab_build_master_lin| | |qacode_build_master_lin| | |qadmin_build_master_lin| | |qadoc_build_master_lin| |
-|              | |qalab_build_master_win| | |qacode_build_master_win| | |qadmin_build_master_win| | |qadoc_build_master_win| |
-+--------------+--------------------------+---------------------------+---------------------------+--------------------------+
-| devel        | |qalab_build_devel_lin|  | |qacode_build_devel_lin|  | |qadmin_build_devel_lin|  | |qadoc_build_devel_lin|  |
-|              | |qalab_build_devel_win|  | |qacode_build_devel_win|  | |qadmin_build_devel_win|  | |qadoc_build_devel_win|  |
-+--------------+--------------------------+---------------------------+---------------------------+--------------------------+
++--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
+| Branch name  | QAlab                    | QAcode                    | QAdmin                    | QAdoc                    | QAtestlink               |
++==============+==========================+===========================+===========================+==========================+==========================+
+| master       | |qalab_build_master_lin| | |qacode_build_master_lin| | |qadmin_build_master_lin| | |qadoc_build_master_lin| | |qadoc_build_master_lin| |
+|              | |qalab_build_master_win| | |qacode_build_master_win| | |qadmin_build_master_win| | |qadoc_build_master_win| | |qadoc_build_master_win| |
++--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
+| devel        | |qalab_build_devel_lin|  | |qacode_build_devel_lin|  | |qadmin_build_devel_lin|  | |qadoc_build_devel_lin|  | |qadoc_build_devel_lin|  |
+|              | |qalab_build_devel_win|  | |qacode_build_devel_win|  | |qadmin_build_devel_win|  | |qadoc_build_devel_win|  | |qadoc_build_devel_win|  |
++--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
 
 Documentation
 -------------
 
 - QAlab qalab_api_
 - QAcode qacode_api_
+- QAtestlink qatestlink_api_
 - QAdoc qadoc_api_
 - QAdmin qadmin_api_ 
 - QAdrivers qadrivers_api_
@@ -53,7 +54,7 @@ How to install ?
 + 3. *Clone submodules* : ``git submodule update --init --recursive``
 + 4. *Attach branches HEAD* : ``git submodule foreach git checkout master``
 
-PIP install
+PIP install *Not working, just development mode cloning from github*
 ***********
 
 ``pip install qalaboratory``
@@ -93,7 +94,7 @@ Hub
 ****
 
 + 1. Create configuration : ``python qalab/qalab.py selenium --mode hub --install``
-+ 2. Start Hub : ``python qalab/qalab.py selenium --mode hub --start --platform lin64``
++ 2. Start Hub : ``python qalab/qalab.py selenium --mode hub --start``
 
 Node
 ****
@@ -137,8 +138,13 @@ QADrivers
 .. |qadmin_build_master_win| image:: https://ci.appveyor.com/api/projects/status/qrb3o3qdeg3qv9eq/branch/master?svg=true
 .. |qadmin_build_devel_lin| image:: https://travis-ci.org/netzulo/qadmin.svg?branch=devel
 .. |qadmin_build_devel_win| image:: https://ci.appveyor.com/api/projects/status/qrb3o3qdeg3qv9eq/branch/devel?svg=true
+.. |qatestlink_build_master_lin| image:: https://travis-ci.org/netzulo/qatestlink.svg?branch=master
+.. |qatestlink_build_master_win| image:: https://ci.appveyor.com/api/projects/status/kw4si7if8lw7m10n/branch/master?svg=true
+.. |qatestlink_build_devel_lin| image:: https://travis-ci.org/netzulo/qatestlink.svg?branch=devel
+.. |qatestlink_build_devel_win| image:: https://ci.appveyor.com/api/projects/status/kw4si7if8lw7m10n/branch/devel?svg=true
 .. _qalab_api: http://qalab.tk/qalab/
 .. _qacode_api: http://qalab.tk/qacode/
+.. _qatestlink_api: http://qalab.tk/qatestlink/
 .. _qadoc_api: http://qalab.tk/qadoc/
 .. _qadmin_api: http://qalab.tk/qadmin/
 .. _qadrivers_api: http://qalab.tk/qadrivers/
