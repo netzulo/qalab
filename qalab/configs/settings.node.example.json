@@ -3,12 +3,14 @@
     {
       "browserName": "firefox",
       "maxInstances": 5,
-      "seleniumProtocol": "WebDriver"
+      "seleniumProtocol": "WebDriver",
+      "platform": "WINDOWS"
     },
     {
       "browserName": "chrome",
       "maxInstances": 5,
-      "seleniumProtocol": "WebDriver"
+      "seleniumProtocol": "WebDriver",
+      "platform": "WINDOWS"
     },
     {
       "browserName": "internet explorer",
