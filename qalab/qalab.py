@@ -16,6 +16,55 @@ import wget
 def main(args=None):
     """TODO: doc method"""
     msg_unkown_command = "Unknown command : {}"
+    if args is None:
+        args = sys.argv[1:]    
+    ## Generate parser    
+    parser = parser_instance()
+    args = parser.parse_args()
+    ## Generate logger
+    logger = logger_instance(args)
+    # START SCRIPT
+    if args.server_driver is None:
+        logger.error("can't start without server_driver name, option: -sd")
+        return
+    if args.server_driver == 'selenium':
+        handle_command_selenium(args, logger)
+    if args.server_driver == 'selendroid':
+        logger.error("selendroid not working yet")
+        raise NotImplementedError("selendroid not working yet")
+    else:
+        logger.error(str(msg_unkown_command.format(args)))
+
+def parser_instance():
+    """TODO: doc method"""
+    parser = argparse.ArgumentParser(
+        description="Performs selenium drivers operations",
+        epilog="----- help us on , https://github.com/netzulo/qalab -------",
+        fromfile_prefix_chars='@',)
+    # Main args
+    parser.add_argument(
+        '-v', '--verbose',
+        action="count", help="verbose level... repeat up to three times.")
+    parser.add_argument(
+        '-sd', '--server_driver',
+        default=None, help="Select server driver, values are: [selenium,selendroid]")
+    # Optional args
+    parser.add_argument(
+        '-m', '--mode',
+        default=None, help="Select mode, values are: [hub, node]")
+    parser.add_argument(
+        '-i', '--install',
+        action="store_true", help="Download driver server jar")
+    parser.add_argument(
+        '-s', '--start',
+        action="store_true", help="Start driver server jar")
+    parser.add_argument(
+        '-p', '--platform',
+        default=None, help="Select mode, values are: [lin32,lin64,win32,win64]")
+    return parser
+
+def logger_instance(args):
+    """TODO: doc method"""
     msg_file_formatter = "{} [{}]({}:{}:{}): {}".format(
         "%(asctime)s",
         "%(levelname)s",
@@ -25,8 +74,6 @@ def main(args=None):
         "%(message)s"
     )
     msg_console_formatter = '[%(levelname)s](%(name)s): %(message)s'
-    if args is None:
-        args = sys.argv[1:]
     logger = logging.getLogger('qalab')
     logger.setLevel(logging.DEBUG)
     if not os.path.exists('../logs'):
@@ -40,39 +87,8 @@ def main(args=None):
     console_handler.setLevel(logging.CRITICAL)
     console_handler.setFormatter(logging.Formatter(msg_console_formatter))
     logger.addHandler(console_handler)
-    ## Generate parser
-    parser = argparse.ArgumentParser(
-        description="Performs selenium drivers operations",
-        epilog="----- help us on , https://github.com/netzulo/qalab -------",
-        fromfile_prefix_chars='@',)
-    ## Main args
-    parser.add_argument(
-        '-v', '--verbose',
-        action="count", help="verbose level... repeat up to three times.")
-    ## Args with subs
-    commands = parser.add_subparsers(
-        dest="selenium", help="Actions for selenium instance")
-    command_install = commands.add_parser(
-        "selenium", help="Actions for selenium HUB or NODE")
-    command_install.add_argument(
-        '-m', '--mode',
-        default=None, help="Select mode, values are: [hub, node]")
-    command_install.add_argument(
-        '-i', '--install',
-        action="store_true", help="Download selenium jar")
-    command_install.add_argument(
-        '-s', '--start',
-        action="store_true", help="Start Selenium jar")
-    command_install.add_argument(
-        '-p', '--platform',
-        default=None, help="Select mode, values are: [lin32,lin64,win32,win64]")
-    args = parser.parse_args()
     set_log_level_from_verbose(console_handler, args, logger)
-    # START SCRIPT
-    if args.selenium == 'selenium':
-        handle_command_selenium(args, logger)
-    else:
-        logger.error(str(msg_unkown_command.format(args)))
+    return logger
 
 def handle_command_selenium(args, logger):
     """Command Selenium"""
