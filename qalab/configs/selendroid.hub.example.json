@@ -1,0 +1,13 @@
+{
+  "host": "localhost",
+  "port": 12000,
+  "newSessionWaitTimeout": -1,
+  "servlets" : [],
+  "prioritizer": null,
+  "capabilityMatcher": "io.selendroid.grid.SelendroidCapabilityMatcher",
+  "throwOnCapabilityNotPresent": true,
+  "nodePolling": 5000,
+  "cleanUpCycle": 5000,
+  "browserTimeout": 0,
+  "jettyMaxThreads":-1
+}
