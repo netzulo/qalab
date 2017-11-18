@@ -24,14 +24,22 @@ WEBDRIVER_ENV_VARS = [
     "-Dwebdriver.edge.driver="
 ]
 DRIVERS_NAMES = [
-    "chromedriver_32.exe", "chromedriver_64.exe",
-    "chromedriver_32", "chromedriver_64",
-    "firefoxdriver_32.exe", "firefoxdriver_64.exe",
-    "firefoxdriver_32", "firefoxdriver_64",
-    "phantomjsdriver_32.exe", "phantomjsdriver_64.exe",
-    "phantomjsdriver_32", "phantomjsdriver_64",
-    "iexplorerdriver_32.exe", "iexplorerdriver_64.exe",
-    "edgedriver_32.exe", "edgedriver_64.exe"
+    "chromedriver_32.exe",
+    "chromedriver_64.exe",
+    "chromedriver_32",
+    "chromedriver_64",
+    "firefoxdriver_32.exe",
+    "firefoxdriver_64.exe",
+    "firefoxdriver_32",
+    "firefoxdriver_64",
+    "phantomjsdriver_32.exe",
+    "phantomjsdriver_64.exe",
+    "phantomjsdriver_32",
+    "phantomjsdriver_64",
+    "iexplorerdriver_32.exe",
+    "iexplorerdriver_64.exe",
+    "edgedriver_32.exe",
+    "edgedriver_64.exe"
 ]
 MSG_UNKOWN_COMMAND = "Unknown command : {}"
 # SETTINGS end
@@ -125,6 +133,14 @@ def handle_command_selendroid(args, logger):
         raise Exception('Select valid mode, values are: [hub, node]')
     config_src = "{}/selendroid.{}.example.json".format(PATH_CONFIG, args.mode)
     config_dst = "{}/selendroid.{}.json".format(PATH_CONFIG, args.mode)
+    # generate apks names with absolute paths
+    if args.install:
+        logger.error("ACTION not implemented: --install")
+    elif args.start:
+        logger.error("ACTION not implemented: --start")
+    else:
+        logger.error("ACTION not selected: --install , --start")
+
 
     logger.error("selendroid not working yet")
     raise NotImplementedError("selendroid not working yet")
