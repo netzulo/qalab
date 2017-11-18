@@ -86,7 +86,6 @@ def handle_command_selenium(args, logger):
         raise Exception('Select valid mode, values are: [hub, node]')
     config_src = "qalab/configs/settings.{}.example.json".format(args.mode)
     config_dst = "qalab/configs/settings.{}.json".format(args.mode)
-    platforms = ["win32", "win64", "lin32", "lin64"]
     drivers_path = "modules/qadrivers/"
     drivers_vars = [
         "-Dwebdriver.chrome.driver=",
@@ -132,59 +131,84 @@ def handle_command_selenium(args, logger):
         return
     else:
         if args.install:
-            msgs_install = [
-                "Installation : {}, copying configuration file from example",
-                "Selenium JAR ready at: {}",
-                "Downloading selenium from : {}",
-                "Installation : drivers ready at path, modules/qadrivers",
-                "Installation : COMPLETED"
-            ]
-            jar_path = "{}/{}".format("qalab/drivers", selenium_jar)
-            if os.path.exists(jar_path):
-                logger.info(msgs_install[0].format(jar_path))
-            else:
-                logger.info(msgs_install[1].format(selenium_url))
-                wget.download(selenium_url, out="qalab/drivers")
-            logger.info(msgs_install[2].format(args.mode))
-            shutil.copy2(config_src, config_dst)
-            logger.info(msgs_install[3])
-            logger.info(msgs_install[4])
+            handle_command_selenium_install(
+                args,
+                logger,
+                selenium_jar,
+                selenium_url,
+                config_src,
+                config_dst
+            )
         elif args.start:
-            msgs_start = [
-                "Can't start without select available platform: [win32,win64,lin32,lin64]"
-            ]
-            cmd_args = ["java"]
-            cmd_drivers = []
-            cmd_default_args = [
-                "-jar", "qalab/drivers/{}".format(selenium_jar),
-                "-role", args.mode,
-                "-{}Config".format(args.mode), config_dst,
-                "-log", "logs/selenium.{}.log".format(args.mode)
-            ]
-            if (
-                    args.mode == 'node' and
-                    (
-                        args.platform is None or
-                        args.platform not in platforms
-                    )
-                ):
-                logger.error(msgs_start[0])
-                return
-            elif args.platform == "win32":
-                cmd_drivers.extend(name_filter_win32(drivers_abspaths))
-            elif args.platform == "win64":
-                cmd_drivers.extend(name_filter_win64(drivers_abspaths))
-            elif args.platform == "lin32":
-                cmd_drivers.extend(name_filter_lin32(drivers_abspaths))
-            elif args.platform == "lin64":
-                cmd_drivers.extend(name_filter_lin64(drivers_abspaths))
-            if args.mode == "node":
-                cmd_args.extend(cmd_drivers)
-            cmd_args.extend(cmd_default_args)
-            logger.info("Executing command : {}".format(cmd_args))
-            return subprocess.call(cmd_args)
+            handle_command_selenium_start(
+                args,
+                logger,
+                selenium_jar,
+                config_dst,
+                drivers_abspaths
+            )
         else:
             logger.error("ACTION not selected: --install , --start")
+
+def handle_command_selenium_start(args, logger, selenium_jar,
+                                  config_dst, drivers_abspaths):
+    """TODO: doc method"""
+    platforms = ["win32", "win64", "lin32", "lin64"]
+    msgs_start = [
+        "Can't start without select available platform: [win32,win64,lin32,lin64]"
+    ]
+    cmd_args = ["java"]
+    cmd_drivers = []
+    cmd_default_args = [
+        "-jar", "qalab/drivers/{}".format(selenium_jar),
+        "-role", args.mode,
+        "-{}Config".format(args.mode), config_dst,
+        "-log", "logs/selenium.{}.log".format(args.mode)
+    ]
+    if (
+            args.mode == 'node' and
+            (
+                args.platform is None or
+                args.platform not in platforms
+            )
+        ):
+        logger.error(msgs_start[0])
+        return
+    elif args.platform == "win32":
+        cmd_drivers.extend(name_filter_win32(drivers_abspaths))
+    elif args.platform == "win64":
+        cmd_drivers.extend(name_filter_win64(drivers_abspaths))
+    elif args.platform == "lin32":
+        cmd_drivers.extend(name_filter_lin32(drivers_abspaths))
+    elif args.platform == "lin64":
+        cmd_drivers.extend(name_filter_lin64(drivers_abspaths))
+    if args.mode == "node":
+        cmd_args.extend(cmd_drivers)
+    cmd_args.extend(cmd_default_args)
+    logger.info("Executing command : {}".format(cmd_args))
+    return subprocess.call(cmd_args)
+
+def handle_command_selenium_install(args, logger, selenium_jar,
+                                    selenium_url, config_src, config_dst):
+    """TODO: doc method"""
+    msgs_install = [
+        "Installation : {}, copying configuration file from example",
+        "Selenium JAR ready at: {}",
+        "Downloading selenium from : {}",
+        "Installation : drivers ready at path, modules/qadrivers",
+        "Installation : COMPLETED"
+        ]
+    jar_path = "{}/{}".format("qalab/drivers", selenium_jar)
+    if os.path.exists(jar_path):
+        logger.info(msgs_install[0].format(jar_path))
+    else:
+        logger.info(msgs_install[1].format(selenium_url))
+        wget.download(selenium_url, out="qalab/drivers")
+    logger.info(msgs_install[2].format(args.mode))
+    shutil.copy2(config_src, config_dst)
+    logger.info(msgs_install[3])
+    logger.info(msgs_install[4])
+
 
 def name_filter_lin64(drivers_abspaths):
     """Return array ofparsed absolute paths name for platform LINUX 64"""
