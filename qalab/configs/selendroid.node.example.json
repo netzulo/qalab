@@ -1,25 +1,18 @@
 {
-  "capabilities":
-      [
-        {
-          "browserName": "qa-tablet-nexus10",
-          "version": "6.0",
-          "maxInstances": 1,
-          "platform": "ANDROID",
-          "aut": ""
-        }
-      ],
-  "configuration":
-  {
-    "cleanUpCycle":2000,
-    "timeout":30000,
-    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "host": "192.168.0.50",
-    "port": 11002,
-    "maxSession": 1,
-    "register": true,
-    "registerCycle": 5000,
-    "hubPort": 11000,
-    "hubHost": "192.168.0.50"
+  "capabilities": [{
+      "browserName": "selendroid",
+      "maxInstances": 1,
+      "aut": "io.selendroid.testapp:0.17.0"
+  }, {
+      "browserName": "android",
+      "maxInstances": 1
+  }],
+  "configuration": {
+      "maxSession": 1,
+      "register": true,
+      "hubHost": "localhost",
+      "hubPort": 12001,
+      "remoteHost": "http://localhost:12000",
+      "proxy": "io.selendroid.grid.SelendroidSessionProxy"
   }
 }

@@ -60,9 +60,9 @@ def main(args=None):
         logger.error("can't start without server_driver name, option: -sd")
         return
     if args.server_driver == 'selenium':
-        handle_command_selenium(args, logger)
+        command_selenium(args, logger)
     elif args.server_driver == 'selendroid':
-        handle_command_selendroid(args, logger)
+        command_selendroid(args, logger)
     else:
         logger.error(str(MSG_UNKOWN_COMMAND.format(args)))
 
@@ -97,12 +97,8 @@ def parser_instance():
 def logger_instance(args):
     """TODO: doc method"""
     msg_file_formatter = "{} [{}]({}:{}:{}): {}".format(
-        "%(asctime)s",
-        "%(levelname)s",
-        "%(name)s",
-        "%(funcName)s",
-        "%(lineno)d",
-        "%(message)s"
+        "%(asctime)s", "%(levelname)s", "%(name)s",
+        "%(funcName)s", "%(lineno)d", "%(message)s"
     )
     msg_console_formatter = '[%(levelname)s](%(name)s): %(message)s'
     logger = logging.getLogger('qalab')
@@ -121,51 +117,36 @@ def logger_instance(args):
     set_log_level_from_verbose(console_handler, args, logger)
     return logger
 
-def handle_command_selendroid(args, logger):
+def command_selendroid(args, logger):
     """Command with selendroid standalone jar file"""
     version = '0.17.0'
     jar_name = 'selendroid-standalone-{}-with-dependencies.jar'.format(version)
     url = '{}/{}/{}'.format(
         'https://github.com/selendroid/selendroid/releases/download',
+        version, jar_name)
+    jar_name_plugin = 'selendroid-grid-plugin-{}.jar'.format(version)
+    url_plugin = '{}/{}/{}'.format(
+        'http://search.maven.org/remotecontent?filepath=io/selendroid/selendroid-grid-plugin',
         version,
-        jar_name)
+        jar_name_plugin)
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
     config_src = "{}/selendroid.{}.example.json".format(PATH_CONFIG, args.mode)
     config_dst = "{}/selendroid.{}.json".format(PATH_CONFIG, args.mode)
     # generate apks names with absolute paths
     if args.install:
-        handle_install(
+        command_install(
             args, logger, url, jar_name, config_src, config_dst)
+        command_install(
+            args, logger, url_plugin, jar_name_plugin, config_src, config_dst)
     elif args.start:
-        logger.error("ACTION not implemented: --start")
+        command_start_selendroid(args, logger)
     else:
         logger.error("ACTION not selected: --install , --start")
     logger.error("selendroid not working yet")
     raise NotImplementedError("selendroid not working yet")
 
-def handle_install(args, logger, url, jar_name, config_src, config_dst):
-    """TODO: doc method"""
-    logger.error("ACTION not implemented: --install")
-    msgs_install = [
-        "Installation : {}, copying configuration file from example",
-        "Selenium JAR ready at: {}",
-        "Downloading selenium from : {}",
-        "Installation : drivers ready at path, modules/qadrivers",
-        "Installation : COMPLETED"
-        ]
-    jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, jar_name)
-    if os.path.exists(jar_path):
-        logger.info(msgs_install[0].format(jar_path))
-    else:
-        logger.info(msgs_install[1].format(url))
-        wget.download(url, out=PATH_SERVER_DRIVERS)
-    logger.info(msgs_install[2].format(args.mode))
-    shutil.copy2(config_src, config_dst)
-    logger.info(msgs_install[3])
-    logger.info(msgs_install[4])
-
-def handle_command_selenium(args, logger):
+def command_selenium(args, logger):
     """Command with selenium standalone jar file"""
     version = "3.5"
     version_build = "3.5.3"
@@ -196,15 +177,40 @@ def handle_command_selenium(args, logger):
             webdriver_var_name, PATH_DRIVERS_MODULE, driver_name))
 
     if args.install:
-        handle_install(
+        command_install(
             args, logger, url, jar_name, config_src, config_dst)
     elif args.start:
-        handle_command_selenium_start(
+        handle_command_start_selenium(
             args, logger, jar_name, config_dst, drivers_abspaths)
     else:
         logger.error("ACTION not selected: --install , --start")
 
-def handle_command_selenium_start(args, logger, selenium_jar,
+def command_start_selendroid(args, logger):
+    logger.error("ACTION not implemented: --start")
+
+
+def command_install(args, logger, url, jar_name, config_src, config_dst):
+    """TODO: doc method"""
+    logger.error("ACTION not implemented: --install")
+    msgs_install = [
+        "Installation : {}, copying configuration file from example",
+        "Selenium JAR ready at: {}",
+        "Downloading selenium from : {}",
+        "Installation : drivers ready at path, modules/qadrivers",
+        "Installation : COMPLETED"
+        ]
+    jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, jar_name)
+    if os.path.exists(jar_path):
+        logger.info(msgs_install[0].format(jar_path))
+    else:
+        logger.info(msgs_install[1].format(url))
+        wget.download(url, out=PATH_SERVER_DRIVERS)
+    logger.info(msgs_install[2].format(args.mode))
+    shutil.copy2(config_src, config_dst)
+    logger.info(msgs_install[3])
+    logger.info(msgs_install[4])
+
+def handle_command_start_selenium(args, logger, selenium_jar,
                                   config_dst, drivers_abspaths):
     """TODO: doc method"""
     platforms = ["win32", "win64", "lin32", "lin64"]
@@ -299,7 +305,6 @@ def set_log_level_from_verbose(console_handler, args, logger):
         console_handler.setLevel('DEBUG')
     else:
         logger.critical("LOGGER level doesn't exist")
-
 
 if __name__ == '__main__':
     main()
