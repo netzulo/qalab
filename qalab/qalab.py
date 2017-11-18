@@ -140,8 +140,6 @@ def handle_command_selendroid(args, logger):
         logger.error("ACTION not implemented: --start")
     else:
         logger.error("ACTION not selected: --install , --start")
-
-
     logger.error("selendroid not working yet")
     raise NotImplementedError("selendroid not working yet")
 
