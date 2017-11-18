@@ -111,5 +111,6 @@ logs/*.log.*
 qalab/configs/*.hub.json
 qalab/configs/*.node.json
 qalab/drivers/selenium-server-standalone-*.jar
-qalab/drivers/selendroid-server-standalone-*.jar
+qalab/drivers/selendroid-standalone-*.jar
 qalab/drivers/selendroid-grid-plugin-*.jar
+qalab/apks/*.apk

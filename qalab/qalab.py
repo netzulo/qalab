@@ -156,7 +156,7 @@ def command_selendroid(args, logger):
     elif args.start:
         command_start_selendroid(
             args, logger, selenium_jar, selendroid_jar,
-            config_src, config_dst)
+            plugin_jar, config_dst)
     else:
         logger.error("ACTION not selected: --install , --start")
 
@@ -199,12 +199,19 @@ def command_selenium(args, logger):
     else:
         logger.error("ACTION not selected: --install , --start")
 
-def command_start_selendroid(args, logger, selenium_jar, selendroid_jar, config_src, config_dst):
+def command_start_selendroid(args, logger, selenium_jar, selendroid_jar,
+                             plugin_jar, config_dst):
     """TODO: doc method"""
     cmd_args = ["java"]
     if args.mode == 'hub':
         cmd_default_args = [
-            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar),
+            "-Dfile.encoding=UTF-8",
+            "-cp",
+            "\"{}:{}\" org.openqa.grid.selenium.GridLauncher".format(
+                "{}/{}".format(PATH_SERVER_DRIVERS, plugin_jar),
+                "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar)
+            ),
+            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selendroid_jar),
             "-role", args.mode,
             "-{}Config".format(args.mode), config_dst,
             "-log", "logs/selendroid.{}.log".format(args.mode)
@@ -213,8 +220,8 @@ def command_start_selendroid(args, logger, selenium_jar, selendroid_jar, config_
         cmd_default_args = [
             "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selendroid_jar),
             "-folder", os.path.abspath(PATH_APKS),
-            "-logLevel", "DEBUG",
-            "-proxy", "io.selendroid.grid.SelendroidSessionProxy"
+            "-logLevel", "INFO",
+            "-proxy", "io.selendroid.grid.SelendroidSessionProxy",
         ]
     else:
         raise Exception('Select valid mode, values are: [hub, node]')
