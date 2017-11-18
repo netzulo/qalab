@@ -108,6 +108,6 @@ ENV/
 logs/*.log.*
 
 # QAlab 
-qalab/configs/settings.hub.json
-qalab/configs/settings.node.json
-qalab/drivers/selenium-server-standalone-3.5.3.jar
+qalab/configs/*.hub.json
+qalab/configs/*.node.json
+qalab/drivers/selenium-server-standalone-*.jar

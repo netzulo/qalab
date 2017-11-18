@@ -12,16 +12,39 @@ import sys
 import subprocess
 import wget
 
+# SETTINGS start
+PATH_CONFIG = 'qalab/configs'
+PATH_DRIVERS_MODULE = 'modules/qadrivers/'
+PATH_SERVER_DRIVERS = 'qalab/drivers'
+WEBDRIVER_ENV_VARS = [
+    "-Dwebdriver.chrome.driver=",
+    "-Dwebdriver.gecko.driver=",
+    "-Dphantomjs.binary.path=",
+    "-Dwebdriver.ie.driver=",
+    "-Dwebdriver.edge.driver="
+]
+DRIVERS_NAMES = [
+        "chromedriver_32.exe", "chromedriver_64.exe",
+        "chromedriver_32", "chromedriver_64",
+        "firefoxdriver_32.exe", "firefoxdriver_64.exe",
+        "firefoxdriver_32", "firefoxdriver_64",
+        "phantomjsdriver_32.exe", "phantomjsdriver_64.exe",
+        "phantomjsdriver_32", "phantomjsdriver_64",
+        "iexplorerdriver_32.exe", "iexplorerdriver_64.exe",
+        "edgedriver_32.exe", "edgedriver_64.exe"
+    ]
+# SETTINGS end
+
 
 def main(args=None):
     """TODO: doc method"""
     msg_unkown_command = "Unknown command : {}"
     if args is None:
-        args = sys.argv[1:]    
-    ## Generate parser    
+        args = sys.argv[1:]
+    # Generate parser
     parser = parser_instance()
     args = parser.parse_args()
-    ## Generate logger
+    # Generate logger
     logger = logger_instance(args)
     # START SCRIPT
     if args.server_driver is None:
@@ -30,8 +53,7 @@ def main(args=None):
     if args.server_driver == 'selenium':
         handle_command_selenium(args, logger)
     if args.server_driver == 'selendroid':
-        logger.error("selendroid not working yet")
-        raise NotImplementedError("selendroid not working yet")
+        handle_command_selendroid(args, logger)
     else:
         logger.error(str(msg_unkown_command.format(args)))
 
@@ -90,81 +112,68 @@ def logger_instance(args):
     set_log_level_from_verbose(console_handler, args, logger)
     return logger
 
-def handle_command_selenium(args, logger):
-    """Command Selenium"""
-    selenium_url_base = "https://selenium-release.storage.googleapis.com"
-    selenium_url_version = "3.5"
-    selenium_url_file = "3.5.3"
-    selenium_jar = "selenium-server-standalone-{}.jar".format(selenium_url_file)
-    selenium_url = "{}/{}/{}".format(
-        selenium_url_base, selenium_url_version, selenium_jar)
+def handle_command_selendroid(args, logger):
+    """Command with selendroid standalone jar file"""
+    version = '0.17.0'
+    jar_name = 'selendroid-standalone-{}-with-dependencies.jar'.format(version)
+    url_base = 'https://github.com/selendroid/selendroid/releases/download/{}/{}'.format(version,jar_name)
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = "qalab/configs/settings.{}.example.json".format(args.mode)
-    config_dst = "qalab/configs/settings.{}.json".format(args.mode)
-    drivers_path = "modules/qadrivers/"
-    drivers_vars = [
-        "-Dwebdriver.chrome.driver=",
-        "-Dwebdriver.gecko.driver=",
-        "-Dphantomjs.binary.path=",
-        "-Dwebdriver.ie.driver=",
-        "-Dwebdriver.edge.driver="
-    ]
-    drivers_names = [
-        "chromedriver_32.exe", "chromedriver_64.exe",
-        "chromedriver_32", "chromedriver_64",
-        "firefoxdriver_32.exe", "firefoxdriver_64.exe",
-        "firefoxdriver_32", "firefoxdriver_64",
-        "phantomjsdriver_32.exe", "phantomjsdriver_64.exe",
-        "phantomjsdriver_32", "phantomjsdriver_64",
-        "iexplorerdriver_32.exe", "iexplorerdriver_64.exe",
-        "edgedriver_32.exe", "edgedriver_64.exe"
-    ]
+    config_src = "{}/selendroid.{}.example.json".format(PATH_CONFIG, args.mode)
+    config_dst = "{}/selendroid.{}.json".format(PATH_CONFIG, args.mode)
+
+    logger.error("selendroid not working yet")
+    raise NotImplementedError("selendroid not working yet")
+
+def handle_command_selenium(args, logger):
+    """Command with selenium standalone jar file"""
+    version = "3.5"
+    version_build = "3.5.3"
+    jar_name = "selenium-server-standalone-{}.jar".format(version_build)
+    url_base = "https://selenium-release.storage.googleapis.com/{}/{}".format(
+        version, jar_name)
+    # required --mode param
+    if args.mode not in ['hub', 'node']:
+        raise Exception('Select valid mode, values are: [hub, node]')
+    config_src = "{}/selenium.{}.example.json".format(PATH_CONFIG, args.mode)
+    config_dst = "{}/selenium.{}.json".format(PATH_CONFIG, args.mode)
+    # generate drivers names with absolute paths
     drivers_abspaths = []
-    for driver_name in drivers_names:
+    for driver_name in DRIVERS_NAMES:
+        webdriver_var_name = None
         if driver_name.startswith("chrome"):
-            drivers_abspaths.append(
-                get_driver_abspath(
-                    drivers_vars[0], drivers_path, driver_name))
+            webdriver_var_name = WEBDRIVER_ENV_VARS[0]
         if driver_name.startswith("firefox"):
-            drivers_abspaths.append(
-                get_driver_abspath(
-                    drivers_vars[1], drivers_path, driver_name))
+            webdriver_var_name = WEBDRIVER_ENV_VARS[1]
         if driver_name.startswith("phantomjs"):
-            drivers_abspaths.append(
-                get_driver_abspath(
-                    drivers_vars[2], drivers_path, driver_name))
+            webdriver_var_name = WEBDRIVER_ENV_VARS[2]
         if driver_name.startswith("iexplorer"):
-            drivers_abspaths.append(
-                get_driver_abspath(
-                    drivers_vars[3], drivers_path, driver_name))
+            webdriver_var_name = WEBDRIVER_ENV_VARS[3]
         if driver_name.startswith("edge"):
-            drivers_abspaths.append(
-                get_driver_abspath(
-                    drivers_vars[4], drivers_path, driver_name))
-    if args.mode is None:
-        logger.error("Can't start without select available mode: [hub, node]")
-        return
+            webdriver_var_name = WEBDRIVER_ENV_VARS[4]
+        # Get absolute path for driver_name
+        drivers_abspaths.append(get_driver_abspath(
+            webdriver_var_name, PATH_DRIVERS_MODULE, driver_name))
+
+    if args.install:
+        handle_command_selenium_install(
+            args,
+            logger,
+            jar_name,
+            url_base,
+            config_src,
+            config_dst
+        )
+    elif args.start:
+        handle_command_selenium_start(
+            args,
+            logger,
+            jar_name,
+            config_dst,
+            drivers_abspaths
+        )
     else:
-        if args.install:
-            handle_command_selenium_install(
-                args,
-                logger,
-                selenium_jar,
-                selenium_url,
-                config_src,
-                config_dst
-            )
-        elif args.start:
-            handle_command_selenium_start(
-                args,
-                logger,
-                selenium_jar,
-                config_dst,
-                drivers_abspaths
-            )
-        else:
-            logger.error("ACTION not selected: --install , --start")
+        logger.error("ACTION not selected: --install , --start")
 
 def handle_command_selenium_start(args, logger, selenium_jar,
                                   config_dst, drivers_abspaths):
@@ -176,7 +185,7 @@ def handle_command_selenium_start(args, logger, selenium_jar,
     cmd_args = ["java"]
     cmd_drivers = []
     cmd_default_args = [
-        "-jar", "qalab/drivers/{}".format(selenium_jar),
+        "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar),
         "-role", args.mode,
         "-{}Config".format(args.mode), config_dst,
         "-log", "logs/selenium.{}.log".format(args.mode)
@@ -214,12 +223,12 @@ def handle_command_selenium_install(args, logger, selenium_jar,
         "Installation : drivers ready at path, modules/qadrivers",
         "Installation : COMPLETED"
         ]
-    jar_path = "{}/{}".format("qalab/drivers", selenium_jar)
+    jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar)
     if os.path.exists(jar_path):
         logger.info(msgs_install[0].format(jar_path))
     else:
         logger.info(msgs_install[1].format(selenium_url))
-        wget.download(selenium_url, out="qalab/drivers")
+        wget.download(selenium_url, out=PATH_SERVER_DRIVERS)
     logger.info(msgs_install[2].format(args.mode))
     shutil.copy2(config_src, config_dst)
     logger.info(msgs_install[3])
