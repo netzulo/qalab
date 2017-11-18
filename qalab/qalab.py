@@ -197,7 +197,7 @@ def handle_command_selenium(args, logger):
 
     if args.install:
         handle_install(
-            args, logger, jar_name, url, config_src, config_dst)
+            args, logger, url, jar_name, config_src, config_dst)
     elif args.start:
         handle_command_selenium_start(
             args, logger, jar_name, config_dst, drivers_abspaths)
