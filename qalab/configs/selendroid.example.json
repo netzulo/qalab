@@ -2,11 +2,11 @@
   "capabilities":
       [
         {
-          "applicationName": "vm-Nexus6",
-          "browserName": "vm-Nexus6",
-          "version":"6.0",
+          "browserName": "qa-tablet-nexus10",
+          "version": "6.0",
           "maxInstances": 1,
-          "platform":"ANDROID"
+          "platform": "ANDROID",
+          "aut": ""
         }
       ],
   "configuration":
