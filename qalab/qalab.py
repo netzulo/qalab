@@ -125,7 +125,7 @@ def handle_command_selendroid(args, logger):
     """Command with selendroid standalone jar file"""
     version = '0.17.0'
     jar_name = 'selendroid-standalone-{}-with-dependencies.jar'.format(version)
-    url_base = '{}/{}/{}'.format(
+    url = '{}/{}/{}'.format(
         'https://github.com/selendroid/selendroid/releases/download',
         version,
         jar_name)
@@ -135,7 +135,8 @@ def handle_command_selendroid(args, logger):
     config_dst = "{}/selendroid.{}.json".format(PATH_CONFIG, args.mode)
     # generate apks names with absolute paths
     if args.install:
-        logger.error("ACTION not implemented: --install")
+        handle_install(
+            args, logger, url, jar_name, config_src, config_dst)
     elif args.start:
         logger.error("ACTION not implemented: --start")
     else:
@@ -143,12 +144,33 @@ def handle_command_selendroid(args, logger):
     logger.error("selendroid not working yet")
     raise NotImplementedError("selendroid not working yet")
 
+def handle_install(args, logger, url, jar_name, config_src, config_dst):
+    """TODO: doc method"""
+    logger.error("ACTION not implemented: --install")
+    msgs_install = [
+        "Installation : {}, copying configuration file from example",
+        "Selenium JAR ready at: {}",
+        "Downloading selenium from : {}",
+        "Installation : drivers ready at path, modules/qadrivers",
+        "Installation : COMPLETED"
+        ]
+    jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, jar_name)
+    if os.path.exists(jar_path):
+        logger.info(msgs_install[0].format(jar_path))
+    else:
+        logger.info(msgs_install[1].format(url))
+        wget.download(url, out=PATH_SERVER_DRIVERS)
+    logger.info(msgs_install[2].format(args.mode))
+    shutil.copy2(config_src, config_dst)
+    logger.info(msgs_install[3])
+    logger.info(msgs_install[4])
+
 def handle_command_selenium(args, logger):
     """Command with selenium standalone jar file"""
     version = "3.5"
     version_build = "3.5.3"
     jar_name = "selenium-server-standalone-{}.jar".format(version_build)
-    url_base = "https://selenium-release.storage.googleapis.com/{}/{}".format(
+    url = "https://selenium-release.storage.googleapis.com/{}/{}".format(
         version, jar_name)
     # required --mode param
     if args.mode not in ['hub', 'node']:
@@ -174,22 +196,11 @@ def handle_command_selenium(args, logger):
             webdriver_var_name, PATH_DRIVERS_MODULE, driver_name))
 
     if args.install:
-        handle_command_selenium_install(
-            args,
-            logger,
-            jar_name,
-            url_base,
-            config_src,
-            config_dst
-        )
+        handle_install(
+            args, logger, jar_name, url, config_src, config_dst)
     elif args.start:
         handle_command_selenium_start(
-            args,
-            logger,
-            jar_name,
-            config_dst,
-            drivers_abspaths
-        )
+            args, logger, jar_name, config_dst, drivers_abspaths)
     else:
         logger.error("ACTION not selected: --install , --start")
 
@@ -230,28 +241,6 @@ def handle_command_selenium_start(args, logger, selenium_jar,
     cmd_args.extend(cmd_default_args)
     logger.info("Executing command : {}".format(cmd_args))
     return subprocess.call(cmd_args)
-
-def handle_command_selenium_install(args, logger, selenium_jar,
-                                    selenium_url, config_src, config_dst):
-    """TODO: doc method"""
-    msgs_install = [
-        "Installation : {}, copying configuration file from example",
-        "Selenium JAR ready at: {}",
-        "Downloading selenium from : {}",
-        "Installation : drivers ready at path, modules/qadrivers",
-        "Installation : COMPLETED"
-        ]
-    jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar)
-    if os.path.exists(jar_path):
-        logger.info(msgs_install[0].format(jar_path))
-    else:
-        logger.info(msgs_install[1].format(selenium_url))
-        wget.download(selenium_url, out=PATH_SERVER_DRIVERS)
-    logger.info(msgs_install[2].format(args.mode))
-    shutil.copy2(config_src, config_dst)
-    logger.info(msgs_install[3])
-    logger.info(msgs_install[4])
-
 
 def name_filter_lin64(drivers_abspaths):
     """Return array ofparsed absolute paths name for platform LINUX 64"""
