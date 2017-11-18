@@ -24,21 +24,22 @@ WEBDRIVER_ENV_VARS = [
     "-Dwebdriver.edge.driver="
 ]
 DRIVERS_NAMES = [
-        "chromedriver_32.exe", "chromedriver_64.exe",
-        "chromedriver_32", "chromedriver_64",
-        "firefoxdriver_32.exe", "firefoxdriver_64.exe",
-        "firefoxdriver_32", "firefoxdriver_64",
-        "phantomjsdriver_32.exe", "phantomjsdriver_64.exe",
-        "phantomjsdriver_32", "phantomjsdriver_64",
-        "iexplorerdriver_32.exe", "iexplorerdriver_64.exe",
-        "edgedriver_32.exe", "edgedriver_64.exe"
-    ]
+    "chromedriver_32.exe", "chromedriver_64.exe",
+    "chromedriver_32", "chromedriver_64",
+    "firefoxdriver_32.exe", "firefoxdriver_64.exe",
+    "firefoxdriver_32", "firefoxdriver_64",
+    "phantomjsdriver_32.exe", "phantomjsdriver_64.exe",
+    "phantomjsdriver_32", "phantomjsdriver_64",
+    "iexplorerdriver_32.exe", "iexplorerdriver_64.exe",
+    "edgedriver_32.exe", "edgedriver_64.exe"
+]
+MSG_UNKOWN_COMMAND = "Unknown command : {}"
 # SETTINGS end
 
 
 def main(args=None):
     """TODO: doc method"""
-    msg_unkown_command = "Unknown command : {}"
+
     if args is None:
         args = sys.argv[1:]
     # Generate parser
@@ -52,10 +53,10 @@ def main(args=None):
         return
     if args.server_driver == 'selenium':
         handle_command_selenium(args, logger)
-    if args.server_driver == 'selendroid':
+    elif args.server_driver == 'selendroid':
         handle_command_selendroid(args, logger)
     else:
-        logger.error(str(msg_unkown_command.format(args)))
+        logger.error(str(MSG_UNKOWN_COMMAND.format(args)))
 
 def parser_instance():
     """TODO: doc method"""
@@ -116,7 +117,10 @@ def handle_command_selendroid(args, logger):
     """Command with selendroid standalone jar file"""
     version = '0.17.0'
     jar_name = 'selendroid-standalone-{}-with-dependencies.jar'.format(version)
-    url_base = 'https://github.com/selendroid/selendroid/releases/download/{}/{}'.format(version,jar_name)
+    url_base = '{}/{}/{}'.format(
+        'https://github.com/selendroid/selendroid/releases/download',
+        version,
+        jar_name)
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
     config_src = "{}/selendroid.{}.example.json".format(PATH_CONFIG, args.mode)
