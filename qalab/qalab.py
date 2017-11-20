@@ -63,7 +63,10 @@ def main(args=None):
     if args.server_driver == 'selenium':
         command_selenium(args, logger)
     elif args.server_driver == 'selendroid':
+        # FIX: errored
         command_selendroid(args, logger)
+    elif args.server_driver == 'appium':
+        command_appium(args, logger)
     else:
         logger.error(str(MSG_UNKOWN_COMMAND.format(args)))
 
@@ -117,6 +120,39 @@ def logger_instance(args):
     logger.addHandler(console_handler)
     set_log_level_from_verbose(console_handler, args, logger)
     return logger
+
+
+def command_appium(args, logger):
+    """Command with appium standalone node client"""
+    if args.mode not in ['hub', 'node']:
+        raise Exception('Select valid mode, values are: [hub, node]')
+    config_src = "{}/appium.{}.example.json".format(PATH_CONFIG, args.mode)
+    config_dst = "{}/appium.{}.json".format(PATH_CONFIG, args.mode)
+    if args.install:
+        copy_config(logger, config_src, config_dst)
+    elif args.start:
+        command_start_appium(args, logger)
+    else:
+        logger.error("ACTION not selected: --install , --start")
+
+def command_start_appium(args, logger):
+    """TODO: doc method"""
+    logger.info("Command start : ...")
+    cmd_args = ["appium"]
+    if args.mode == 'hub':
+        raise NotImplementedError('Mode hub for appium not developed yet')
+    elif args.mode == 'node':
+        cmd_default_args = [
+            '--nodeconfig', "{}/{}".format(PATH_CONFIG, 'appium.node.json')
+        ]
+    else:
+        raise Exception('Select valid mode, values are: [hub, node]')
+    # start driver_server with arguments
+    cmd_args.extend(cmd_default_args)
+    logger.debug("command info : {}".format(cmd_args))
+    subprocess.call(cmd_args)
+    logger.info("Command start : DONE")
+
 
 def command_selendroid(args, logger):
     """Command with selendroid standalone jar file"""
@@ -219,8 +255,10 @@ def command_start_selendroid(args, logger, selenium_jar, selendroid_jar,
     elif args.mode == 'node':
         cmd_default_args = [
             "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selendroid_jar),
+            "-port", "12001",
+            "-selendroidServerPort", "12000",
             "-folder", os.path.abspath(PATH_APKS),
-            "-logLevel", "INFO",
+            "-logLevel", "DEBUG",
             "-proxy", "io.selendroid.grid.SelendroidSessionProxy",
         ]
     else:
@@ -232,23 +270,31 @@ def command_start_selendroid(args, logger, selenium_jar, selendroid_jar,
 
 def command_install(args, logger, url, jar_name, config_src, config_dst):
     """TODO: doc method"""
-    msgs_install = [
-        "Installation : {}, copying configuration file from example",
-        "Selenium JAR ready at: {}",
-        "Downloading selenium from : {}",
-        "Installation : drivers ready at path, modules/qadrivers",
-        "Installation : COMPLETED"
-        ]
+    logger.info('Command install: ...')
     jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, jar_name)
     if os.path.exists(jar_path):
-        logger.info(msgs_install[0].format(jar_path))
+        logger.info('File exist')
+        logger.debug('    at path={}'.format(jar_path))
     else:
-        logger.info(msgs_install[1].format(url))
-        wget.download(url, out=jar_path)
-    logger.info(msgs_install[2].format(args.mode))
+        download_file(logger, url, jar_path)
+    copy_config(logger, config_src, config_dst)
+    logger.info('Command install: DONE')
+
+def download_file(logger, url, out_path):
+    """TODO: doc method"""
+    logger.info('Downloading file: ...')
+    logger.debug('    url={}'.format(url))
+    logger.debug('    out_path={}'.format(out_path))
+    wget.download(url, out=out_path)
+    logger.info('Downloading file: DONE')
+
+def copy_config(logger, config_src, config_dst):
+    """TODO: doc method"""
+    logger.info('Copy config: ...')
+    logger.debug('    from={}'.format(config_src))
+    logger.debug('    to={}'.format(config_dst))
     shutil.copy2(config_src, config_dst)
-    logger.info(msgs_install[3])
-    logger.info(msgs_install[4])
+    logger.info('Copy config: DONE')
 
 def handle_command_start_selenium(args, logger, selenium_jar,
                                   config_dst, drivers_abspaths):
