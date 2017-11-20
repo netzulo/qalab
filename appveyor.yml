@@ -22,6 +22,7 @@ install:
   - "%PYTHON%\\python.exe qalab\\qalab.py -sd selenium -m node -i"
   - "%PYTHON%\\python.exe qalab\\qalab.py -sd selendroid -m hub -i"
   - "%PYTHON%\\python.exe qalab\\qalab.py -sd selendroid -m node -i"
+  - "%PYTHON%\\python.exe qalab\\qalab.py -sd appium -m node -i"
 
 test_script:
   - echo "BUILD SUCCESS"
