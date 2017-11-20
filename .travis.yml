@@ -28,6 +28,7 @@ install:
 - python qalab/qalab.py -sd selenium -m node -i
 - python qalab/qalab.py -sd selendroid -m hub -i
 - python qalab/qalab.py -sd selendroid -m node -i
+- python qalab/qalab.py -sd appium -m node -i
 before_script:
 - python qalab/qalab.py -sd selenium -m hub -s -p lin64 &
 - python qalab/qalab.py -sd selenium -m node -s -p lin64 &
