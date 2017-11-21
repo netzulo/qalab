@@ -150,7 +150,7 @@ def command_start_appium(args, logger):
     # start driver_server with arguments
     cmd_args.extend(cmd_default_args)
     logger.debug("command info : {}".format(cmd_args))
-    subprocess.call(cmd_args)
+    subprocess.call(cmd_args, shell=True)
     logger.info("Command start : DONE")
 
 
