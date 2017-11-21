@@ -82,7 +82,8 @@ def parser_instance():
         action="count", help="verbose level... repeat up to three times.")
     parser.add_argument(
         '-sd', '--server_driver',
-        default=None, help="Select server driver, values are: [selenium,selendroid]")
+        default=None,
+        help="Select server driver, values are: [selenium,selendroid,appium]")
     # Optional args
     parser.add_argument(
         '-m', '--mode',

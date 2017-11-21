@@ -23,7 +23,7 @@ Documentation
 
 
 Code Metrics by sonarqube
-----------------------------
+-------------------------
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qalab
   :alt: Quality Gate
@@ -46,6 +46,8 @@ Code Metrics by sonarqube
 .. image:: http://qalab.tk:82/api/badges/measure?key=qalab&metric=comment_lines_density
   :alt: Comments
   :target: http://qalab.tk:82/api/badges/gate?key=qalab
+
+
 How to install ?
 ----------------
 
@@ -54,7 +56,7 @@ How to install ?
 + 3. *Clone submodules* : ``git submodule update --init --recursive``
 + 4. *Attach branches HEAD* : ``git submodule foreach git checkout master``
 
-PIP install *Not working, just development mode cloning from github*
+PIP install
 ***********
 
 ``pip install qalaboratory``
@@ -64,27 +66,24 @@ Command Usage
 
 ::
 
-	usage: qalab.py [-h] [-v] {selenium} ...
+  usage: qalab.py [-h] [-v] [-sd SERVER_DRIVER] [-m MODE] [-i] [-s]
+                [-p PLATFORM]
 
-	Performs selenium drivers operations
+Performs selenium drivers operations
 
-	positional arguments:
-	  {selenium}     Actions for selenium instance
-	    selenium     Actions for selenium HUB or NODE
-	
-	selenium arguments:
-		-h, --help            show this help message and exit
-		-m MODE, --mode MODE  Select mode, values are: [hub, node]
-		-i, --install         Download selenium jar
-		-s, --start           Start Selenium jar
-		-p PLATFORM, --platform PLATFORM
-			                  Select mode, values are: [lin32,lin64,win32,win64]
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         verbose level... repeat up to three times.
+  -sd SERVER_DRIVER, --server_driver SERVER_DRIVER
+                        Select server driver, values are:
+                        [selenium,selendroid, appium]
+  -m MODE, --mode MODE  Select mode, values are: [hub, node]
+  -i, --install         Download driver server jar
+  -s, --start           Start driver server jar
+  -p PLATFORM, --platform PLATFORM
+                        Select mode, values are: [lin32,lin64,win32,win64]
 
-	optional arguments:
-		-h, --help     show this help message and exit
-		-v, --verbose  verbose level... repeat up to three times.
-
-	----- help us on , https://github.com/netzulo/qalab -------
+----- help us on , https://github.com/netzulo/qalab -------
 
 
 How to create HUB + Node ?
@@ -93,14 +92,23 @@ How to create HUB + Node ?
 Hub
 ****
 
-+ 1. Create configuration : ``python qalab/qalab.py selenium --mode hub --install``
-+ 2. Start Hub : ``python qalab/qalab.py selenium --mode hub --start``
++ 1. Create configuration : ``python qalab/qalab.py --server_driver selenium --mode hub --install``
++ 2. Start Hub : ``python qalab/qalab.py --server_driver selenium --mode hub --start``
 
 Node
 ****
 
-+ 1. Create configuration : ``python qalab/qalab.py selenium --mode node --install``
-+ 2. Start Node : ``python qalab/qalab.py selenium --mode node --start --platform win64``
++ 1. Create configuration : ``python qalab/qalab.py --server_driver selenium --mode node --install``
++ 2. Start Node : ``python qalab/qalab.py selenium --server_driver selenium --mode node --start --platform win64``
+
+Appium
+******
+
+*Must be installed SDK and appium as global package*
+
++ 1. Install appium: ``npm install -g appium``
++ 1. Create configuration : ``python qalab/qalab.py --server_driver appium --mode node --install``
++ 2. Start Node : ``python qalab/qalab.py --server_driver appium --mode node --start --platform win64``
 
 QADrivers
 *********
@@ -118,8 +126,8 @@ QADrivers
 +-------------------+----------+----------+------------+------------+
 | Edge              | -        | -        | OK         | OK         |
 +-------------------+----------+----------+------------+------------+
-
-
+| Android           | OK       | OK       | OK         | OK         |
++-------------------+----------+----------+------------+------------+
 
 
 .. |qalab_build_master_lin| image:: https://travis-ci.org/netzulo/qalab.svg?branch=master
