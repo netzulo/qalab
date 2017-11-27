@@ -15,7 +15,7 @@
         }
     ],
     "configuration": {
-        "cleanUpCycle": 30000,
+        "cleanUpCycle": 2000,
         "timeout": -1,
         "url": "http://localhost:4723/wd/hub",
         "host": "localhost",
