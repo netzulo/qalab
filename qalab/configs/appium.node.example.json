@@ -1,0 +1,29 @@
+{
+    "capabilities": [
+        {
+            "platform": "ANDROID",
+            "version": "6.0",
+            "maxInstances": 1,
+            "noSign":true,            
+            "automationName": "Appium",            
+            "browserName": "",
+            "platformName": "Android",
+            "platformVersion": "6.0",
+            "deviceName": "qa-tablet-nexus10",
+            "orientation": "LANDSCAPE",
+            "app": "qalab/apks/selendroid-test-app-0.17.0.apk"
+        }
+    ],
+    "configuration": {
+        "cleanUpCycle": 2000,
+        "timeout": -1,
+        "url": "http://localhost:4723/wd/hub",
+        "host": "localhost",
+        "port": 4723,
+        "maxSession": 1,
+        "register": true,
+        "registerCycle": 5000,
+        "hubPort": 11000,
+        "hubHost": "localhost"
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "capabilities": [{
+      "browserName": "selendroid",
+      "maxInstances": 1,
+      "aut": "io.selendroid.testapp:0.17.0"
+  }, {
+      "browserName": "android",
+      "maxInstances": 1
+  }],
+  "configuration": {
+      "maxSession": 1,
+      "register": true,
+      "hubHost": "localhost",
+      "hubPort": 12001,
+      "remoteHost": "http://localhost:12000",
+      "proxy": "io.selendroid.grid.SelendroidSessionProxy"
+  }
+}
