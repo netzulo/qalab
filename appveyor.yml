@@ -1,8 +1,4 @@
 build: off
-branches:
-  only:
-    - master
-    - devel
 environment:
   matrix:
     - PYTHON: "C:\\Python27"

@@ -19,14 +19,14 @@ def readme():
 
 
 setup(name='qalaboratory',
-      version='0.0.9',
+      version='0.1.0',
       packages=find_packages(exclude=['tests']),
       description='QALAB, proyect manager for QA open source proyects',
       long_description=readme(),
       author='Netzulo Open Source',
       author_email='netzuleando@gmail.com',
       url='https://github.com/netzulo/qalab',
-      download_url='https://github.com/netzulo/qalab/tarball/v0.0.9',
+      download_url='https://github.com/netzulo/qalab/tarball/v0.1.0',
       install_requires=[
           'appdirs',
           'packaging==16.8',

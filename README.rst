@@ -7,9 +7,6 @@ QA laboratory
 | master       | |qalab_build_master_lin| | |qacode_build_master_lin| | |qadmin_build_master_lin| | |qadoc_build_master_lin| | |qadoc_build_master_lin| |
 |              | |qalab_build_master_win| | |qacode_build_master_win| | |qadmin_build_master_win| | |qadoc_build_master_win| | |qadoc_build_master_win| |
 +--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
-| devel        | |qalab_build_devel_lin|  | |qacode_build_devel_lin|  | |qadmin_build_devel_lin|  | |qadoc_build_devel_lin|  | |qadoc_build_devel_lin|  |
-|              | |qalab_build_devel_win|  | |qacode_build_devel_win|  | |qadmin_build_devel_win|  | |qadoc_build_devel_win|  | |qadoc_build_devel_win|  |
-+--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
 
 Documentation
 -------------
@@ -55,6 +52,15 @@ How to install ?
 + 2. *Enter on repo directory* : ``cd qalab``
 + 3. *Clone submodules* : ``git submodule update --init --recursive``
 + 4. *Attach branches HEAD* : ``git submodule foreach git checkout master``
+
+
+How to exec tests ?
+-------------------
+
++ 1. *Clone this repo* : ``git clone https://github.com/netzulo/qalab.git``
++ 2. *Enter on repo directory* : ``cd qalab``
++ 3. *Execute test with setup.py* : ``python setup.py test``
+
 
 PIP install
 ***********
