@@ -35,6 +35,7 @@ matrix:
 before_install:
 - git submodule update --init --recursive
 - git submodule foreach git checkout master
+- pip install tox
 - pip freeze
 install:
 - tox -e "{$TOXENV,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}"
