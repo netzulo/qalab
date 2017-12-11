@@ -7,6 +7,7 @@ import sys
 from setuptools import setup, find_packages
 
 
+VERSION = '0.1.0'
 CURR_PATH = path.abspath(path.dirname(__file__))
 # make works script on windows
 sys.path.append(path.join(CURR_PATH, 'qalab'))
@@ -19,14 +20,15 @@ def readme():
 
 
 setup(name='qalaboratory',
-      version='0.1.0',
+      version=VERSION,
       packages=find_packages(exclude=['tests']),
       description='QALAB, proyect manager for QA open source proyects',
       long_description=readme(),
       author='Netzulo Open Source',
       author_email='netzuleando@gmail.com',
       url='https://github.com/netzulo/qalab',
-      download_url='https://github.com/netzulo/qalab/tarball/v0.1.0',
+      download_url='https://github.com/netzulo/qalab/tarball/v{}'.format(
+          VERSION),
       install_requires=[
           'appdirs',
           'packaging==16.8',
@@ -34,7 +36,29 @@ setup(name='qalaboratory',
           'six==1.10.0',
           'nose==1.3.7',
           'nose-testconfig==0.10',
-          'wget'
+          'wget',
+          'pytest'
+      ],
+      setup_requires=[
+        'pytest-runner',
+        'tox',
+      ],
+      tests_require=[
+        'pytest-html',
+        'pytest-dependency',
+        'pytest-cov',
+      ],
+      scripts=['qalab/qalab.py'],
+      classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Build Tools',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
       ],
       keywords=[
           'testing',
@@ -57,6 +81,5 @@ setup(name='qalaboratory',
           'selendroid',
           'automation',
           'pytest'
-      ],
-      scripts=['qalab/qalab.py']
+      ]
      )
