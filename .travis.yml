@@ -40,7 +40,12 @@ install:
 - tox -e "{$TOXENV,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}"
 before_script:
 script:
-- tox -e selenium-tests
+- python qalab/qalab.py -sd selenium -m hub -p lin64 -s &
+- python qalab/qalab.py -sd selenium -m node -p lin64 -s &
+- sleep 10
+- nc -z -v -w5 localhost 11000
+- nc -z -v -w5 localhost 11001
+
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;
