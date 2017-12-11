@@ -1,6 +1,22 @@
 QA laboratory 
 =============
 
+.. image:: https://img.shields.io/github/issues/netzulo/qalab.svg
+  :alt: Issues on Github
+  :target: https://github.com/netzulo/qalab/issues
+
+.. image:: https://img.shields.io/github/issues-pr/netzulo/qalab.svg
+  :alt: Pull Request opened on Github
+  :target: https://github.com/netzulo/qalab/issues
+
+.. image:: https://img.shields.io/github/release/netzulo/qalab.svg
+  :alt: Release version on Github
+  :target: https://github.com/netzulo/qalab/releases/latest
+
+.. image:: https://img.shields.io/github/release-date/netzulo/qalab.svg
+  :alt: Release date on Github
+  :target: https://github.com/netzulo/qalab/releases/latest
+
 +--------------+--------------------------+---------------------------+---------------------------+--------------------------+--------------------------+
 | Branch name  | QAlab                    | QAcode                    | QAdmin                    | QAdoc                    | QAtestlink               |
 +==============+==========================+===========================+===========================+==========================+==========================+
@@ -75,21 +91,21 @@ Command Usage
   usage: qalab.py [-h] [-v] [-sd SERVER_DRIVER] [-m MODE] [-i] [-s]
                 [-p PLATFORM]
 
-Performs selenium drivers operations
+  Performs selenium drivers operations
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --verbose         verbose level... repeat up to three times.
-  -sd SERVER_DRIVER, --server_driver SERVER_DRIVER
+  optional arguments:
+    -h, --help            show this help message and exit
+    -v, --verbose         verbose level... repeat up to three times.
+    -sd SERVER_DRIVER, --server_driver SERVER_DRIVER
                         Select server driver, values are:
                         [selenium,selendroid, appium]
-  -m MODE, --mode MODE  Select mode, values are: [hub, node]
-  -i, --install         Download driver server jar
-  -s, --start           Start driver server jar
-  -p PLATFORM, --platform PLATFORM
+    -m MODE, --mode MODE  Select mode, values are: [hub, node]
+    -i, --install         Download driver server jar
+    -s, --start           Start driver server jar
+    -p PLATFORM, --platform PLATFORM
                         Select mode, values are: [lin32,lin64,win32,win64]
 
------ help us on , https://github.com/netzulo/qalab -------
+  ----- help us on , https://github.com/netzulo/qalab -------
 
 
 How to create HUB + Node ?
@@ -115,6 +131,31 @@ Appium
 + 1. Install appium: ``npm install -g appium``
 + 1. Create configuration : ``python qalab/qalab.py --server_driver appium --mode node --install``
 + 2. Start Node : ``python qalab/qalab.py --server_driver appium --mode node --start --platform win64``
+
+
+TOX environments
+****************
+
++---------------------+--------------------------------+
+| Env name            | Env description                |
++===================+==================================+
+| py27,py34,py35,py36 | Python supported versions      |
++---------------------+--------------------------------+
+| docs                | Generate doc HTML in /docs     |
++---------------------+--------------------------------+
+| flake8              | Exec linter in qalab/ tests/   |
++---------------------+--------------------------------+
+| selenium-hub        | Start intalled selenium hub    |
++---------------------+--------------------------------+
+| selenium-node       | Start intalled selenium node   |
++---------------------+--------------------------------+
+| selendroid-hub      | Start intalled selendroid hub  |
++---------------------+--------------------------------+
+| selendroid-node     | Start intalled selendroid node |
++---------------------+--------------------------------+
+| appium-node         | Start intalled appium node     |
++---------------------+--------------------------------+
+
 
 QADrivers
 *********

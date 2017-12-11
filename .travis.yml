@@ -12,30 +12,41 @@ addons:
     token:
       secure: VtPxaodHoyiwC1P1RTlfb86qaEEg96/1CTvpDAR7dnT/EfzCR6OqSKbi+xRIYLyl+KLxTkmhvbwt83YseWXh5OCrq89USRA7tJBwubBj6TWf7B24xgsijusUtc/Xz/BbZFqM8wz8PnenpifHu4MNHwT6zXm5uYc3r2FK9BPJgjicNIHgj83m2r6TBJfK1n8mADOWBlxl/Y8m3kopPUzmb6GeM4cgykYp46KhgK/zviCUrVR1mTn2ilkqX3/KgG1FGUUSRzXgTaToqvzVSKE+qMq7Ai9N3arv8JcnMSpR9rl0ZCAC3shc2hCiB5WygpJmxya5v9YjDEb7RQQavUCEs/4LnDZbckufa4ImPHDyRACUBmg8Bsgu0XQKxEsl8RgDibSPz1Sd6HFAgr80OPUwBa562DJLv3qoYSB3/FmKaww/asxJC8sUhYZi2Xx3WrguZgn8jgQJfX51EnFNQrTEQdvfI5RE1s1vIfZXEx7yqCrcQj5nhM0CSLXG8MA7R1TpZCC/oGzl0dVhIr+O2kjfFtmjO9j3HxiTlMXSopMtMCRLQZoiu3ipCnIsyGROgeBbBg0Xq67qECD9k8hqrwlgnbjxlAgbGi3yMTb1nkh6AhCs59NwcUeGQoW/7k6UgA4p9rSHwEupbzmXKvn7brjca5Ih5wmlRne10qnFS+dLvMg=
 language: python
-python:
-- '2.7'
-- '3.3'
-- '3.4'
-- '3.5'
-- '3.6'
+matrix:
+  include:
+    - os: linux
+      sudo;: required
+      python: 2.7
+      env: TOXENV=py27
+    - os: linux
+      sudo;: required
+      python: 3.4
+      env: TOXENV=py34
+    - os: linux
+      sudo;: required
+      python: 3.5
+      env: TOXENV=py35
+    - os: linux
+      sudo;: required
+      python: 3.6
+      env: TOXENV=py36
+
+
 before_install:
 - git submodule foreach git checkout master
+- pip install tox
 - pip freeze
-- python setup.py build
-- python setup.py install
 install:
-- python qalab/qalab.py -sd selenium -m hub -i
-- python qalab/qalab.py -sd selenium -m node -i
-- python qalab/qalab.py -sd selendroid -m hub -i
-- python qalab/qalab.py -sd selendroid -m node -i
-- python qalab/qalab.py -sd appium -m node -i
+- tox -e "{$TOXENV,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}"
 before_script:
-- python qalab/qalab.py -sd selenium -m hub -s -p lin64 &
-- python qalab/qalab.py -sd selenium -m node -s -p lin64 &
+- python setup.py install
 script:
+- python qalab/qalab.py -sd selenium -m hub -p lin64 -s &
+- python qalab/qalab.py -sd selenium -m node -p lin64 -s &
 - sleep 10
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
+
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;
