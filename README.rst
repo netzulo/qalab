@@ -132,6 +132,31 @@ Appium
 + 1. Create configuration : ``python qalab/qalab.py --server_driver appium --mode node --install``
 + 2. Start Node : ``python qalab/qalab.py --server_driver appium --mode node --start --platform win64``
 
+
+TOX environments
+****************
+
++---------------------+--------------------------------+
+| Env name            | Env description                |
++===================+==================================+
+| py27,py34,py35,py36 | Python supported versions      |
++---------------------+--------------------------------+
+| docs                | Generate doc HTML in /docs     |
++---------------------+--------------------------------+
+| flake8              | Exec linter in qalab/ tests/   |
++---------------------+--------------------------------+
+| selenium-hub        | Start intalled selenium hub    |
++---------------------+--------------------------------+
+| selenium-node       | Start intalled selenium node   |
++---------------------+--------------------------------+
+| selendroid-hub      | Start intalled selendroid hub  |
++---------------------+--------------------------------+
+| selendroid-node     | Start intalled selendroid node |
++---------------------+--------------------------------+
+| appium-node         | Start intalled appium node     |
++---------------------+--------------------------------+
+
+
 QADrivers
 *********
 
