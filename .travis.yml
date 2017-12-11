@@ -39,6 +39,7 @@ before_install:
 install:
 - tox -e "{$TOXENV,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}"
 before_script:
+- python setup.py install
 script:
 - python qalab/qalab.py -sd selenium -m hub -p lin64 -s &
 - python qalab/qalab.py -sd selenium -m node -p lin64 -s &
