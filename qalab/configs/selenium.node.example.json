@@ -29,6 +29,12 @@
       "maxInstances": 5,
       "seleniumProtocol": "WebDriver",
       "platform": "WINDOWS"
+    },
+    {
+      "browserName": "opera",
+      "maxInstances": 5,
+      "seleniumProtocol": "WebDriver",
+      "platform": "WINDOWS"
     }
   ],
   "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",

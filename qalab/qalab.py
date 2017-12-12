@@ -22,7 +22,8 @@ WEBDRIVER_ENV_VARS = [
     "-Dwebdriver.gecko.driver=",
     "-Dphantomjs.binary.path=",
     "-Dwebdriver.ie.driver=",
-    "-Dwebdriver.edge.driver="
+    "-Dwebdriver.edge.driver=",
+    "-Dwebdriver.opera.driver="
 ]
 DRIVERS_NAMES = [
     "chromedriver_32.exe",
@@ -40,7 +41,11 @@ DRIVERS_NAMES = [
     "iexplorerdriver_32.exe",
     "iexplorerdriver_64.exe",
     "edgedriver_32.exe",
-    "edgedriver_64.exe"
+    "edgedriver_64.exe",
+    "operadriver_32.exe",
+    "operadriver_64.exe",
+    "operadriver_32",
+    "operadriver_64",
 ]
 MSG_UNKOWN_COMMAND = "Unknown command : {}"
 # SETTINGS end
@@ -223,6 +228,8 @@ def command_selenium(args, logger):
             webdriver_var_name = WEBDRIVER_ENV_VARS[3]
         if driver_name.startswith("edge"):
             webdriver_var_name = WEBDRIVER_ENV_VARS[4]
+        if driver_name.startswith("opera"):
+            webdriver_var_name = WEBDRIVER_ENV_VARS[5]
         # Get absolute path for driver_name
         drivers_abspaths.append(get_driver_abspath(
             webdriver_var_name, PATH_DRIVERS_MODULE, driver_name))
@@ -340,7 +347,8 @@ def name_filter_lin64(drivers_abspaths):
     return [
         name_filter(drivers_abspaths, "chromedriver_64"),
         name_filter(drivers_abspaths, "firefoxdriver_64"),
-        name_filter(drivers_abspaths, "phantomjsdriver_64")
+        name_filter(drivers_abspaths, "phantomjsdriver_64"),
+        name_filter(drivers_abspaths, "operadriver_64")
     ]
 
 def name_filter_lin32(drivers_abspaths):
@@ -348,7 +356,8 @@ def name_filter_lin32(drivers_abspaths):
     return [
         name_filter(drivers_abspaths, "chromedriver_32"),
         name_filter(drivers_abspaths, "firefoxdriver_32"),
-        name_filter(drivers_abspaths, "phantomjsdriver_32")
+        name_filter(drivers_abspaths, "phantomjsdriver_32"),
+        name_filter(drivers_abspaths, "operadriver_32")
     ]
 
 def name_filter_win64(drivers_abspaths):
@@ -358,7 +367,9 @@ def name_filter_win64(drivers_abspaths):
         name_filter(drivers_abspaths, "firefoxdriver_64.exe"),
         name_filter(drivers_abspaths, "phantomjsdriver_64.exe"),
         name_filter(drivers_abspaths, "iexplorerdriver_64.exe"),
-        name_filter(drivers_abspaths, "edgedriver_64.exe")]
+        name_filter(drivers_abspaths, "edgedriver_64.exe"),
+        name_filter(drivers_abspaths, "operadriver_64.exe")
+    ]
 
 def name_filter_win32(drivers_abspaths):
     """Return array ofparsed absolute paths name for platform WINDOWS 32"""
@@ -366,7 +377,8 @@ def name_filter_win32(drivers_abspaths):
         name_filter(drivers_abspaths, "chromedriver_32.exe"),
         name_filter(drivers_abspaths, "firefoxdriver_32.exe"),
         name_filter(drivers_abspaths, "phantomjsdriver_32.exe"),
-        name_filter(drivers_abspaths, "iexplorerdriver_32.exe")
+        name_filter(drivers_abspaths, "iexplorerdriver_32.exe"),
+        name_filter(drivers_abspaths, "operadriver_32.exe")
     ]
 
 def name_filter(names=None, endswith=""):
