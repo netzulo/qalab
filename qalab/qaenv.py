@@ -9,84 +9,9 @@ import logging.handlers
 import os
 import shutil
 import sys
-import subprocess
-from qalab.core.server_driver_selenium import ServerDriverSelenium
 import wget
-
-
-# SETTINGS start
-PATH_CONFIG = 'qalab/configs'
-PATH_DRIVERS_MODULE = 'modules/qadrivers/'
-PATH_SERVER_DRIVERS = 'qalab/drivers'
-PATH_APKS = 'qalab/apks'
-WEBDRIVER_ENV_VARS = [
-    "-Dwebdriver.chrome.driver=",
-    "-Dwebdriver.gecko.driver=",
-    "-Dphantomjs.binary.path=",
-    "-Dwebdriver.ie.driver=",
-    "-Dwebdriver.edge.driver=",
-    "-Dwebdriver.opera.driver="
-]
-DRIVERS_NAMES = [
-    "chromedriver_32.exe",
-    "chromedriver_64.exe",
-    "chromedriver_32",
-    "chromedriver_64",
-    "firefoxdriver_32.exe",
-    "firefoxdriver_64.exe",
-    "firefoxdriver_32",
-    "firefoxdriver_64",
-    "phantomjsdriver_32.exe",
-    "phantomjsdriver_64.exe",
-    "phantomjsdriver_32",
-    "phantomjsdriver_64",
-    "iexplorerdriver_32.exe",
-    "iexplorerdriver_64.exe",
-    "edgedriver_32.exe",
-    "edgedriver_64.exe",
-    "operadriver_32.exe",
-    "operadriver_64.exe",
-    "operadriver_32",
-    "operadriver_64",
-]
-MSG_UNKOWN_COMMAND = "Unknown command : {}"
-### COMMON
-# {path}/{args.server_driver}.{args.mode}.json
-DRIVER_CONFIG_PATH = "{}/{}.{}.json"
-# {path}/{args.server_driver}.{args.mode}.example.json
-DRIVER_CONFIG_PATH_EXAMPLE = "{}/{}.{}.example.json"
-### SELENIUM
-SELENIUM_VERSION = "3.5"
-SELENIUM_VERSION_BUILD = "3.5.3"
-SELENIUM_JAR_NAME = "selenium-server-standalone-{}.jar".format(
-    SELENIUM_VERSION_BUILD)
-SELENIUM_URL = "https://selenium-release.storage.googleapis.com/{}/{}".format(
-    SELENIUM_VERSION, SELENIUM_JAR_NAME)
-
-### SELENDROID
-# Selendroid , TODO: just for mode node
-SELENDROID_PORT = 12000
-SELENDROID_SELENDROID_VERSION = '0.17.0'
-SELENDROID_JAR = 'selendroid-standalone-{}-with-dependencies.jar'.format(
-    SELENDROID_SELENDROID_VERSION)
-SELENDROID_URL = '{}/{}/{}'.format(
-    'https://github.com/selendroid/selendroid/releases/download',
-    SELENDROID_SELENDROID_VERSION,
-    SELENDROID_JAR)
-# Selendroid plugin, TODO: just for mode node
-SELENDROID_PLUGIN_JAR = 'selendroid-grid-plugin-{}.jar'.format(
-    SELENDROID_SELENDROID_VERSION)
-SELENDROID_PLUGIN_URL = '{}/{}/{}'.format(
-    'http://search.maven.org/remotecontent?filepath=io/selendroid/selendroid-grid-plugin',
-    SELENDROID_SELENDROID_VERSION,
-    SELENDROID_JAR)
-# Selenium, TODO: just for mode hub
-SELENDROID_SELENIUM_VERSION = "3.5.3"
-SELENDROID_SELENIUM_JAR = "selenium-server-standalone-{}.jar".format(
-    SELENDROID_SELENIUM_VERSION)
-SELENDROID_SELENIUM_URL = "https://selenium-release.storage.googleapis.com/3.5/{}".format(
-    SELENDROID_SELENIUM_JAR)
-# SETTINGS end
+from qalab.core.server_driver_selenium import ServerDriverSelenium
+from qalab.core.server_driver_appium import ServerDriverAppium
 
 
 def main(args=None):
@@ -227,40 +152,11 @@ def command_selendroid(args, logger):
 
 def command_selenium(args, logger):
     """Command with selenium standalone jar file"""
-    #TODO, que esto funcion -> server_driver = ServerDriverSelenium(args.mode)
-    # required --mode param
-    if args.mode not in ['hub', 'node']:
-        raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = DRIVER_CONFIG_PATH_EXAMPLE.format(
-        PATH_CONFIG, 'selenium', args.mode)
-    config_dst = DRIVER_CONFIG_PATH.format(
-        PATH_CONFIG, 'selenium', args.mode)
-    # generate drivers names with absolute paths
-    drivers_abspaths = []
-    for driver_name in DRIVERS_NAMES:
-        webdriver_var_name = None
-        if driver_name.startswith("chrome"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[0]
-        if driver_name.startswith("firefox"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[1]
-        if driver_name.startswith("phantomjs"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[2]
-        if driver_name.startswith("iexplorer"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[3]
-        if driver_name.startswith("edge"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[4]
-        if driver_name.startswith("opera"):
-            webdriver_var_name = WEBDRIVER_ENV_VARS[5]
-        # Get absolute path for driver_name
-        drivers_abspaths.append(get_driver_abspath(
-            webdriver_var_name, PATH_DRIVERS_MODULE, driver_name))
-
+    server_driver = ServerDriverSelenium(logger, args.mode)
     if args.install:
-        command_install(
-            args, logger, SELENIUM_URL, SELENIUM_JAR_NAME, config_src, config_dst)
+        server_driver.install()
     elif args.start:
-        handle_command_start_selenium(
-            args, logger, SELENIUM_JAR_NAME, config_dst, drivers_abspaths)
+        server_driver.start()
     else:
         logger.error("ACTION not selected: --install , --start")
 
@@ -310,109 +206,7 @@ def command_install(args, logger, url, jar_name, config_src, config_dst):
     copy_config(logger, config_src, config_dst)
     logger.info('Command install: DONE')
 
-def download_file(logger, url, out_path):
-    """TODO: doc method"""
-    logger.info('Downloading file: ...')
-    logger.debug('  url={}'.format(url))
-    logger.debug('  out_path={}'.format(out_path))
-    wget.download(url, out=out_path)
-    logger.info('Downloading file: DONE')
 
-def copy_config(logger, config_src, config_dst):
-    """TODO: doc method"""
-    logger.info('Copy config: ...')
-    logger.debug('  from={}'.format(config_src))
-    logger.debug('  to={}'.format(config_dst))
-    shutil.copy2(config_src, config_dst)
-    logger.info('Copy config: DONE')
-
-def handle_command_start_selenium(args, logger, selenium_jar,
-                                  config_dst, drivers_abspaths):
-    """TODO: doc method"""
-    platforms = ["win32", "win64", "lin32", "lin64"]
-    msgs_start = [
-        "Can't start without select available platform: [win32,win64,lin32,lin64]"
-    ]
-    cmd_args = ["java"]
-    cmd_drivers = []
-    cmd_default_args = [
-        "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar),
-        "-role", args.mode,
-        "-{}Config".format(args.mode), config_dst,
-        "-log", "logs/selenium.{}.log".format(args.mode)
-    ]
-    if (
-            args.mode == 'node' and
-            (
-                args.platform is None or
-                args.platform not in platforms
-            )
-        ):
-        logger.error(msgs_start[0])
-        return
-    elif args.platform == "win32":
-        cmd_drivers.extend(name_filter_win32(drivers_abspaths))
-    elif args.platform == "win64":
-        cmd_drivers.extend(name_filter_win64(drivers_abspaths))
-    elif args.platform == "lin32":
-        cmd_drivers.extend(name_filter_lin32(drivers_abspaths))
-    elif args.platform == "lin64":
-        cmd_drivers.extend(name_filter_lin64(drivers_abspaths))
-    if args.mode == "node":
-        cmd_args.extend(cmd_drivers)
-    cmd_args.extend(cmd_default_args)
-    logger.info("Executing command : {}".format(cmd_args))
-    return subprocess.call(cmd_args)
-
-def name_filter_lin64(drivers_abspaths):
-    """Return array ofparsed absolute paths name for platform LINUX 64"""
-    return [
-        name_filter(drivers_abspaths, "chromedriver_64"),
-        name_filter(drivers_abspaths, "firefoxdriver_64"),
-        name_filter(drivers_abspaths, "phantomjsdriver_64"),
-        name_filter(drivers_abspaths, "operadriver_64")
-    ]
-
-def name_filter_lin32(drivers_abspaths):
-    """Return array ofparsed absolute paths name for platform LINUX 32"""
-    return [
-        name_filter(drivers_abspaths, "chromedriver_32"),
-        name_filter(drivers_abspaths, "firefoxdriver_32"),
-        name_filter(drivers_abspaths, "phantomjsdriver_32"),
-        name_filter(drivers_abspaths, "operadriver_32")
-    ]
-
-def name_filter_win64(drivers_abspaths):
-    """Return array ofparsed absolute paths name for platform WINDOWS 64"""
-    return [
-        name_filter(drivers_abspaths, "chromedriver_32.exe"),
-        name_filter(drivers_abspaths, "firefoxdriver_64.exe"),
-        name_filter(drivers_abspaths, "phantomjsdriver_64.exe"),
-        name_filter(drivers_abspaths, "iexplorerdriver_64.exe"),
-        name_filter(drivers_abspaths, "edgedriver_64.exe"),
-        name_filter(drivers_abspaths, "operadriver_64.exe")
-    ]
-
-def name_filter_win32(drivers_abspaths):
-    """Return array ofparsed absolute paths name for platform WINDOWS 32"""
-    return [
-        name_filter(drivers_abspaths, "chromedriver_32.exe"),
-        name_filter(drivers_abspaths, "firefoxdriver_32.exe"),
-        name_filter(drivers_abspaths, "phantomjsdriver_32.exe"),
-        name_filter(drivers_abspaths, "iexplorerdriver_32.exe"),
-        name_filter(drivers_abspaths, "operadriver_32.exe")
-    ]
-
-def name_filter(names=None, endswith=""):
-    """Filter for name ending with text filter"""
-    names = list(names)
-    for name in names:
-        if name.endswith(endswith):
-            return name
-
-def get_driver_abspath(driver_var, driver_path, driver_name):
-    """Concatenate path name + driver name"""
-    return "{}{}{}".format(driver_var, driver_path, driver_name)
 
 def set_log_level_from_verbose(console_handler, args, logger):
     """Logging level handler for script"""

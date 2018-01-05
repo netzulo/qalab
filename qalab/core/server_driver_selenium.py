@@ -3,27 +3,76 @@
 """TODO: doc module"""
 
 
-from qalab.core.server_driver_base import ServerDriverBase
+import os
+import subprocess
 import qalab.configs.settings as SETTINGS
+from qalab.core.server_driver_base import ServerDriverBase
+
 
 
 class ServerDriverSelenium(ServerDriverBase):
     """TODO: doc class"""
 
-    _server_driver = 'selenium'
-    _drivers_abspath = None
-    
+    server_driver = 'selenium'
+    drivers_abspath = None
+    _platforms = ["win32", "win64", "lin32", "lin64"]
 
-    def __init__(self, mode):
+
+    def __init__(self, logger, mode):
         """TODO: doc method"""
-        super(ServerDriverSelenium, self).__init__(mode)
-        self._drivers_abspath = self.get_abspaths()
+        super(ServerDriverSelenium, self).__init__(logger, mode)
+        self.drivers_abspath = self.get_abspaths()
 
     def install(self):
-        self._configure(self._server_driver)
+        """Install proccess for selenium server_driver"""
+        super(ServerDriverSelenium, self)._configure(self.server_driver)
+        self.logger.info('Command install: ...')
+        jar_path = "{}/{}".format(SETTINGS.PATH_SERVER_DRIVERS, SETTINGS.SELENIUM_JAR_NAME)
+        if os.path.exists(jar_path):
+            self.logger.warning('File exist, not downloading')
+            self.logger.debug('  at path={}'.format(jar_path))
+        else:
+            self.download_file(SETTINGS.SELENIUM_URL, jar_path)
+        self.logger.info('Command install: DONE')
+
+
+    def start(self, platform):
+        """Start proccess for selenium server_driver"""
+        # TODO: noqa
+        cmd_args = ["java"]
+        cmd_drivers = []
+        cmd_default_args = [
+            "-jar", "{}/{}".format(
+                SETTINGS.PATH_SERVER_DRIVERS,
+                SETTINGS.SELENIUM_JAR_NAME),
+            "-role", self._mode,
+            "-{}Config".format(self._mode), self._config_dst,
+            "-log", "logs/selenium.{}.log".format(self._mode)
+        ]
+        if (
+                self._mode == 'node' and
+                (
+                    platform is None or
+                    platform not in platforms
+                )
+            ):
+            logger.error(SETTINGS.MSG_PLATFORM_ERROR)
+            return
+        elif platform == "win32":
+            cmd_drivers.extend(name_filter_win32(self.drivers_abspath))
+        elif platform == "win64":
+            cmd_drivers.extend(name_filter_win64(self.drivers_abspath))
+        elif platform == "lin32":
+            cmd_drivers.extend(name_filter_lin32(self.drivers_abspath))
+        elif platform == "lin64":
+            cmd_drivers.extend(name_filter_lin64(self.drivers_abspath))
+        if self._mode == "node":
+            cmd_args.extend(cmd_drivers)
+        cmd_args.extend(cmd_default_args)
+        self.command_exec(cmd_args)
 
     def get_abspaths(self):
-        """TODO: doc method"""
+        """Get drivers names with absolute paths"""
         drivers_abspath = []
         for driver_name in SETTINGS.DRIVERS_NAMES:
             webdriver_var_name = None
@@ -45,3 +94,52 @@ class ServerDriverSelenium(ServerDriverBase):
                 SETTINGS.PATH_DRIVERS_MODULE,
                 driver_name))
         return drivers_abspath
+
+    def name_filter_lin64(drivers_abspaths):
+        """Return array ofparsed absolute paths name for platform LINUX 64"""
+        return [
+            name_filter(self.drivers_abspath, "chromedriver_64"),
+            name_filter(self.drivers_abspath, "firefoxdriver_64"),
+            name_filter(self.drivers_abspath, "phantomjsdriver_64"),
+            name_filter(self.drivers_abspath, "operadriver_64")
+        ]
+
+    def name_filter_lin32(drivers_abspaths):
+        """Return array ofparsed absolute paths name for platform LINUX 32"""
+        return [
+            name_filter(self.drivers_abspath, "chromedriver_32"),
+            name_filter(self.drivers_abspath, "firefoxdriver_32"),
+            name_filter(self.drivers_abspath, "phantomjsdriver_32"),
+            name_filter(self.drivers_abspath, "operadriver_32")
+        ]
+
+    def name_filter_win64(drivers_abspaths):
+        """Return array ofparsed absolute paths name for platform WINDOWS 64"""
+        return [
+            name_filter(self.drivers_abspath, "chromedriver_32.exe"),
+            name_filter(self.drivers_abspath, "firefoxdriver_64.exe"),
+            name_filter(self.drivers_abspath, "phantomjsdriver_64.exe"),
+            name_filter(self.drivers_abspath, "iexplorerdriver_64.exe"),
+            name_filter(self.drivers_abspath, "edgedriver_64.exe"),
+            name_filter(self.drivers_abspath, "operadriver_64.exe")
+        ]
+
+    def name_filter_win32(drivers_abspaths):
+        """Return array ofparsed absolute paths name for platform WINDOWS 32"""
+        return [
+            name_filter(self.drivers_abspath, "chromedriver_32.exe"),
+            name_filter(self.drivers_abspath, "firefoxdriver_32.exe"),
+            name_filter(self.drivers_abspath, "phantomjsdriver_32.exe"),
+            name_filter(self.drivers_abspath, "iexplorerdriver_32.exe"),
+            name_filter(self.drivers_abspath, "operadriver_32.exe")
+        ]
+
+    def name_filter(names, endswith):
+        """Filter for name ending with text filter"""
+        names = list(names)
+        _name = None
+        for name in names:
+            if name.endswith(endswith):
+                return name
+            _name = name
+        raise Exception('Driver name \'{}\' not found at list'.format(_name))

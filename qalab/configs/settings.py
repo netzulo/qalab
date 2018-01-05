@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TODO: doc module"""
+"""Configuration settings for differents driver classes"""
 
 
 # SETTINGS start
@@ -44,6 +44,7 @@ DRIVER_CONFIG_PATH = "{}/{}.{}.json"
 # {path}/{args.server_driver}.{args.mode}.example.json
 DRIVER_CONFIG_PATH_EXAMPLE = "{}/{}.{}.example.json"
 ### SELENIUM
+MSG_PLATFORM_ERROR = "Can't start without select available platform: [win32,win64,lin32,lin64]"
 SELENIUM_VERSION = "3.5"
 SELENIUM_VERSION_BUILD = "3.5.3"
 SELENIUM_JAR_NAME = "selenium-server-standalone-{}.jar".format(
