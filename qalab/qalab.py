@@ -10,7 +10,9 @@ import os
 import shutil
 import sys
 import subprocess
+from qalab.core.server_driver_selenium import ServerDriverSelenium
 import wget
+
 
 # SETTINGS start
 PATH_CONFIG = 'qalab/configs'
@@ -48,6 +50,42 @@ DRIVERS_NAMES = [
     "operadriver_64",
 ]
 MSG_UNKOWN_COMMAND = "Unknown command : {}"
+### COMMON
+# {path}/{args.server_driver}.{args.mode}.json
+DRIVER_CONFIG_PATH = "{}/{}.{}.json"
+# {path}/{args.server_driver}.{args.mode}.example.json
+DRIVER_CONFIG_PATH_EXAMPLE = "{}/{}.{}.example.json"
+### SELENIUM
+SELENIUM_VERSION = "3.5"
+SELENIUM_VERSION_BUILD = "3.5.3"
+SELENIUM_JAR_NAME = "selenium-server-standalone-{}.jar".format(
+    SELENIUM_VERSION_BUILD)
+SELENIUM_URL = "https://selenium-release.storage.googleapis.com/{}/{}".format(
+    SELENIUM_VERSION, SELENIUM_JAR_NAME)
+
+### SELENDROID
+# Selendroid , TODO: just for mode node
+SELENDROID_PORT = 12000
+SELENDROID_SELENDROID_VERSION = '0.17.0'
+SELENDROID_JAR = 'selendroid-standalone-{}-with-dependencies.jar'.format(
+    SELENDROID_SELENDROID_VERSION)
+SELENDROID_URL = '{}/{}/{}'.format(
+    'https://github.com/selendroid/selendroid/releases/download',
+    SELENDROID_SELENDROID_VERSION,
+    SELENDROID_JAR)
+# Selendroid plugin, TODO: just for mode node
+SELENDROID_PLUGIN_JAR = 'selendroid-grid-plugin-{}.jar'.format(
+    SELENDROID_SELENDROID_VERSION)
+SELENDROID_PLUGIN_URL = '{}/{}/{}'.format(
+    'http://search.maven.org/remotecontent?filepath=io/selendroid/selendroid-grid-plugin',
+    SELENDROID_SELENDROID_VERSION,
+    SELENDROID_JAR)
+# Selenium, TODO: just for mode hub
+SELENDROID_SELENIUM_VERSION = "3.5.3"
+SELENDROID_SELENIUM_JAR = "selenium-server-standalone-{}.jar".format(
+    SELENDROID_SELENIUM_VERSION)
+SELENDROID_SELENIUM_URL = "https://selenium-release.storage.googleapis.com/3.5/{}".format(
+    SELENDROID_SELENIUM_JAR)
 # SETTINGS end
 
 
@@ -132,8 +170,10 @@ def command_appium(args, logger):
     """Command with appium standalone node client"""
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = "{}/appium.{}.example.json".format(PATH_CONFIG, args.mode)
-    config_dst = "{}/appium.{}.json".format(PATH_CONFIG, args.mode)
+    config_src = DRIVER_CONFIG_PATH_EXAMPLE.format(
+        PATH_CONFIG, 'appium', args.mode)
+    config_dst = DRIVER_CONFIG_PATH.format(
+        PATH_CONFIG, 'appium', args.mode)
     if args.install:
         copy_config(logger, config_src, config_dst)
     elif args.start:
@@ -162,58 +202,39 @@ def command_start_appium(args, logger):
 
 def command_selendroid(args, logger):
     """Command with selendroid standalone jar file"""
-    # Selendroid , TODO: just for mode node
-    selendroid_version = '0.17.0'
-    selendroid_jar = 'selendroid-standalone-{}-with-dependencies.jar'.format(selendroid_version)
-    selendroid_url = '{}/{}/{}'.format(
-        'https://github.com/selendroid/selendroid/releases/download',
-        selendroid_version, selendroid_jar)
-    # Selendroid plugin, TODO: just for mode node
-    plugin_jar = 'selendroid-grid-plugin-{}.jar'.format(selendroid_version)
-    plugin_url = '{}/{}/{}'.format(
-        'http://search.maven.org/remotecontent?filepath=io/selendroid/selendroid-grid-plugin',
-        selendroid_version, plugin_jar)
-    # Selenium, TODO: just for mode hub
-    selenium_version = "3.5.3"
-    selenium_jar = "selenium-server-standalone-{}.jar".format(selenium_version)
-    selenium_url = "https://selenium-release.storage.googleapis.com/3.5/{}".format(selenium_jar)
     # installation starts...
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = "{}/selendroid.{}.example.json".format(PATH_CONFIG, args.mode)
-    config_dst = "{}/selendroid.{}.json".format(PATH_CONFIG, args.mode)
+    config_src = DRIVER_CONFIG_PATH_EXAMPLE.format(
+        PATH_CONFIG, 'selendroid', args.mode)
+    config_dst = DRIVER_CONFIG_PATH.format(
+        PATH_CONFIG, 'selendroid', args.mode)
     # TODO: generate apks names with absolute paths
     if args.install:
         if args.mode == 'node':
             command_install(
-                args, logger, selendroid_url, selendroid_jar,
+                args, logger, SELENDROID_URL, SELENDROID_JAR,
                 config_src, config_dst)
             command_install(
-                args, logger, plugin_url, plugin_jar,
+                args, logger, SELENDROID_PLUGIN_URL, SELENDROID_PLUGIN_JAR,
                 config_src, config_dst)
         elif args.mode == 'hub':
-            command_install(
-                args, logger, selenium_url, selenium_jar,
-                config_src, config_dst)
+            command_install(args, logger, SELENDROID_SELENIUM_URL, SELENDROID_SELENIUM_JAR, config_src, config_dst)
     elif args.start:
-        command_start_selendroid(
-            args, logger, selenium_jar, selendroid_jar,
-            plugin_jar, config_dst)
+        command_start_selendroid(args, logger)
     else:
         logger.error("ACTION not selected: --install , --start")
 
 def command_selenium(args, logger):
     """Command with selenium standalone jar file"""
-    version = "3.5"
-    version_build = "3.5.3"
-    jar_name = "selenium-server-standalone-{}.jar".format(version_build)
-    url = "https://selenium-release.storage.googleapis.com/{}/{}".format(
-        version, jar_name)
+    #TODO, que esto funcion -> server_driver = ServerDriverSelenium(args.mode)
     # required --mode param
     if args.mode not in ['hub', 'node']:
         raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = "{}/selenium.{}.example.json".format(PATH_CONFIG, args.mode)
-    config_dst = "{}/selenium.{}.json".format(PATH_CONFIG, args.mode)
+    config_src = DRIVER_CONFIG_PATH_EXAMPLE.format(
+        PATH_CONFIG, 'selenium', args.mode)
+    config_dst = DRIVER_CONFIG_PATH.format(
+        PATH_CONFIG, 'selenium', args.mode)
     # generate drivers names with absolute paths
     drivers_abspaths = []
     for driver_name in DRIVERS_NAMES:
@@ -236,35 +257,36 @@ def command_selenium(args, logger):
 
     if args.install:
         command_install(
-            args, logger, url, jar_name, config_src, config_dst)
+            args, logger, SELENIUM_URL, SELENIUM_JAR_NAME, config_src, config_dst)
     elif args.start:
         handle_command_start_selenium(
-            args, logger, jar_name, config_dst, drivers_abspaths)
+            args, logger, SELENIUM_JAR_NAME, config_dst, drivers_abspaths)
     else:
         logger.error("ACTION not selected: --install , --start")
 
-def command_start_selendroid(args, logger, selenium_jar, selendroid_jar,
-                             plugin_jar, config_dst):
+def command_start_selendroid(args, logger):
     """TODO: doc method"""
     cmd_args = ["java"]
+    config_dst = DRIVER_CONFIG_PATH_EXAMPLE.format(
+        PATH_CONFIG, 'selendroid', args.mode)
     if args.mode == 'hub':
         cmd_default_args = [
             "-Dfile.encoding=UTF-8",
             "-cp",
             "\"{}:{}\" org.openqa.grid.selenium.GridLauncher".format(
-                "{}/{}".format(PATH_SERVER_DRIVERS, plugin_jar),
-                "{}/{}".format(PATH_SERVER_DRIVERS, selenium_jar)
+                "{}/{}".format(PATH_SERVER_DRIVERS, SELENDROID_PLUGIN_JAR),
+                "{}/{}".format(PATH_SERVER_DRIVERS, SELENDROID_SELENIUM_JAR)
             ),
-            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selendroid_jar),
+            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, SELENDROID_JAR),
             "-role", args.mode,
             "-{}Config".format(args.mode), config_dst,
             "-log", "logs/selendroid.{}.log".format(args.mode)
         ]
     elif args.mode == 'node':
         cmd_default_args = [
-            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, selendroid_jar),
+            "-jar", "{}/{}".format(PATH_SERVER_DRIVERS, SELENDROID_JAR),
             "-port", "12001",
-            "-selendroidServerPort", "12000",
+            "-selendroidServerPort", SELENDROID_PORT,
             "-folder", os.path.abspath(PATH_APKS),
             "-logLevel", "DEBUG",
             "-proxy", "io.selendroid.grid.SelendroidSessionProxy",
@@ -282,7 +304,7 @@ def command_install(args, logger, url, jar_name, config_src, config_dst):
     jar_path = "{}/{}".format(PATH_SERVER_DRIVERS, jar_name)
     if os.path.exists(jar_path):
         logger.info('File exist')
-        logger.debug('    at path={}'.format(jar_path))
+        logger.debug('  at path={}'.format(jar_path))
     else:
         download_file(logger, url, jar_path)
     copy_config(logger, config_src, config_dst)
@@ -291,16 +313,16 @@ def command_install(args, logger, url, jar_name, config_src, config_dst):
 def download_file(logger, url, out_path):
     """TODO: doc method"""
     logger.info('Downloading file: ...')
-    logger.debug('    url={}'.format(url))
-    logger.debug('    out_path={}'.format(out_path))
+    logger.debug('  url={}'.format(url))
+    logger.debug('  out_path={}'.format(out_path))
     wget.download(url, out=out_path)
     logger.info('Downloading file: DONE')
 
 def copy_config(logger, config_src, config_dst):
     """TODO: doc method"""
     logger.info('Copy config: ...')
-    logger.debug('    from={}'.format(config_src))
-    logger.debug('    to={}'.format(config_dst))
+    logger.debug('  from={}'.format(config_src))
+    logger.debug('  to={}'.format(config_dst))
     shutil.copy2(config_src, config_dst)
     logger.info('Copy config: DONE')
 
