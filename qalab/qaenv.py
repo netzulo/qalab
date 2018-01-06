@@ -156,7 +156,7 @@ def command_selenium(args, logger):
     if args.install:
         server_driver.install()
     elif args.start:
-        server_driver.start()
+        server_driver.start(args.platform)
     else:
         logger.error("ACTION not selected: --install , --start")
 

@@ -14,10 +14,9 @@ class ServerDriverBase(object):
     """TODO: doc class"""
 
     _mode = None
-    _config_src = None
-    _config_dst = None
+    _config_path_example = None
+    _config_path = None
     _server_driver = 'base'
-
 
     def __init__(self, logger, mode):
         """TODO: doc method"""
@@ -32,7 +31,7 @@ class ServerDriverBase(object):
         self._config_path_example = SETTINGS.DRIVER_CONFIG_PATH_EXAMPLE
         self._config_path = SETTINGS.DRIVER_CONFIG_PATH
 
-    def _configure(self, server_driver):
+    def _configure(self, server_driver, copy=True):
         """
         Just copy settings from example file
           from: {server_driver}.{args.mode}.example.json
@@ -47,12 +46,15 @@ class ServerDriverBase(object):
             SETTINGS.PATH_CONFIG, server_driver, self._mode)
         self._config_path = self._config_path.format(
             SETTINGS.PATH_CONFIG, server_driver, self._mode)
+        self.logger.info('path_config={}'.format(self._config_path))
         if os.path.exists(self._config_path):
-            self.logger.warning('File exist, not copying from example')
+            msg_err = 'File exist, not copying from example'
+            self.logger.warning(msg_err)
         else:
-            shutil.copy2(
-                self._config_path_example,
-                self._config_path)
+            if copy:
+                shutil.copy2(
+                    self._config_path_example,
+                    self._config_path)
 
     def install(self):
         """Installation process"""
@@ -77,8 +79,10 @@ class ServerDriverBase(object):
 
     def command_exec(self, cmd_args):
         try:
-            logger.info("Executing command : {}".format(cmd_args))
+            self.logger.info("Executing command : {}".format(
+                cmd_args))
             return subprocess.call(cmd_args)
         except Exception as err:
             raise Exception(
-                "Failed at handle command: {}".format(cmd_args))
+                err, "Failed at handle command: {}".format(
+                    cmd_args))
