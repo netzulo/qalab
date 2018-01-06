@@ -48,7 +48,7 @@ setup(name='qalaboratory',
         'pytest-dependency',
         'pytest-cov',
       ],
-      scripts=['qalab/qalab.py'],
+      scripts=['qalab/qaenv.py'],
       classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -81,5 +81,4 @@ setup(name='qalaboratory',
           'selendroid',
           'automation',
           'pytest'
-      ]
-     )
+      ])

@@ -98,7 +98,7 @@ Command Usage
     -v, --verbose         verbose level... repeat up to three times.
     -sd SERVER_DRIVER, --server_driver SERVER_DRIVER
                         Select server driver, values are:
-                        [selenium,selendroid, appium]
+                        [selenium,appium,selendroid]
     -m MODE, --mode MODE  Select mode, values are: [hub, node]
     -i, --install         Download driver server jar
     -s, --start           Start driver server jar
@@ -114,23 +114,24 @@ How to create HUB + Node ?
 Hub
 ****
 
-+ 1. Create configuration : ``python qalab/qalab.py --server_driver selenium --mode hub --install``
-+ 2. Start Hub : ``python qalab/qalab.py --server_driver selenium --mode hub --start``
++ 1. Create configuration : ``python qalab/qaenv.py --server_driver selenium --mode hub --install``
++ 2. Start Hub : ``python qalab/qaenv.py --server_driver selenium --mode hub --start``
 
 Node
 ****
 
-+ 1. Create configuration : ``python qalab/qalab.py --server_driver selenium --mode node --install``
-+ 2. Start Node : ``python qalab/qalab.py selenium --server_driver selenium --mode node --start --platform win64``
++ 1. Create configuration : ``python qalab/qaenv.py --server_driver selenium --mode node --install``
++ 2. Start Node : ``python qalab/qaenv.py selenium --server_driver selenium --mode node --start --platform win64``
 
 Appium
 ******
 
-*Must be installed SDK and appium as global package*
+*Must be installed SDK and appium (from NPM) as global package*
 
-+ 1. Install appium: ``npm install -g appium``
-+ 1. Create configuration : ``python qalab/qalab.py --server_driver appium --mode node --install``
-+ 2. Start Node : ``python qalab/qalab.py --server_driver appium --mode node --start --platform win64``
++ 1. Install SDK
++ 2. Install appium: ``npm install -g appium``
++ 3. Create configuration : ``python qalab/qaenv.py --server_driver appium --mode node --install``
++ 4. Start Node : ``python qalab/qaenv.py --server_driver appium --mode node --start --platform win64``
 
 
 TOX environments

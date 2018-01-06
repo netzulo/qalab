@@ -37,12 +37,12 @@ before_install:
 - pip install tox
 - pip freeze
 install:
-- tox -e "{$TOXENV,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}"
+- tox -e "{$TOXENV,selenium-hub,selenium-node,appium-node}"
 before_script:
 - python setup.py install
 script:
-- python qalab/qalab.py -sd selenium -m hub -p lin64 -s &
-- python qalab/qalab.py -sd selenium -m node -p lin64 -s &
+- python qalab/qaenv.py -sd selenium -m hub -p lin64 -s &
+- python qalab/qaenv.py -sd selenium -m node -p lin64 -s &
 - sleep 10
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
