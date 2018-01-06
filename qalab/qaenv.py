@@ -49,7 +49,7 @@ def parser_instance():
     parser.add_argument(
         '-sd', '--server_driver',
         default=None,
-        help="Select server driver, values are: [selenium,selendroid,appium]")
+        help="Select server driver, values are: [selenium,appium,selendroid]")
     # Optional args
     parser.add_argument(
         '-m', '--mode',
