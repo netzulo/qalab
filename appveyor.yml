@@ -58,7 +58,7 @@ install:
 - "pip install --disable-pip-version-check --user --upgrade pip"
 - "python -m pip install wheel"
 - "python -m pip install --pre -U tox"
-- "tox -e \"{%TOXENV%,selenium-hub,selenium-node,selendroid-hub,selendroid-node,appium-node}\""
+- "tox -e \"{%TOXENV%,selenium-hub,selenium-node,appium-node}\""
 
 artifacts:
 - path: "dist\\*"
