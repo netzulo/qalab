@@ -1,26 +1,52 @@
 
 # -*- coding: utf-8 -*-
-"""TODO: doc module"""
+"""package for manage selenium drivers and actions"""
 
 
+import os
+import qalab.configs.settings as SETTINGS
 from qalab.core.server_driver_base import ServerDriverBase
 
 
 class ServerDriverAppium(ServerDriverBase):
-    """TODO: doc class"""
+    """
+    Class manager for selenium
+     drivers with customizable configuration
+    """
 
-    _server_driver = 'appium'
+    server_driver = 'appium'
+    drivers_abspath = None
+    platforms = ["win32", "win64", "lin32", "lin64"]
+    cmd_args = ["appium"]
 
     def __init__(self, logger, mode):
-        """TODO: doc method"""
+        """
+        ServerDriverSelenium constructor
+        :args:
+            logger: python logging class
+            mode: valid values are 'hub', 'node'
+        """
         super(ServerDriverAppium, self).__init__(logger, mode)
 
     def install(self):
-        """Install proccess for selenium server_driver"""
-        super(ServerDriverSelenium, self)._configure(self.server_driver)
-        self.logger.info('Command install: ...')
-        self.logger.info('Command install: DONE')
+        """Install proccess for appium server_driver"""
+        if self._mode == 'hub':
+            raise NotImplementedError(
+                'Still not developed, open issue on github if you got this')
+        super(ServerDriverAppium, self)._configure(self.server_driver)
+        self.logger.info('Command install: need NPM and global appium installed')
 
     def start(self, platform):
-        """Start proccess for selenium server_driver"""
-        # TODO: noqa
+        """Start proccess for appium server_driver"""
+        if self._mode == 'hub':
+            raise NotImplementedError(
+                'Still not developed, open issue on github if you got this')
+        super(ServerDriverAppium, self)._configure(self.server_driver, copy=False)
+        self.logger.info('Command start: ...')
+        cmd_default_args = [
+            "--{}config".format(self._mode), self._config_path
+        ]
+        # start driver_server with arguments
+        self.cmd_args.extend(cmd_default_args)
+        self.command_exec(self.cmd_args, shell=True)
+        self.logger.info("Command start : DONE")

@@ -77,11 +77,11 @@ class ServerDriverBase(object):
         wget.download(url, out=out_path)
         self.logger.info('Downloading file: DONE')
 
-    def command_exec(self, cmd_args):
+    def command_exec(self, cmd_args, shell=False):
         try:
             self.logger.info("Executing command : {}".format(
                 cmd_args))
-            return subprocess.call(cmd_args)
+            return subprocess.call(cmd_args, shell=shell)
         except Exception as err:
             raise Exception(
                 err, "Failed at handle command: {}".format(

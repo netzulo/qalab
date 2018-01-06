@@ -90,19 +90,25 @@ def logger_instance(args):
     set_log_level_from_verbose(console_handler, args, logger)
     return logger
 
+def command_selenium(args, logger):
+    """Command with selenium standalone jar file"""
+    server_driver = ServerDriverSelenium(logger, args.mode)
+    if args.install:
+        server_driver.install()
+    elif args.start:
+        server_driver.start(args.platform)
+    else:
+        logger.error("ACTION not selected: --install , --start")
 
 def command_appium(args, logger):
     """Command with appium standalone node client"""
-    if args.mode not in ['hub', 'node']:
-        raise Exception('Select valid mode, values are: [hub, node]')
-    config_src = DRIVER_CONFIG_PATH_EXAMPLE.format(
-        PATH_CONFIG, 'appium', args.mode)
-    config_dst = DRIVER_CONFIG_PATH.format(
-        PATH_CONFIG, 'appium', args.mode)
+    server_driver = ServerDriverAppium(logger, args.mode)
     if args.install:
-        copy_config(logger, config_src, config_dst)
+        server_driver.install()
     elif args.start:
-        command_start_appium(args, logger)
+        # TODO: make works,
+        server_driver.start(args.platform)
+        #command_start_appium(args, logger)
     else:
         logger.error("ACTION not selected: --install , --start")
 
@@ -147,16 +153,6 @@ def command_selendroid(args, logger):
             command_install(args, logger, SELENDROID_SELENIUM_URL, SELENDROID_SELENIUM_JAR, config_src, config_dst)
     elif args.start:
         command_start_selendroid(args, logger)
-    else:
-        logger.error("ACTION not selected: --install , --start")
-
-def command_selenium(args, logger):
-    """Command with selenium standalone jar file"""
-    server_driver = ServerDriverSelenium(logger, args.mode)
-    if args.install:
-        server_driver.install()
-    elif args.start:
-        server_driver.start(args.platform)
     else:
         logger.error("ACTION not selected: --install , --start")
 

@@ -27,7 +27,6 @@ class ServerDriverSelenium(ServerDriverBase):
             mode: valid values are 'hub', 'node'
         """
         super(ServerDriverSelenium, self).__init__(logger, mode)
-        super(ServerDriverSelenium, self)._configure(self.server_driver, copy=False)
         self.drivers_abspath = self.get_abspaths()
 
     def install(self):
@@ -46,6 +45,7 @@ class ServerDriverSelenium(ServerDriverBase):
 
     def start(self, platform):
         """Start proccess for selenium server_driver"""
+        super(ServerDriverSelenium, self)._configure(self.server_driver, copy=False)
         self.logger.info('Command start: ...')
         cmd_default_args = [
             "-jar", "{}/{}".format(
