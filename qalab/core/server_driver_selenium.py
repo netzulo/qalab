@@ -21,7 +21,7 @@ class ServerDriverSelenium(ServerDriverBase):
 
     def __init__(self, logger, mode):
         """
-        ServerDriverSelenium constructor
+        Start server_driver for selenium with logger and custom mode
         :args:
             logger: python logging class
             mode: valid values are 'hub', 'node'
@@ -45,7 +45,8 @@ class ServerDriverSelenium(ServerDriverBase):
 
     def start(self, platform):
         """Start proccess for selenium server_driver"""
-        super(ServerDriverSelenium, self)._configure(self.server_driver, copy=False)
+        super(ServerDriverSelenium, self)._configure(
+            self.server_driver, copy=False)
         self.logger.info('Command start: ...')
         cmd_default_args = [
             "-jar", "{}/{}".format(
@@ -60,13 +61,17 @@ class ServerDriverSelenium(ServerDriverBase):
                 self.logger.error(SETTINGS.MSG_PLATFORM_ERROR)
                 return
             # merge drivers args
-            self.cmd_args.extend(self.args_drivers(platform))    
+            self.cmd_args.extend(self.args_drivers(platform))
         # merge default args
         self.cmd_args.extend(cmd_default_args)
         self.logger.info('Command start: DONE')
         self.command_exec(self.cmd_args)
 
     def args_drivers(self, platform):
+        """
+        Get a list of drivers absolute
+         paths filtered by platform
+        """
         cmd_drivers = []
         if self._mode == "node":
             if platform == "win32":

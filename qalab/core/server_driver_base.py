@@ -6,8 +6,8 @@
 import os
 import shutil
 import subprocess
-import wget
 import qalab.configs.settings as SETTINGS
+import wget
 
 
 class ServerDriverBase(object):
@@ -37,9 +37,9 @@ class ServerDriverBase(object):
           from: {server_driver}.{args.mode}.example.json
           to:   {server_driver}.{args.mode}.json
         """
-        if server_driver not in ['selenium', 'selendroid', 'appium']:
+        if server_driver not in ['selenium', 'appium', 'selendroid']:
             raise Exception(
-                'Select valid mode, values are: [selenium, selendroid, appium]'
+                'Select valid mode, values are: [selenium, appium, selendroid]'
             )
         self.logger.info('Configuring server_driver={}'.format(server_driver))
         self._config_path_example = self._config_path_example.format(
@@ -78,6 +78,7 @@ class ServerDriverBase(object):
         self.logger.info('Downloading file: DONE')
 
     def command_exec(self, cmd_args, shell=False):
+        """Execute a command on OS terminal"""
         try:
             self.logger.info("Executing command : {}".format(
                 cmd_args))

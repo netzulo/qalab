@@ -3,8 +3,6 @@
 """package for manage selenium drivers and actions"""
 
 
-import os
-import qalab.configs.settings as SETTINGS
 from qalab.core.server_driver_base import ServerDriverBase
 
 
@@ -21,7 +19,7 @@ class ServerDriverAppium(ServerDriverBase):
 
     def __init__(self, logger, mode):
         """
-        ServerDriverSelenium constructor
+        Start server_driver for appium with logger and custom mode
         :args:
             logger: python logging class
             mode: valid values are 'hub', 'node'
@@ -34,14 +32,16 @@ class ServerDriverAppium(ServerDriverBase):
             raise NotImplementedError(
                 'Still not developed, open issue on github if you got this')
         super(ServerDriverAppium, self)._configure(self.server_driver)
-        self.logger.info('Command install: need NPM and global appium installed')
+        self.logger.info(
+            'Command install: need NPM and global appium installed')
 
     def start(self, platform):
         """Start proccess for appium server_driver"""
         if self._mode == 'hub':
             raise NotImplementedError(
                 'Still not developed, open issue on github if you got this')
-        super(ServerDriverAppium, self)._configure(self.server_driver, copy=False)
+        super(ServerDriverAppium, self)._configure(
+            self.server_driver, copy=False)
         self.logger.info('Command start: ...')
         cmd_default_args = [
             "--{}config".format(self._mode), self._config_path

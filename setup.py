@@ -81,5 +81,4 @@ setup(name='qalaboratory',
           'selendroid',
           'automation',
           'pytest'
-      ]
-     )
+      ])
