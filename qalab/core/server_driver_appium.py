@@ -17,14 +17,15 @@ class ServerDriverAppium(ServerDriverBase):
     platforms = ["win32", "win64", "lin32", "lin64"]
     cmd_args = ["appium"]
 
-    def __init__(self, logger, mode):
+    def __init__(self, logger, mode, driver_config_path=None):
         """
         Start server_driver for appium with logger and custom mode
         :args:
             logger: python logging class
             mode: valid values are 'hub', 'node'
         """
-        super(ServerDriverAppium, self).__init__(logger, mode)
+        super(ServerDriverAppium, self).__init__(
+            logger, mode, driver_config_path=driver_config_path)
 
     def install(self):
         """Install proccess for appium server_driver"""
