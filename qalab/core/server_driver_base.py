@@ -18,7 +18,7 @@ class ServerDriverBase(object):
     _config_path = None
     _server_driver = 'base'
 
-    def __init__(self, logger, mode):
+    def __init__(self, logger, mode, driver_config_path=None):
         """TODO: doc method"""
         if logger is None:
             raise Exception("param 'logger' can't be None")
@@ -29,7 +29,10 @@ class ServerDriverBase(object):
             raise Exception('Select valid mode, values are: [hub, node]')
         self._mode = mode
         self._config_path_example = SETTINGS.DRIVER_CONFIG_PATH_EXAMPLE
-        self._config_path = SETTINGS.DRIVER_CONFIG_PATH
+        if driver_config_path:
+            self._config_path = driver_config_path
+        else:
+            self._config_path = SETTINGS.DRIVER_CONFIG_PATH
 
     def _configure(self, server_driver, copy=True):
         """

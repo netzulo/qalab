@@ -64,6 +64,10 @@ def parser_instance():
         '-p', '--platform',
         default=None,
         help="Select mode, values are: [lin32,lin64,win32,win64]")
+    parser.add_argument(
+        '-dcp', '--driver_config_path',
+        default=None,
+        help="Use different absolute PATH+FILE_NAME to read DRIVER_CONFIG")
     return parser
 
 
@@ -93,7 +97,8 @@ def logger_instance(args):
 
 def command_selenium(args, logger):
     """Command with selenium standalone jar file"""
-    server_driver = ServerDriverSelenium(logger, args.mode)
+    server_driver = ServerDriverSelenium(
+        logger, args.mode, driver_config_path=args.driver_config_path)
     if args.install:
         server_driver.install()
     elif args.start:
@@ -104,7 +109,8 @@ def command_selenium(args, logger):
 
 def command_appium(args, logger):
     """Command with appium standalone node client"""
-    server_driver = ServerDriverAppium(logger, args.mode)
+    server_driver = ServerDriverAppium(
+        logger, args.mode, driver_config_path=args.driver_config_path)
     if args.install:
         server_driver.install()
     elif args.start:

@@ -19,14 +19,15 @@ class ServerDriverSelenium(ServerDriverBase):
     platforms = ["win32", "win64", "lin32", "lin64"]
     cmd_args = ["java"]
 
-    def __init__(self, logger, mode):
+    def __init__(self, logger, mode, driver_config_path=None):
         """
         Start server_driver for selenium with logger and custom mode
         :args:
             logger: python logging class
             mode: valid values are 'hub', 'node'
         """
-        super(ServerDriverSelenium, self).__init__(logger, mode)
+        super(ServerDriverSelenium, self).__init__(
+            logger, mode, driver_config_path=driver_config_path)
         self.drivers_abspath = self.get_abspaths()
 
     def install(self):
