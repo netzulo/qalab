@@ -7,7 +7,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1.4'
+VERSION = '0.1.5'
 CURR_PATH = path.abspath(path.dirname(__file__))
 # make works script on windows
 sys.path.append(path.join(CURR_PATH, 'qalab'))
@@ -22,7 +22,8 @@ def readme():
 setup(name='qalaboratory',
       version=VERSION,
       packages=find_packages(exclude=['tests']),
-      description='QALAB, proyect manager for QA open source proyects',
+      description=("QALAB, proyect manager for QA open source proyects, "
+                   "managing selenium, appium, selendroid drivers"),
       long_description=readme(),
       author='Netzulo Open Source',
       author_email='netzuleando@gmail.com',
