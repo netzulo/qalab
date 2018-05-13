@@ -88,23 +88,26 @@ Command Usage
 
 ::
 
-  usage: qalab.py [-h] [-v] [-sd SERVER_DRIVER] [-m MODE] [-i] [-s]
-                [-p PLATFORM]
-
+  usage: qaenv.py [-h] [-v] [-sd SERVER_DRIVER] [-m MODE] [-i] [-s]
+                  [-p PLATFORM] [-dcp DRIVER_CONFIG_PATH]
+  
   Performs selenium drivers operations
-
+  
   optional arguments:
     -h, --help            show this help message and exit
     -v, --verbose         verbose level... repeat up to three times.
     -sd SERVER_DRIVER, --server_driver SERVER_DRIVER
-                        Select server driver, values are:
-                        [selenium,appium,selendroid]
+                          Select server driver, values are:
+                          [selenium,appium,selendroid]
     -m MODE, --mode MODE  Select mode, values are: [hub, node]
     -i, --install         Download driver server jar
     -s, --start           Start driver server jar
     -p PLATFORM, --platform PLATFORM
-                        Select mode, values are: [lin32,lin64,win32,win64]
-
+                          Select mode, values are: [lin32,lin64,win32,win64]
+    -dcp DRIVER_CONFIG_PATH, --driver_config_path DRIVER_CONFIG_PATH
+                          Use different absolute PATH+FILE_NAME to read
+                          DRIVER_CONFIG
+  
   ----- help us on , https://github.com/netzulo/qalab -------
 
 
