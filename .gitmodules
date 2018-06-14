@@ -13,3 +13,6 @@
 [submodule "modules/qatestlink"]
 	path = modules/qatestlink
 	url = https://github.com/netzulo/qatestlink
+[submodule "modules/qautils"]
+	path = modules/qautils
+	url = https://github.com/netzulo/qautils.git
