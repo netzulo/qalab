@@ -64,10 +64,10 @@ Command Usage
 
 
 How to create HUB + Node ?
--------------------------
+--------------------------
 
 Hub
-****
+***
 
 + 1. Create configuration : ``python qalab/qaenv.py --server_driver selenium --mode hub --install``
 + 2. Start Hub : ``python qalab/qaenv.py --server_driver selenium --mode hub --start``
