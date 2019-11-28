@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - pytest configuration files #untracked
 - tox configuration files #untracked
 - Update readme to improve readability
+- Update Selenium Hub configuration to v3.141.59
+- Update Selenium Node configuration to v3.141.59
+- Update Google chrome drivers to 78.0.3904.11
 
 ### Fixed
 

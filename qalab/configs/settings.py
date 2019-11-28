@@ -45,8 +45,8 @@ DRIVER_CONFIG_PATH_EXAMPLE = "{}/{}.{}.example.json"
 # SELENIUM
 MSG_PLATFORM_ERROR = "Can't without available platform: {}".format(
     "[win32,win64,lin32,lin64]")
-SELENIUM_VERSION = "3.12"
-SELENIUM_VERSION_BUILD = "3.12.0"
+SELENIUM_VERSION = "3.141"
+SELENIUM_VERSION_BUILD = "3.141.59"
 SELENIUM_JAR_NAME = "selenium-server-standalone-{}.jar".format(
     SELENIUM_VERSION_BUILD)
 SELENIUM_URL = "https://selenium-release.storage.googleapis.com/{}/{}".format(
