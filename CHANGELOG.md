@@ -23,5 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Visual Studio Professional configuration files #untracked
 
 
-[Unreleased]: https://github.com/netzulo/qacode/compare/v0.1.6...HEAD
+[Unreleased]: https://github.com/netzulo/qacode/compare/v0.1.8...HEAD
+[0.1.8]: https://github.com/netzulo/qacode/compare/v0.1.7...v0.1.8
+[0.1.7]: https://github.com/netzulo/qacode/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/netzulo/qacode/compare/v0.1.5...v0.1.6
