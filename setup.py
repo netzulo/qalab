@@ -7,7 +7,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1.8'
+VERSION = '0.2.0'
 CURR_PATH = path.abspath(path.dirname(__file__))
 # make works script on windows
 sys.path.append(path.join(CURR_PATH, 'qalab'))

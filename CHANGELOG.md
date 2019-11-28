@@ -16,6 +16,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 
+## [0.2.0] - 2019-11-29
+
+### Added
+
+### Changed
+
+### Fixed
+- Missing package version at setup.py, error from v1.9.0 #untracked
+
+### Removed
+
+
 ## [0.1.9] - 2019-11-29
 
 ### Added
@@ -37,7 +49,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Visual Studio Professional configuration files #untracked
 
 
-[Unreleased]: https://github.com/netzulo/qacode/compare/v0.1.9...HEAD
+[Unreleased]: https://github.com/netzulo/qacode/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/netzulo/qacode/compare/v0.1.9...v0.2.0
 [0.1.9]: https://github.com/netzulo/qacode/compare/v0.1.8...v0.1.9
 [0.1.8]: https://github.com/netzulo/qacode/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/netzulo/qacode/compare/v0.1.6...v0.1.7
