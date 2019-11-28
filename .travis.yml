@@ -4,13 +4,6 @@ env:
   - secure: Q3yIlvsQ2Ten33rNGcL5+5UglAWmri0ga6Z2FQKq4SXUMyKJhfQsP96TyTgDjWupgrtVag1q/cNecwyJHNQKW6p2HUg9FKeSk+v8qxXpgm58NGm4R1WJY6OaFaxX8vE6RXShzrT55jeEGCj+wPbpSotOsAArtodUqGKnqCQHS5AKaCsFkmthMped3lM1Rw+qR/ToQLrrrfoPN4V/c8g5j0x4II+6XSSLoNLlovN8MF8pJzQ2ZpHfaus7U147ErG5Xyjxt7RQXwyXCjOJbjZ5u8UOwLd5dGp37z081ZG/HpilDi/G1JEAz5vGo2cwVSxhCnJ9qCuqyzd2VNBlBpKEZwIlGp+CxBON2En9c3Vc3HzWTS6fofTOyJe04hZOND/k0r8eDWTSultIIkgmrdTr4iVkeoCw/GRvxbP33qFkUBexmhykhhcXGwDC0JUxU/XkFUdpaR5hIDfcbiduhBGNM/Z53rcktt0O/Ug8wXp+PmQ7MBrKYh4ZesytLa3CIfJkJr+hr9+L9YP7VooJDNbz4q78IucfYmqhuLS3f+JdfHbpYAcnt42ueYYZjibL3QoSprb61IWVFikt4Pt01uD1V//F5cysm8qVGzfg8L5KlZJcF/DUYqJnaazkasKztKR8pdMMcMSa3tAeOkH1jxGf9fUhXuHXD1D9KqokA4zqhYo=
 #GITHUB_TOKEN
   - secure: F0st01LnybnS75tBmlQSdM9Ydb38HUTuddRecUwRDfb3s6nbI+LPRgrFtdpDMh1PdSMUG3hiDhpCe1OQpRq9VPvCdYoGrd0PZi0wUYWrd8F8eOEV5UcX6NvL3uZxwDjIo6M3Bkkl4HVfhbSmLgtkdXhIg0K9LWMOLqamh5/OXY1ikPKzcd73V3JLIvVtoC2C+Hyq5wbXhkGGu4uOhKEtZCsHsFahjsLvgxjFR6SbDtLBpAt7Mi+pjwYyrR5w/57KuH4tPuYAnJARXpAlOGZNRM2+ntfvucnZIUIBmOgBu+ruWe0Q6ZJQEZsZ3PJmPmo+AbZbs85r5AwKMJk31fTzU3VJCfBcJZLe5Wdw6qoa3ZUiEKbjf7KSO8faTkm2HAmUx28Jiq+WrYyPUKnESKytgCu9CO/N1mCHAdBRjl7ee8qeOpyfneccy8LcSPgYfaX3D1atX5/1pflh8TfzFE5wCvqCg5P/xUKw556LNP1HI3NJtvnLQqLQ4dwCpeglWU33FYW80CTLugc86Tl6Kcq30IcEbuHwOYLsidezlsakqgjvprdRrStkNL4aZmtpFFitpR75o3wFM3CSWvLn+MYSulFhHSCZY9IOv4/9VczodgqNl3TYG04xJmEpZwZfnwKk+jKzyr6popGHfAHsVh6bATKkAaOQfVBKuzy7Mtd7bWA=
-addons:
-  sonarqube:
-    branches:
-    - master
-    - devel
-    token:
-      secure: VtPxaodHoyiwC1P1RTlfb86qaEEg96/1CTvpDAR7dnT/EfzCR6OqSKbi+xRIYLyl+KLxTkmhvbwt83YseWXh5OCrq89USRA7tJBwubBj6TWf7B24xgsijusUtc/Xz/BbZFqM8wz8PnenpifHu4MNHwT6zXm5uYc3r2FK9BPJgjicNIHgj83m2r6TBJfK1n8mADOWBlxl/Y8m3kopPUzmb6GeM4cgykYp46KhgK/zviCUrVR1mTn2ilkqX3/KgG1FGUUSRzXgTaToqvzVSKE+qMq7Ai9N3arv8JcnMSpR9rl0ZCAC3shc2hCiB5WygpJmxya5v9YjDEb7RQQavUCEs/4LnDZbckufa4ImPHDyRACUBmg8Bsgu0XQKxEsl8RgDibSPz1Sd6HFAgr80OPUwBa562DJLv3qoYSB3/FmKaww/asxJC8sUhYZi2Xx3WrguZgn8jgQJfX51EnFNQrTEQdvfI5RE1s1vIfZXEx7yqCrcQj5nhM0CSLXG8MA7R1TpZCC/oGzl0dVhIr+O2kjfFtmjO9j3HxiTlMXSopMtMCRLQZoiu3ipCnIsyGROgeBbBg0Xq67qECD9k8hqrwlgnbjxlAgbGi3yMTb1nkh6AhCs59NwcUeGQoW/7k6UgA4p9rSHwEupbzmXKvn7brjca5Ih5wmlRne10qnFS+dLvMg=
 language: python
 matrix:
   include:
@@ -31,7 +24,6 @@ matrix:
       python: 3.6
       env: TOXENV=py36
 
-
 before_install:
 - git submodule foreach git checkout master
 - pip install tox
@@ -41,15 +33,11 @@ install:
 before_script:
 - python setup.py install
 script:
+- tox -e "flake8,$TOXENV"
 - python qalab/qaenv.py -sd selenium -m hub -p lin64 -s &
 - python qalab/qaenv.py -sd selenium -m node -p lin64 -s &
 - sleep 10
 - nc -z -v -w5 localhost 11000
 - nc -z -v -w5 localhost 11001
-
-after_script:
-- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-      sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;
-  else
-      sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 -Dsonar.github.repository=netzulo/qalab -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST} -Dsonar.github.oauth=${GITHUB_TOKEN} -Dsonar.analysis.mode=preview ;
-  fi
+after_success:
+- tox -e docs
