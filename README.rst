@@ -88,25 +88,6 @@ Appium
 + 3. Create configuration : ``python qalab/qaenv.py --server_driver appium --mode node --install``
 + 4. Start Node : ``python qalab/qaenv.py --server_driver appium --mode node --start --platform win64``
 
-+---------------------+--------------------------------+
-| Env name            | Env description                |
-+=====================+================================+
-| py27,py34,py35,py36 | Python supported versions      |
-+---------------------+--------------------------------+
-| docs                | Generate doc HTML in /docs     |
-+---------------------+--------------------------------+
-| flake8              | Exec linter in qalab/ tests/   |
-+---------------------+--------------------------------+
-| selenium-hub        | Start intalled selenium hub    |
-+---------------------+--------------------------------+
-| selenium-node       | Start intalled selenium node   |
-+---------------------+--------------------------------+
-| selendroid-hub      | Start intalled selendroid hub  |
-+---------------------+--------------------------------+
-| selendroid-node     | Start intalled selendroid node |
-+---------------------+--------------------------------+
-| appium-node         | Start intalled appium node     |
-+---------------------+--------------------------------+
 
 How to exec tests ?
 -------------------
@@ -117,29 +98,29 @@ How to exec tests ?
 + Tests from tox : ``tox -l && tox -e TOX_ENV_NAME`` ( *see tox.ini file to get environment names* )
 
 
-+---------------------+--------------------------------+
-| TOX Env name        | Env description                |
-+=====================+================================+
-| py27,py34,py35,py36 | Python supported versions      |
-+---------------------+--------------------------------+
-| flake8              | Exec linter in qalab/ tests/   |
-+---------------------+--------------------------------+
-| coverage            | Generate XML and HTML reports  |
-+---------------------+--------------------------------+
-| docs                | Generate doc HTML in /docs     |
-+---------------------+--------------------------------+
-| selenium-hub        | Start intalled selenium hub    |
-+---------------------+--------------------------------+
-| selenium-node       | Start intalled selenium node   |
-+---------------------+--------------------------------+
-| selendroid-hub      | Start intalled selendroid hub  |
-+---------------------+--------------------------------+
-| selendroid-node     | Start intalled selendroid node |
-+---------------------+--------------------------------+
-| appium-node         | Start intalled appium node     |
-+---------------------+--------------------------------+
-| selenium-tests      | Execute Hub+Node tests         |
-+---------------------+--------------------------------+
++--------------------------+--------------------------------+
+| TOX Env name             | Env description                |
++==========================+================================+
+| py27,py34,py35,py36,py37 | Python supported versions      |
++--------------------------+--------------------------------+
+| flake8                   | Exec linter in qalab/ tests/   |
++--------------------------+--------------------------------+
+| coverage                 | Generate XML and HTML reports  |
++--------------------------+--------------------------------+
+| docs                     | Generate doc HTML in /docs     |
++--------------------------+--------------------------------+
+| selenium-hub             | Start intalled selenium hub    |
++--------------------------+--------------------------------+
+| selenium-node            | Start intalled selenium node   |
++--------------------------+--------------------------------+
+| selendroid-hub           | Start intalled selendroid hub  |
++--------------------------+--------------------------------+
+| selendroid-node          | Start intalled selendroid node |
++--------------------------+--------------------------------+
+| appium-node              | Start intalled appium node     |
++--------------------------+--------------------------------+
+| selenium-tests           | Execute Hub+Node tests         |
++--------------------------+--------------------------------+
 
 
 QADrivers
